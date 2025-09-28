@@ -1,0 +1,308 @@
+body {
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: black;
+    margin-top: 25px;
+}
+
+/*Login*/
+.FormCajaLogin {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    background: url(../../assets/images/login_oso.png) no-repeat center center fixed;
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center center; /* Centra la imagen */
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-attachment: fixed; /* Mantiene la imagen fija mientras se desplaza la página */
+    height: 100vh; /* Asegura que el HTML ocupe toda la altura de la ventana */
+}
+
+.grupo-entradas {
+    position: absolute;
+    display: grid;
+    width: 100%;
+    transition: .5s;
+}
+.FormularioLogin{
+    margin-bottom: 10%;
+}
+
+.FormLogin {
+    background-color: #f2f2f2;
+    margin: 3em auto auto auto;
+    border-radius: 6px;
+    color: #000;
+    border: 0.1em solid black;
+    width: 400px;
+    height: 600px;
+    position: relative;
+    margin-right: 25%;
+    margin-top: 4%;
+    overflow: hidden;
+}
+
+.TextoCajas {
+    font-weight: bold;
+    padding: 1px;
+    color: #000;
+    text-align: left;
+}
+.TextoS{
+    margin-bottom: 47ppx;
+}
+.CajaTexto {
+    width: 72%;
+    padding: 10px;
+    font-size: 1em;
+    margin-top: 5%;
+    margin-right: 25%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+    border: 1px solid black;
+    color: black;
+}
+
+.BtnRegistrar {
+    width: 72%;
+    text-decoration: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    border: 0;
+    border-radius: 10px;
+    border: 1px solid black;
+    font-size: 18px;
+    color: white;
+    background-color: #1e6d40;
+    font-weight: bold;
+    margin-bottom: 5%;
+    margin-top: 7%;
+    margin-left: 3%;
+}
+
+.BtnLogin {
+    width: 72%;
+    margin-left: 3%;
+    text-decoration: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    border: 0;
+    border-radius: 10px;
+    border: 1px solid black;
+    font-size: 18px;
+    color: white;
+    background-color: #1e6d40;
+    font-weight: bold;
+    margin-top: 7%;
+    margin-bottom: 5%;
+    margin-right: 25%;
+}
+
+.botondeintercambiar {
+    width: 240px;
+    margin: 35px auto;
+    position: relative;
+    box-shadow: 0 0 6px 0.5px black;
+    border-radius: 30px;
+}
+
+.botoncambiarcaja {
+    padding: 10px 30px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#btnvai {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 130px;
+    height: 100%;
+    background-color: #1e6d40;
+    border-radius: 30px;
+    transition: .5s;
+}
+
+#frmlogin {
+    bottom: 10%;
+    left: 50px;
+}
+
+#frmregistrar {
+    left: 450px;
+}
+
+/*Panel*/
+.BarraLateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #1e6d40;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.BarraLateral ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10%;
+    font-size: 18px;
+}
+
+.BarraLateral li {
+    text-align: left;
+    padding: 12px 10px;
+    background-color: rgba(0, 0, 0, .5);
+    color: #d9dbe0;
+}
+
+.BarraLateral a {
+    color: white;
+    text-decoration: none;
+}
+
+.ContenedorPrincipal {
+    margin-left: 200px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .BarraLateral {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .ContenedorPrincipal {
+        margin-left: 0;
+    }
+}
+
+/*Tabla*/
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+}
+
+.ContenedorTabla {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1260px;
+    width: 100%;
+}
+
+.BotonesTeam,
+.BotonesTeam1,
+.BotonesTeam2,
+.BotonesTeam3,
+.BotonesTeam4,
+.BotonesTeam5 {
+    text-align: center;
+    display: inline-block;
+    background: #1e6d40;
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    border: 2px solid black;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.BotonesTeam1,
+.BotonesTeam2,
+.BotonesTeam3 {
+    transition: transform 250ms;
+    width: 8%;
+    background: #1e6d40;
+}
+
+.BotonesTeam2 {
+    background: #185ca7;
+}
+
+.BotonesTeam3 {
+    background: #cf055f;
+}
+
+.BotonesTeam4 {
+    background: #11757A;
+}
+
+.BotonesTeam5 {
+    transition: transform 250ms;
+    background: #B63C12;
+}
+
+.BotonesTeam1:hover,
+.BotonesTeam2:hover,
+.BotonesTeam3:hover,
+.BotonesTeam5:hover {
+    transform: translateY(-10px);
+}
+
+.ContBuscar {
+    overflow: hidden;
+    padding-top: 1%;
+}
+
+.CajaTextoBuscar {
+    width: 300px;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid black;
+    color: black;
+}
+
+/*CajaPopUp*/
+.contenedor_popup {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    transition: all 0.2s;
+    background-color: white;
+}
+
+.caja_popup2 {
+    display: block;
+    position: absolute;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+}
