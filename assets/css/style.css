@@ -3,306 +3,197 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
+    height: 100vh;
+    display: flex; /* Usamos flexbox para posicionar el contenido */
+    
+    /* CORRECCIÓN: Estilos del fondo para que cubra el 100% de la página */
+    background: url(../../assets/images/login_oso.png) no-repeat center center fixed;
+    background-size: cover; /* Cubre toda la ventana */
+    background-attachment: fixed;
 }
 
 h1 {
     color: black;
     margin-top: 25px;
+    text-align: center;
+    font-size: 2.5em; /* Un poco más grande para el título */
 }
-
-/*Login*/
+.Titulo{
+    margin-bottom: 8%;
+}
+/* --- Login --- */
 .FormCajaLogin {
     width: 100%;
     height: 100%;
-    display: grid;
-    background: url(../../assets/images/login_oso.png) no-repeat center center fixed;
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    background-position: center center; /* Centra la imagen */
-    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
-    background-attachment: fixed; /* Mantiene la imagen fija mientras se desplaza la página */
-    height: 100vh; /* Asegura que el HTML ocupe toda la altura de la ventana */
-}
-
-.grupo-entradas {
-    position: absolute;
-    display: grid;
-    width: 100%;
-    transition: .5s;
-}
-.FormularioLogin{
-    margin-bottom: 10%;
+    display: flex;
+    margin-right: 10%;
+    justify-content: flex-end; /* Empuja el formulario a la derecha */
+    align-items: center; /* Centra el formulario verticalmente */
+    box-sizing: border-box;
+    padding-right: 10%; /* Añade un pequeño margen a la derecha de toda la caja de login */
 }
 
 .FormLogin {
-    background-color: #f2f2f2;
-    margin: 3em auto auto auto;
-    border-radius: 6px;
+    background-color: rgb(238, 234, 234); /* Fondo de la caja es blanco */
+    border-radius: 15px; /* Bordes redondeados */
     color: #000;
-    border: 0.1em solid black;
-    width: 400px;
-    height: 600px;
+    padding-right: 20px;
+    border: 1px solid #ddd; /* Borde más suave */
+    width: 450px; 
+    height: 550px; 
     position: relative;
-    margin-right: 25%;
-    margin-top: 4%;
+    padding: 20px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra para que se destaque */
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Eliminamos los márgenes de posicionamiento que causaban problemas */
+    margin: 0; 
 }
 
-.TextoCajas {
-    font-weight: bold;
-    padding: 1px;
-    color: #000;
-    text-align: left;
-}
-.TextoS{
-    margin-bottom: 47ppx;
-}
-.CajaTexto {
-    width: 72%;
-    padding: 10px;
-    font-size: 1em;
-    margin-top: 5%;
-    margin-right: 25%;
-    margin-bottom: 5%;
-    border-radius: 5px;
-    border: 1px solid black;
-    color: black;
+/* Movimiento suave al pasar el cursor */
+.FormLogin {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.BtnRegistrar {
-    width: 72%;
-    text-decoration: none;
-    padding: 10px 30px;
-    cursor: pointer;
-    border: 0;
-    border-radius: 10px;
-    border: 1px solid black;
-    font-size: 18px;
-    color: white;
-    background-color: #1e6d40;
-    font-weight: bold;
-    margin-bottom: 5%;
-    margin-top: 7%;
-    margin-left: 3%;
+.FormLogin:hover {
+    transform: translateY(-10px); /* Se mueve hacia arriba 10px */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Sombra más profunda */
+}
+
+.Titulo11{
+    margin-bottom: 15px;
+    margin-left: 8%;
+    padding:20px
+}
+.grupo-entradas {
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 10%; /* Padding lateral para centrar los inputs */
+    box-sizing: border-box;
+    transition: none; 
+    margin-right: 43px;
+}
+
+/* Estilos de íconos y campos de texto */
+.input-grupo {
+    position: relative;
+    width: 120%;
+    margin-bottom: 25px;
+}
+
+.input-grupo .icono {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1e6d40; 
+    font-size: 1.2em;
+    z-index: 10;
 }
 
 .BtnLogin {
-    width: 72%;
-    margin-left: 3%;
+    width: 100%;
     text-decoration: none;
-    padding: 10px 30px;
+    text-align: center;
+    padding: 14px 35px;
     cursor: pointer;
-    border: 0;
-    border-radius: 10px;
-    border: 1px solid black;
-    font-size: 18px;
-    color: white;
-    background-color: #1e6d40;
-    font-weight: bold;
-    margin-top: 7%;
-    margin-bottom: 5%;
-    margin-right: 25%;
-}
-
-.botondeintercambiar {
-    width: 240px;
-    margin: 35px auto;
-    position: relative;
-    box-shadow: 0 0 6px 0.5px black;
-    border-radius: 30px;
-}
-
-.botoncambiarcaja {
-    padding: 10px 30px;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    outline: none;
-    position: relative;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-#btnvai {
-    top: 0;
-    left: 0;
-    position: absolute;
-    width: 130px;
-    height: 100%;
-    background-color: #1e6d40;
-    border-radius: 30px;
-    transition: .5s;
-}
-
-#frmlogin {
-    bottom: 10%;
-    left: 50px;
-}
-
-#frmregistrar {
-    left: 450px;
-}
-
-/*Panel*/
-.BarraLateral {
-    position: fixed;
-    top: 0;
-    left: 0;
+    border: 2px solid #1e6d40;
     width: 200px;
-    height: 100%;
-    background-color: #1e6d40;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.BarraLateral ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10%;
+    border-radius: 25px;
     font-size: 18px;
-}
-
-.BarraLateral li {
-    text-align: left;
-    padding: 12px 10px;
-    background-color: rgba(0, 0, 0, .5);
-    color: #d9dbe0;
-}
-
-.BarraLateral a {
     color: white;
-    text-decoration: none;
+    background-color: #1e6d40;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: 8%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
 }
 
-.ContenedorPrincipal {
-    margin-left: 200px;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
+.BtnLogin:hover {
+    background-color: #155030;
 }
 
-@media (max-width: 768px) {
-    .BarraLateral {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-    .ContenedorPrincipal {
-        margin-left: 0;
-    }
-}
-
-/*Tabla*/
-table {
-    border-collapse: collapse;
+/* Estilos base: Aplica a INPUT y SELECT */
+.CajaTexto {
+    /* 1. Dimensiones y bordes originales */
     width: 100%;
-    margin: 0 auto;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    color: #000;
-}
-
-th {
-    background-color: black;
-    color: white;
-}
-
-th,
-td {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #dddddd;
-}
-
-.ContenedorTabla {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1260px;
-    width: 100%;
-}
-
-.BotonesTeam,
-.BotonesTeam1,
-.BotonesTeam2,
-.BotonesTeam3,
-.BotonesTeam4,
-.BotonesTeam5 {
-    text-align: center;
-    display: inline-block;
-    background: #1e6d40;
-    padding: 6px 10px;
-    border-radius: 6px;
-    text-decoration: none;
-    color: white;
-    border: 2px solid black;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.BotonesTeam1,
-.BotonesTeam2,
-.BotonesTeam3 {
-    transition: transform 250ms;
-    width: 8%;
-    background: #1e6d40;
-}
-
-.BotonesTeam2 {
-    background: #185ca7;
-}
-
-.BotonesTeam3 {
-    background: #cf055f;
-}
-
-.BotonesTeam4 {
-    background: #11757A;
-}
-
-.BotonesTeam5 {
-    transition: transform 250ms;
-    background: #B63C12;
-}
-
-.BotonesTeam1:hover,
-.BotonesTeam2:hover,
-.BotonesTeam3:hover,
-.BotonesTeam5:hover {
-    transform: translateY(-10px);
-}
-
-.ContBuscar {
-    overflow: hidden;
-    padding-top: 1%;
-}
-
-.CajaTextoBuscar {
-    width: 300px;
-    padding: 10px;
+    /* Ajuste de padding izquierdo para el ícono (45px) */
+    padding: 12px 12px 12px 45px; 
     font-size: 1em;
-    border-radius: 5px;
-    border: 1px solid black;
-    color: black;
+    margin: 0;
+    border-radius: 25px; 
+    border: 2px solid #1e6d40; /* Borde verde oscuro */
+    box-sizing: border-box;
+    
+    /* 2. Color de fondo por defecto y texto cuando NO está lleno/seleccionado */
+    background-color: white; 
+    color: #494848; /* Color gris para el texto (cuando es placeholder) */
+    
+    /* Aseguramos que la flecha del select se vea bien */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
-/*CajaPopUp*/
-.contenedor_popup {
+/* Estilo para cuando el usuario hace clic en cualquier campo */
+.CajaTexto:focus {
+    border-color: #1e6d40; 
+    outline: none; 
+}
+
+/* --- Lógica para el campo SELECT (Rol) --- */
+
+/* 1. Cuando el SELECT es VÁLIDO (se ha elegido un rol real) */
+.CajaTexto:valid {
+    background-color: #e8f5e9; /* Fondo verde claro */
+    color: black; /* Texto negro cuando se selecciona */
+}
+
+/* --- Lógica para campos INPUT (Usuario y Contraseña) --- */
+
+/* 2. Cuando el navegador AUTOCOMPLETA (solo funciona en inputs) */
+.CajaTexto:-webkit-autofill,
+.CajaTexto:-webkit-autofill:hover, 
+.CajaTexto:-webkit-autofill:focus {
+    /* Fondo verde claro aplicado */
+    -webkit-box-shadow: 0 0 0px 1000px #e8f5e9 inset !important; 
+    /* Texto se mantiene negro */
+    -webkit-text-fill-color: black !important; 
+    /* Borde se mantiene verde oscuro */
+    border-color: #1e6d40 !important; 
+}
+
+/* Ícono de ojo en el input contraseña */
+.toggle-password {
+    position: absolute;
+    right: 15px;
     top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    transition: all 0.2s;
-    background-color: white;
+    transform: translateY(-50%);
+    color: #1e6d40;
+    font-size: 1.2em;
+    cursor: pointer;
+    z-index: 10;
 }
 
-.caja_popup2 {
-    display: block;
+/* Contenedor para el select + flecha personalizada */
+.select-container {
+    position: relative;
+}
+
+/* Flecha ▼ personalizada */
+.custom-arrow {
     position: absolute;
-    padding: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* para que no bloquee clics */
+    font-size: 1em;
+    color: #1e6d40;
 }

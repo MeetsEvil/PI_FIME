@@ -1,13 +1,15 @@
 <?php
 session_start();
 if (isset($_SESSION['usuarioingresando'])) {
-    header('Location: ../auth/dashboard.php'); // Redirige a dashboard si ya está logueado
+    // Redirige a dashboard si ya está logueado
+    header('Location: dashboard.php');
     exit();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Login | FIME Inclusivo</title>
@@ -15,61 +17,66 @@ if (isset($_SESSION['usuarioingresando'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
+
 <body>
 
-<div class="FormCajaLogin">
-    <div class="FormLogin">
+    <div class="FormCajaLogin">
+        <div class="FormLogin">
 
-        <div class="botondeintercambiar">
-            <div id="btnvai"></div>
-            <button type="button" class="botoncambiarcaja" onclick="loginvai()" id="vaibtnlogin">Login</button>
-            <button type="button" class="botoncambiarcaja" onclick="registrarvai()" id="vaibtnregistrar">Registrar</button>
+            <form method="POST" id="frmlogin" class="grupo-entradas" action="login.php">
+                <div class="Titulo"><div class="Titulo11">
+                    <h1>BIENVENIDO!</h1></div>
+
+                    <div class="input-grupo">
+                        <i class="fas fa-user icono"></i>
+                        <input type="text" name="txtusuario" class="CajaTexto" placeholder="Usuario" autocomplete="off" required>
+                    </div>
+
+                    <div class="input-grupo">
+                        <i class="fas fa-lock icono"></i>
+                        <input type="password" id="password" name="txtpassword" class="CajaTexto" placeholder="Contraseña" autocomplete="off" required>
+                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                    </div>
+
+                    <div class="input-grupo select-container">
+                        <i class="fas fa-user-tag icono"></i>
+                        <select name="txtrol" required class="CajaTexto" id="selectRol">
+                            <option value="Administrador">Administrador</option>
+                            <option value="Profesional">Profesional</option>
+                            <option value="Academico">Academico</option>
+                        </select>
+                        <span class="custom-arrow">&#9662;</span> <!-- Flecha ▼ -->
+                    </div>
+
+
+                    <!-- Nuevo script para deseleccionar al cargar -->
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const selectElement = document.getElementById('selectRol');
+                            // Quita la selección de cualquier opción al cargar la página
+                            selectElement.selectedIndex = -1;
+                        });
+                    </script>
+                    <script>
+                        document.getElementById('togglePassword').addEventListener('click', function() {
+                            const passwordField = document.getElementById('password');
+                            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                            passwordField.setAttribute('type', type);
+
+                            this.classList.toggle('fa-eye');
+                            this.classList.toggle('fa-eye-slash');
+                        });
+                    </script>
+
+                </div>
+
+                <div>
+                    <input type="submit" value="Ingresar" class="BtnLogin" name="btningresar">
+                </div>
+            </form>
         </div>
-
-        <!-- Formulario Login -->
-        <div class="FormularioLogin">
-        <form method="POST" id="frmlogin" class="grupo-entradas" action="login.php">
-            <h1 class="TextoS">Iniciar sesión</h1>
-
-            <div class="TextoCajas">Usuario</div>
-            <input type="text" name="txtusuario" class="CajaTexto" autocomplete="off" required>
-
-            <div class="TextoCajas">Contraseña</div>
-            <input type="password" name="txtpassword" class="CajaTexto" autocomplete="off" required>
-
-            <div>
-                <input type="submit" value="Iniciar sesión" class="BtnLogin" name="btningresar">
-            </div>
-        </form>
-        </div>
-
-        <!-- Formulario Registrar -->
-        <form method="POST" id="frmregistrar" class="grupo-entradas" action="registrar.php">
-            <h1>Crear nueva cuenta</h1>
-
-            <div class="TextoCajas">Ingresar usuario</div>
-            <input type="text" name="txtusuario1" class="CajaTexto" autocomplete="off" required>
-
-            <div class="TextoCajas">Ingresar contraseña</div>
-            <input type="password" name="txtpassword1" class="CajaTexto" autocomplete="off" required>
-
-            <div>
-                <label for="rol">Selecciona rol</label>
-                <select name="txtrol1" required class="CajaTexto">
-                    <option value="Administrador">Administrador</option>
-                    <option value="Profesional">Profesional</option>
-                    <option value="Academico">Académico</option>
-                </select>
-            </div>
-
-            <div>
-                <input type="submit" value="Crear cuenta" class="BtnRegistrar" name="btnregistrar">
-            </div>
-        </form>
-
     </div>
-</div>
 
-<script src="../../assets/js/boton_formulario.js"></script>
 </body>
+
 </html>
