@@ -1,0 +1,551 @@
+/* =========== Google Fonts ============ */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/* =============== Globals ============== */
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #2a2185;
+  --white: #fff;
+  --gray: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex; /* Usamos flexbox para posicionar el contenido */
+    background: url(../images/fondo_sidebar.png) no-repeat center center fixed;
+    background-size: cover; /* Cubre toda la ventana */
+    background-attachment: fixed;
+}
+
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+/* =============== Navigation ================ */
+
+.navigation {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background: linear-gradient(90deg, #239358, #0d4d28); /* nuevo fondo */
+    border-left: 10px solid #0d4d28; /* opcional, que combine */
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.navigation.active {
+  width: 100px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered {
+  background-color: var(--white);
+}
+
+.navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+}
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: var(--green);
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  margin-left: 20px;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+}
+.navigation ul li a .icon ion-icon {
+  font-size: 1.75rem;
+}
+/* Texto de los menús */
+.navigation ul li a .title {
+    font-size: 1.1em; /* antes 1em */
+    font-weight: 500;
+}
+
+/* Texto del título */
+.navigation ul li:first-child .title {
+    font-size: 1.5em; /* más grande que los menús */
+    font-weight: bold;
+}
+
+
+.navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 70px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+
+/* --------- curve outside ---------- */
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none;
+}
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+}
+
+/* ===================== Main ===================== */
+.main {
+  position: absolute;
+  width: calc(100% - 300px);
+  left: 300px;
+  min-height: 100vh;
+  transition: 0.5s;
+}
+.main.active {
+  width: calc(100% - 100px);
+  left: 100px;
+}
+
+.topbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.toggle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.search {
+  position: relative;
+  width: 400px;
+  margin: 0 10px;
+}
+
+.search label {
+  position: relative;
+  width: 100%;
+}
+
+.search label input {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  padding: 5px 20px;
+  padding-left: 35px;
+  font-size: 18px;
+  outline: none;
+  border: 1px solid var(--black2);
+}
+
+.search label ion-icon {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 1.2rem;
+}
+
+.user {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+
+.user img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ====================== Responsive Design ========================== */
+@media (max-width: 991px) {
+  .navigation {
+    left: -300px;
+  }
+  .navigation.active {
+    width: 300px;
+    left: 0;
+  }
+  .main {
+    width: 100%;
+    left: 0;
+  }
+  .main.active {
+    left: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation {
+    width: 100%;
+    left: -100%;
+    z-index: 1000;
+  }
+  .navigation.active {
+    width: 100%;
+    left: 0;
+  }
+  .toggle {
+    z-index: 10001;
+  }
+  .main.active .toggle {
+    color: #fff;
+    position: fixed;
+    right: 0;
+    left: initial;
+  }
+}
+
+.user-box {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #000; /* borde negro */
+    margin-left: auto; 
+    margin-right: 20px;
+    margin-top: 20px;
+    padding: 8px 15px;  
+    border-radius: 25px;
+    font-size: 1.2em;   
+    gap: 10px; /* separación interna en lugar de tanto padding */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* efecto hover */
+.user-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+
+
+
+
+/* Nombre y rol */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.user-name {
+    font-weight: bold;
+    color: #1e6d40; /* verde oscuro */
+    font-size: 1em;
+}
+
+.user-role {
+    font-size: 0.8em;
+    color: #3b8a5b; /* verde más claro */
+
+}
+
+/* Botón info */
+.info-btn {
+    background: linear-gradient(90deg, #239358, #0d4d28);
+    border: none;
+    color: white;
+    width: 37px;   /* lo hago un poco más grande */
+    height: 37px;
+    border-radius: 50%;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* --- Estilos para el contenedor central del dashboard --- */
+.module-box {
+    margin: 30px auto;
+    margin-top: 50px;
+    margin-left: 170px;
+    margin-right: 10px;
+    padding: 30px;
+    border: 1px solid #000; /* borde negro */
+    /* Degradado y bordes */
+    background: linear-gradient(90deg, #239358, #0d4d28);
+    border: 2px solid #adabab;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+
+    /* Dimensiones */
+    width: calc(90% - 100px);
+    min-height: 60px;
+
+    /* Configuración del layout interno */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.module-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+/* Contenedor interno para alinear el contenido */
+.module-box .content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+    color: #fff; /* Color del texto para contraste */
+}
+
+/* Sección del texto */
+.module-box .text-content {
+    flex: 1;
+    max-width: 60%; /* Ajustado para dar espacio a la imagen */
+}
+
+
+.module-box h2 {
+    font-size: 3.5em;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.module-box h2 span {
+    display: block;
+    font-size: 1em;
+}
+
+.module-box p {
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+/* Botón de consulta */
+.btn-consultar {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #ff5722;
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-consultar:hover {
+    background-color: #e64a19;
+}
+
+/* Sección de la imagen */
+.module-box .image-content {
+    flex: 1; /* Le permite tomar el espacio restante */
+    display: flex;
+    justify-content: flex-end; /* Alinea la imagen a la derecha */
+    align-items: center;
+    padding-left: 20px; /* Un poco de espacio entre el texto y la imagen */
+}
+
+.module-box .image-content img {
+    max-width: 100%; /* Asegura que la imagen no se desborde del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block;
+
+    /* --- Aquí es donde controlas el tamaño --- */
+    /* Puedes usar un porcentaje del contenedor padre (image-content) */
+    width: 82%; /* Por ejemplo, 80% del espacio disponible para la imagen */
+
+    /* O un valor fijo si lo prefieres, aunque no se recomienda para responsive */
+    /* width: 350px; */
+    /* height: 350px; */ /* Si usas height, asegúrate de que 'height: auto' esté comentado o eliminado */
+}
+
+.page-title {
+    /* Elimina 'position: left;' y 'padding-left: 560px;' */
+    position: absolute; /* Usamos posicionamiento absoluto para colocar el título */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.2em;
+    font-weight: 600;
+    font-family: Georgia;
+    color: #1e6d40;
+    margin-top: 40px;
+}
+
+/* ================= Modal de Confirmación ================= */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Se mantiene en su lugar */
+    z-index: 1000; /* Alto z-index para que esté encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* Fondo semitransparente oscuro */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+    background: linear-gradient(90deg, #239358, #0d4d28);
+    color: white;
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+
+.modal-header h2 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-body p {
+    font-size: 1.1em;
+    color: #333;
+    margin: 0;
+}
+
+.modal-footer {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-cancel,
+.btn-confirm {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-cancel {
+    background-color: #7e7d7d;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #888;
+}
+
+.btn-confirm {
+    background-color: #dc3545; /* Rojo para confirmar salida */
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #c82333;
+}

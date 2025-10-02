@@ -1,24 +1,21 @@
-var x = document.getElementById("frmlogin");
-var y = document.getElementById("frmregistrar");
-var z = document.getElementById("btnvai");
-var textcolor1=document.getElementById("vaibtnlogin");
-var textcolor2=document.getElementById("vaibtnregistrar");
-textcolor1.style.color="white";
-textcolor2.style.color="black";
+// add hovered class to selected list item
+let list = document.querySelectorAll(".navigation li");
 
-function registrarvai()
-{
-x.style.left = "-400px";
-y.style.left = "50px";
-z.style.left = "110px";
-textcolor1.style.color="black";
-textcolor2.style.color="white";
+function activeLink() {
+  list.forEach((item) => {
+    item.classList.remove("hovered");
+  });
+  this.classList.add("hovered");
 }
-function loginvai()
-{
-x.style.left = "50px";
-y.style.left = "450px";
-z.style.left = "0";
-textcolor1.style.color="white";
-textcolor2.style.color="black";
-}
+
+list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+// Menu Toggle
+let toggle = document.querySelector(".toggle");
+let navigation = document.querySelector(".navigation");
+let main = document.querySelector(".main");
+
+toggle.onclick = function () {
+  navigation.classList.toggle("active");
+  main.classList.toggle("active");
+};
