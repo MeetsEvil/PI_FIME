@@ -25,7 +25,7 @@ body {
     padding: 0;
     height: 100vh;
     display: flex; /* Usamos flexbox para posicionar el contenido */
-    background: url(../images/fondo_sidebar.png) no-repeat center center fixed;
+    background-color: #e6ecdb;
     background-size: cover; /* Cubre toda la ventana */
     background-attachment: fixed;
 }
@@ -35,123 +35,117 @@ body {
   position: relative;
   width: 100%;
 }
-
-/* =============== Navigation ================ */
-
+/* ===================== Navigation ===================== */
 .navigation {
-    position: fixed;
-    width: 300px;
-    height: 100%;
-    background: linear-gradient(90deg, #239358, #0d4d28); /* nuevo fondo */
-    border-left: 10px solid #0d4d28; /* opcional, que combine */
-    transition: 0.5s;
-    overflow: hidden;
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  background: linear-gradient(90deg, #239358, #0d4d28);
+  border-left: 10px solid #0d4d28;
+  transition: width 0.3s;
+  overflow: hidden;
+  z-index: 10;
 }
 
 .navigation.active {
-  width: 100px;
+  width: 100px; /* Minimizado */
 }
 
 .navigation ul {
-  position: absolute;
-  top: 0;
-  left: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
   width: 100%;
+  position: relative;
 }
 
 .navigation ul li {
-  position: relative;
   width: 100%;
-  list-style: none;
+  position: relative;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
+  margin: 15px 0; /* Espacio uniforme arriba y abajo */
 }
 
-.navigation ul li:hover,
-.navigation ul li.hovered {
-  background-color: var(--white);
-}
-
-.navigation ul li:nth-child(1) {
-  margin-bottom: 40px;
+/* Separación extra para el logo (primer ítem) */
+.navigation ul li:first-child {
+  margin: 20px 0 40px 0; /* margen superior más pequeño y inferior más grande */
   pointer-events: none;
 }
 
+
 .navigation ul li a {
-  position: relative;
-  display: block;
-  width: 100%;
   display: flex;
+  align-items: center;
+  width: 100%;       /* Área completa para hover */
+  height: 60px;
+  padding: 0 15px;   /* Padding lateral para tooltip */
+  position: relative; /* Referencia para tooltip */
   text-decoration: none;
-  color: var(--white);
-}
-.navigation ul li:hover a,
-.navigation ul li.hovered a {
-  color: var(--green);
+  color: white;
+  transition: color 0.3s, background-color 0.3s;
 }
 
 .navigation ul li a .icon {
-  position: relative;
   display: block;
-  margin-left: 20px;
   min-width: 60px;
-  height: 60px;
-  line-height: 75px;
   text-align: center;
-}
-.navigation ul li a .icon ion-icon {
   font-size: 1.75rem;
 }
-/* Texto de los menús */
-.navigation ul li a .title {
-    font-size: 1.1em; /* antes 1em */
-    font-weight: 500;
-}
-
-/* Texto del título */
-.navigation ul li:first-child .title {
-    font-size: 1.5em; /* más grande que los menús */
-    font-weight: bold;
-}
-
 
 .navigation ul li a .title {
-  position: relative;
-  display: block;
-  padding: 0 10px;
-  height: 70px;
-  line-height: 60px;
-  text-align: start;
+  font-size: 1.1em;
+  font-weight: 500;
   white-space: nowrap;
+  transition: opacity 0.3s;
 }
 
-/* --------- curve outside ---------- */
-.navigation ul li:hover a::before,
-.navigation ul li.hovered a::before {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: -50px;
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border-radius: 50%;
-  box-shadow: 35px 35px 0 10px var(--white);
-  pointer-events: none;
+/* Logo */
+.navigation ul li:first-child .title {
+  font-size: 1.5em;
+  font-weight: bold;
 }
-.navigation ul li:hover a::after,
-.navigation ul li.hovered a::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -50px;
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border-radius: 50%;
-  box-shadow: 35px -35px 0 10px var(--white);
-  pointer-events: none;
+
+/* Hover y activo */
+.navigation ul li:hover,
+.navigation ul li.active {
+  background-color: #e6ecdb;
 }
+
+.navigation ul li:hover a,
+.navigation ul li.active a {
+  color: #0d4d28;
+}
+
+/* ================= Minimizado y Tooltips ================= */
+.navigation.active ul li a .title {
+  opacity: 0; /* Oculta el título */
+}
+
+/* Tooltip solo para sidebar minimizado */
+.navigation.active ul li a::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 100%; /* A la derecha del <a> */
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  background-color: #000; /* Fondo negro */
+  color: #fff; /* Letras blancas */
+  padding: 6px 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 999;
+}
+
+/* Mostrar tooltip al pasar el cursor */
+.navigation.active ul li:hover a::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(5px);
+}
+
 
 /* ===================== Main ===================== */
 .main {
@@ -348,8 +342,10 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 
     /* Dimensiones */
-    width: calc(90% - 100px);
+    width: calc(95% - 200px);
     min-height: 60px;
+    height: 640px;
+    
 
     /* Configuración del layout interno */
     display: flex;
@@ -448,6 +444,7 @@ body {
     font-family: Georgia;
     color: #1e6d40;
     margin-top: 40px;
+    
 }
 
 /* ================= Modal de Confirmación ================= */
@@ -548,4 +545,197 @@ body {
 
 .btn-confirm:hover {
     background-color: #c82333;
+}
+
+
+
+/* Botón de cerrar */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #ccc;
+}
+
+/* Íconos sociales */
+.socialMedia {
+  margin-top: 20px;
+
+}
+
+.socialIcon {
+  margin: 0 10px;
+  font-size: 32px;
+  color: #333; /* Cambia el color a un gris oscuro */
+  transition: transform 0.2s;
+}
+
+.socialIcon:hover {
+  transform: scale(1.2);
+  color: #8f928f;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* ================= Contenedor de la página de Beneficiarios ================= */
+.beneficiary-container {
+    margin: 30px auto;
+    margin-top: 50px;
+    margin-left: 170px;
+    margin-right: 10px;
+    padding: 30px;
+    border: 1px solid #000; /* borde negro */
+    /* Degradado y bordes */
+    background: white;
+    border: 2px solid #adabab;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+
+    /* Dimensiones */
+    width: calc(95% - 200px);
+    min-height: 60px;
+    height: 640px;
+    
+    /* Configuración del layout interno */
+    display: flex;
+    flex-direction: column; /* Cambiado para apilar los elementos verticalmente */
+    /* Aquí se elimina justify-content: center y align-items: center */
+}
+
+.beneficiary-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* ================= Estilos de los elementos internos ================= */
+
+/* Contenedor del título y botón "Nuevo" */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
+}
+
+.btn-new {
+    /* Mismo estilo de fondo que el botón de información */
+    background: linear-gradient(90deg, #239358, #0d4d28);
+    /* Mismo estilo de borde, solo que este botón es redondo */
+    border: none;
+    color: white; /* Color de la fuente blanco */
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    
+    /* Mantiene las dimensiones y bordes circulares */
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.btn-new:hover {
+    /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
+    background: linear-gradient(90deg, #1f7b48, #0c4323);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-new ion-icon {
+    /* El color del ícono debe ser blanco para que se vea */
+    color: white;
+    font-size: 1.2em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
+}
+
+/* Sección de los botones de acción y búsqueda */
+.actions-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.btn-export {
+    /* Gradiente lineal de 180 grados con los colores especificados */
+    background: linear-gradient(180deg, #d6d1d1, #ffffff);
+    color: #000; /* Color de la fuente negro */
+    border: 1px solid #000; /* Borde de 1px sólido negro */
+    
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-export:hover {
+    /* Un ligero cambio al pasar el cursor para dar retroalimentación */
+    background: linear-gradient(180deg, #c4bfbf, #f0f0f0);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.search-box {
+    background: linear-gradient(180deg, #d6d1d1, #ffffff);
+    border: 1px solid #000;
+    
+    /* Usa flexbox para alinear el input y el ícono */
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos */
+    
+    border-radius: 5px;
+    padding: 5px 10px;
+    
+    /* Define el ancho del buscador */
+    width: 300px; /* Ejemplo de ancho fijo */
+    /* o puedes usar flex-grow: 1; en el .actions-section para que ocupe todo el espacio */
+}
+.search-box:hover {
+    /* Un ligero cambio al pasar el cursor para dar retroalimentación */
+    background: linear-gradient(180deg, #c4bfbf, #f0f0f0);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #000;
+    font-size: 1em;
+    
+    /* Esto hace que el input ocupe todo el espacio restante */
+    flex-grow: 1;
+}
+
+.search-box ion-icon {
+    color: #000;
+    font-size: 1.2em;
+    cursor: pointer;
+    
+    /* Agrega un margen para separar el ícono del texto de búsqueda */
+    margin-left: 10px;
+}
+
+.table-section {
+    width: 100%;
+    /* Aquí puedes empezar a dar estilo a la tabla misma */
 }
