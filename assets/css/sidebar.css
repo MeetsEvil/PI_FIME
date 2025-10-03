@@ -343,8 +343,8 @@ body {
 
     /* Dimensiones */
     width: calc(95% - 200px);
-    min-height: 60px;
-    height: 640px;
+    min-height: 85px;
+    height: 740px;
     
 
     /* Configuración del layout interno */
@@ -591,6 +591,7 @@ body {
     margin-top: 50px;
     margin-left: 170px;
     margin-right: 10px;
+    margin-bottom: 90px;
     padding: 30px;
     border: 1px solid #000; /* borde negro */
     /* Degradado y bordes */
@@ -599,10 +600,11 @@ body {
     border-radius: 25px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 
+
     /* Dimensiones */
     width: calc(95% - 200px);
-    min-height: 60px;
-    height: 640px;
+    min-height: 95px;
+    height: 740px;
     
     /* Configuración del layout interno */
     display: flex;
@@ -665,77 +667,247 @@ body {
     font-size: 1.2em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
 }
 
-/* Sección de los botones de acción y búsqueda */
-.actions-section {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.btn-export {
-    /* Gradiente lineal de 180 grados con los colores especificados */
-    background: linear-gradient(180deg, #d6d1d1, #ffffff);
-    color: #000; /* Color de la fuente negro */
-    border: 1px solid #000; /* Borde de 1px sólido negro */
-    
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.btn-export:hover {
-    /* Un ligero cambio al pasar el cursor para dar retroalimentación */
-    background: linear-gradient(180deg, #c4bfbf, #f0f0f0);
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.search-box {
-    background: linear-gradient(180deg, #d6d1d1, #ffffff);
-    border: 1px solid #000;
-    
-    /* Usa flexbox para alinear el input y el ícono */
-    display: flex;
-    align-items: center; /* Centra verticalmente los elementos */
-    
-    border-radius: 5px;
-    padding: 5px 10px;
-    
-    /* Define el ancho del buscador */
-    width: 300px; /* Ejemplo de ancho fijo */
-    /* o puedes usar flex-grow: 1; en el .actions-section para que ocupe todo el espacio */
-}
-.search-box:hover {
-    /* Un ligero cambio al pasar el cursor para dar retroalimentación */
-    background: linear-gradient(180deg, #c4bfbf, #f0f0f0);
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-.search-box input {
+.btn-regresar {
+    /* Mismo estilo de fondo que el botón de información */
+    background: gray;
+    /* Mismo estilo de borde, solo que este botón es redondo */
     border: none;
-    outline: none;
-    background: transparent;
-    color: #000;
-    font-size: 1em;
-    
-    /* Esto hace que el input ocupe todo el espacio restante */
-    flex-grow: 1;
-}
-
-.search-box ion-icon {
-    color: #000;
-    font-size: 1.2em;
+    color: white; /* Color de la fuente blanco */
+    font-weight: 600;
     cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
     
-    /* Agrega un margen para separar el ícono del texto de búsqueda */
-    margin-left: 10px;
+    /* Mantiene las dimensiones y bordes circulares */
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
 }
 
-.table-section {
-    width: 100%;
-    /* Aquí puedes empezar a dar estilo a la tabla misma */
+.btn-regresar:hover {
+    /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
+    background: rgba(10, 10, 10, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+.btn-regresa ion-icon {
+    /* El color del ícono debe ser blanco para que se vea */
+    color: white;
+    font-size: 1.4em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
+}
+
+#tablaBeneficiarios {
+  padding-top: 20px;
+    margin-top: 70px;
+    width: 100%;
+    border-collapse: collapse; /* quita espacios entre bordes */
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 0.95em;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#tablaBeneficiarios th, #tablaBeneficiarios td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#tablaBeneficiarios th {
+    background-color: #239358;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#tablaBeneficiarios tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+#tablaBeneficiarios tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Botones generales */
+.btn-action2 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    margin-right: 5px;
+    text-decoration: none;
+    color: #545454; /* ícono gris */
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-action2 i {
+    pointer-events: none; /* para que el ícono no interfiera con el click */
+}
+
+/* Botón Editar */
+.btn-edit {
+    background-color: #ffde59; /* amarillo */
+}
+
+.btn-edit:hover {
+    filter: brightness(90%);
+}
+
+/* Botón Ver */
+.btn-view {
+    background-color: #c1ff72; /* verde lima */
+}
+
+.btn-view:hover {
+    filter: brightness(90%);
+}
+/* Contenedor de la paginación */
+.form-pagination-container {
+    width: 100%;
+    margin: 20px auto 30px auto;
+    padding: 15px 20px;
+    min-height: 95px;
+    height: 600px;
+    background-color: #f9f9f9;
+    border: 1px solid #adabab;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Número de hoja */
+/* REEMPLAZA ESTA REGLA (línea 247) */
+.pagination-info {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #1e6d40;
+    margin-bottom: 10px;
+    /* Las siguientes líneas causaban el problema, las eliminamos */
+    /* position: relative; */
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+/* Contenedor de botones */
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Botones de paginación */
+.btn-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 25px;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+}
+
+.btn-next {
+    background: linear-gradient(90deg, #239358, #0d4d28);
+}
+
+.btn-next:hover {
+    background: linear-gradient(90deg, #1f7b48, #0c4323);
+}
+
+.btn-prev {
+    background: gray;
+}
+
+.btn-prev:hover {
+    background: rgba(80, 80, 80, 0.7);
+}
+
+.btn-pagination ion-icon {
+    font-size: 1.2em;
+}
+
+/* Páginas del formulario */
+/* Título de sección */
+.form-page h3 {
+    font-size: 1.5em;       /* más grande */
+    color: #003366;         /* azul fuerte */
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* Etiquetas y campos alineados horizontalmente */
+.form-page label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+    width: 100%;
+    font-weight: 600;
+    color: #000000; /* negro fuerte */
+}
+
+/* Nombre del campo a la izquierda */
+.form-page label span {
+    width: 180px;       /* ancho fijo para alinear todos los campos */
+    margin-right: 15px;
+    text-align: right;
+}
+
+/* Inputs, selects y textarea */
+.form-page input, 
+.form-page select, 
+.form-page textarea {
+    flex: 1;            /* ocupa el espacio restante */
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+.form-page {
+    display: none; /* Oculta todas las páginas del formulario por defecto */
+}
+
+.form-page.is-active {
+    display: block; /* Muestra solo la página que tenga la clase 'is-active' */
+}
+
+
+
+.modal-content.success {
+    max-width: 400px;
+    padding: 30px;
+    border: 2px solid #239358;
+    display: flex; /* Habilita el layout flexible */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+}
+
+.success-icon {
+    font-size: 5em;
+    color: #239358; /* Color verde de éxito */
+    margin-bottom: 10px;
+}
+
+.success-title {
+    font-size: 1.8em;
+    color: #0d4d28;
+    margin-bottom: 5px;
+}
+

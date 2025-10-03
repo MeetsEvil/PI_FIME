@@ -17,6 +17,26 @@ $user = $_SESSION['usuarioingresando'];
     <title>Beneficiarios</title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <!-- Extensión Botones -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+    <!-- Dependencias para exportar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
 </head>
 
 <body>
@@ -43,7 +63,7 @@ $user = $_SESSION['usuarioingresando'];
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_beneficiarios.php') ? 'active' : ''; ?>">
+                <li class="<?php echo ($currentPage == 'index_beneficiarios.php' or $currentPage == 'crear_beneficiarios.php') ? 'active' : ''; ?>">
                     <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
                         <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
                         <span class="title">Beneficiarios</span>
@@ -117,26 +137,82 @@ $user = $_SESSION['usuarioingresando'];
         <div class="beneficiary-container">
             <div class="header-section">
                 <h2 class="section-title">Beneficiario</h2>
-                <a href="#" class="btn-new">
+                <a href="../../modules/beneficiarios/crear_beneficiarios.php" class="btn-new">
                     <ion-icon name="add-circle-outline"></ion-icon> Nuevo
                 </a>
             </div>
+            <!-- Tabla HTML -->
+            <table id="tablaBeneficiarios" class="tabla-beneficiarios" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Género</th>
+                        <th>Tipo de Apoyo</th>
+                        <th>Fecha Inscripción</th>
+                        <th>Última Actualización</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+            </table>
 
-            <div class="actions-section">
-                <button class="btn-export">Copiar</button>
-                <button class="btn-export">Excel</button>
-                <button class="btn-export">PDF</button>
-                <div class="search-box">
-                    <input type="text" placeholder="Buscar:">
-                    <ion-icon name="search-outline"></ion-icon>
-                </div>
-            </div>
-
-            <div class="table-section">
-            </div>
+            <!-- Script SOLO una vez -->
+            <script>
+                $('#tablaBeneficiarios').DataTable({
+                    "ajax": "get_beneficiarios.php",
+                    "columns": [{
+                            "data": "id_beneficiario"
+                        },
+                        {
+                            "data": "nombre_completo"
+                        },
+                        {
+                            "data": "edad"
+                        },
+                        {
+                            "data": "genero"
+                        },
+                        {
+                            "data": "tipo_apoyo"
+                        },
+                        {
+                            "data": "fecha_ingreso"
+                        },
+                        {
+                            "data": "ultima_actualizacion"
+                        },
+                        {
+                            "data": "opciones"
+                        }
+                    ],
+                    "pageLength": 8, // <--- Aquí se define la paginación de 8 registros
+                    "lengthMenu": [8, 16, 32, 50], // opcional: menú para cambiar cantidad
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                    },
+                    dom: 'Bfrtip', // Activa los botones
+                    buttons: [{
+                            extend: 'copyHtml5',
+                            text: 'Copiar',
+                            className: 'btn btn-sm btn-secondary'
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: 'Excel',
+                            className: 'btn btn-sm btn-success'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: 'PDF',
+                            className: 'btn btn-sm btn-danger',
+                            orientation: 'landscape', // opcional
+                            pageSize: 'A4' // opcional
+                        }
+                    ]
+                });
+            </script>
         </div>
-
-    </div>
     </div>
     <div id="contactModal" class="modal">
         <div class="modal-content">
@@ -177,52 +253,46 @@ $user = $_SESSION['usuarioingresando'];
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-    <script>
-        // Modal de Contacto
+        <script>
+        // Variables globales (deben existir fuera de la función de inicialización)
         var contactModal = document.getElementById("contactModal");
-        var closeContact = document.getElementById("closeContact");
-        // Seleccionamos el nuevo botón de cancelar
-        var cancelContactBtn = document.getElementById("cancelContactBtn");
+        var logoutModal = document.getElementById("logoutModal");
 
+        // Funciones llamadas por el atributo onclick
         function mostrarInfo() {
             contactModal.style.display = "flex";
         }
-
-        closeContact.onclick = function() {
-            contactModal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == contactModal) {
-                contactModal.style.display = "none";
-            }
-        }
-
-        // Modal de Cerrar Sesión
-        var logoutModal = document.getElementById("logoutModal");
-        var closeLogoutBtn = document.querySelector("#logoutModal .close-btn"); // Selecciona el botón de cerrar del modal de logout
-        var cancelBtn = document.getElementById("cancelBtn");
-
         function showLogoutModal() {
             logoutModal.style.display = "flex";
         }
 
-        // Asegúrate de que los eventos de clic usen las variables correctas
-        closeLogoutBtn.onclick = function() {
-            logoutModal.style.display = "none";
-        }
+        // --- Lógica de inicialización de eventos para cierre ---
+        document.addEventListener('DOMContentLoaded', function() {
+            var closeContact = document.getElementById("closeContact");
+            var cancelContactBtn = document.getElementById("cancelContactBtn");
+            var closeLogoutBtn = document.querySelector("#logoutModal .close-btn");
+            var cancelBtn = document.getElementById("cancelBtn");
 
-        cancelBtn.onclick = function() {
-            logoutModal.style.display = "none";
-        }
+            // Eventos para el Modal de Contacto
+            if (closeContact) closeContact.onclick = function() { contactModal.style.display = "none"; }
+            if (cancelContactBtn) cancelContactBtn.onclick = function() { contactModal.style.display = "none"; }
 
-        // Lógica para cerrar el modal al hacer clic fuera de él
-        window.onclick = function(event) {
-            if (event.target == logoutModal) {
-                logoutModal.style.display = "none";
+            // Eventos para el Modal de Cerrar Sesión
+            if (closeLogoutBtn) closeLogoutBtn.onclick = function() { logoutModal.style.display = "none"; }
+            if (cancelBtn) cancelBtn.onclick = function() { logoutModal.style.display = "none"; }
+
+            // Cierre al hacer clic fuera de los modales
+            window.onclick = function(event) {
+                if (event.target == contactModal) {
+                    contactModal.style.display = "none";
+                }
+                if (event.target == logoutModal) {
+                    logoutModal.style.display = "none";
+                }
             }
-        }
+        });
     </script>
+
 </body>
 
 </html>

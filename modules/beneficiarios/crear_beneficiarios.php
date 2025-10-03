@@ -1,0 +1,349 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuarioingresando'])) {
+    header("Location: ../auth/index.php");
+    exit();
+}
+$user = $_SESSION['usuarioingresando'];
+
+// 1. Incluir la conexión a la base de datos
+include '../../config/db.php';
+
+// Obtiene el nombre del archivo de la URL
+$currentPage = basename($_SERVER['REQUEST_URI']);
+
+// Lista de carreras
+$carreras = [
+    "Ingeniería Aeronáutica",
+    "Ingeniería Biomédica",
+    "Ingeniería Mecánica y Administración",
+    "Ingeniería Mecánica y Administración Empresarial (modalidad dual)",
+    "Ingeniería Mecánica y Eléctrica",
+    "Ingeniería Mecatrónica",
+    "Ingeniería de Manufactura",
+    "Ingeniería de Materiales",
+    "Ingeniería en Electrónica y Comunicaciones",
+    "Ingeniería en Electrónica y Automatización",
+    "Ingeniería en Electromovilidad",
+    "Ingeniero Administrador de Sistemas"
+];
+
+// 2. Consulta para obtener los profesionales
+$profesionales = [];
+$query = "SELECT id_profesional, nombre, apellido_paterno, apellido_materno FROM profesionales WHERE estado = 'Activo'";
+// Se asume que $conex está disponible desde db.php
+if (isset($conex)) {
+    $result = mysqli_query($conex, $query);
+
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $nombre_completo = trim($row['nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
+            $profesionales[] = [
+                'id' => $row['id_profesional'],
+                'nombre' => $nombre_completo
+            ];
+        }
+        mysqli_free_result($result);
+    } 
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Beneficiario</title>
+    <link rel="stylesheet" href="../../assets/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="school-outline"></ion-icon>
+                        </span>
+                        <span class="title">FIME Inclusivo</span>
+                    </a>
+                </li>
+
+                <li class="<?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/auth/dashboard.php" data-tooltip="Inicio">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Inicio</span>
+                    </a>
+                </li>
+
+                <li class="<?php echo ($currentPage == 'index_beneficiarios.php' or $currentPage == 'crear_beneficiarios.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
+                        <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                        <span class="title">Beneficiarios</span>
+                    </a>
+                </li>
+
+                <li class="<?php echo ($currentPage == 'index_diagnosticos.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
+                        <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
+                        <span class="title">Diagnósticos</span>
+                    </a>
+                </li>
+
+                <li class="<?php echo ($currentPage == 'index_adaptaciones.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
+                        <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
+                        <span class="title">Adaptaciones</span>
+                    </a>
+                </li>
+
+                <li class="<?php echo ($currentPage == 'index_intervenciones.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
+                        <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
+                        <span class="title">Intervenciones</span>
+                    </a>
+                </li>
+
+                <li class="<?php echo ($currentPage == 'index_profesionales.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
+                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
+                        <span class="title">Profesionales</span>
+                    </a>
+                </li>
+
+                <li class="<?php echo ($currentPage == 'index_reportes.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
+                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
+                        <span class="title">Reportes</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+            <h2 class="page-title">Programa de Inclusión</h2>
+            <div class="user-box">
+                <div class="user-info">
+                    <div class="user-name"><?php echo htmlspecialchars($user); ?></div>
+                    <div class="user-role"><?php echo htmlspecialchars($_SESSION['rol']); ?></div>
+                </div>
+                <button class="info-btn" onclick="mostrarInfo()">
+                    <ion-icon name="information-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="beneficiary-container">
+            <div class="header-section">
+                <h2 class="section-title">Registrar beneficiario</h2>
+                <a href="../../modules/beneficiarios/index_beneficiarios.php" class="btn-regresar">
+                    <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
+                </a>
+            </div>
+
+            <div class="form-pagination-container">
+                <form id="beneficiaryForm" action="crear_beneficiarios.php" method="POST" onsubmit="return false;">
+
+                    <div class="form-page is-active" data-page="1">
+                        <h3>Datos Personales</h3>
+                        <label><span>Nombre:</span><input type="text" name="nombre" required></label>
+                        <label><span>Apellido Paterno:</span><input type="text" name="apellido_paterno" required></label>
+                        <label><span>Apellido Materno:</span><input type="text" name="apellido_materno"></label>
+                        <label><span>CURP:</span><input type="text" name="curp" minlength="18" maxlength="18" required pattern="[A-Z0-9]{18}" title="El CURP debe tener exactamente 18 caracteres alfanuméricos y estar en mayúsculas."></label>
+                        <label><span>Fecha de nacimiento:</span><input type="date" name="fecha_nacimiento" required></label>
+                        <label><span>Género:</span>
+                            <select name="genero" required>
+                                <option value="">Selecciona...</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </label>
+                        <label><span>Teléfono:</span><input type="tel" name="telefono" minlength="10" maxlength="10" pattern="\d{10}" title="El teléfono debe tener 10 dígitos."></label>
+                        <label><span>Correo Institucional:</span><input type="email" name="correo_institucional"></label>
+                    </div>
+
+                    <div class="form-page" data-page="2">
+                        <h3>Datos Académicos</h3>
+                        <label><span>Matrícula:</span><input type="text" name="matricula" minlength="7" maxlength="7" required pattern="[0-9]{7}" title="La matrícula debe tener exactamente 7 dígitos."></label>
+                        <label><span>Carrera:</span>
+                            <select name="carrera" required>
+                                <option value="">Selecciona una carrera...</option>
+                                <?php foreach ($carreras as $carrera): ?>
+                                    <option value="<?php echo htmlspecialchars($carrera); ?>"><?php echo htmlspecialchars($carrera); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </label>
+                        <label><span>Semestre:</span><input type="number" name="semestre" min="1" max="12" required></label>
+                        <label><span>Estatus Académico:</span>
+                            <select name="estatus_academico" required>
+                                <option value="">Selecciona...</option>
+                                <option value="Activo">Activo</option>
+                                <option value="Baja temporal">Baja temporal</option>
+                                <option value="Egresado">Egresado</option>
+                                <option value="Baja definitiva">Baja definitiva</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="form-page" data-page="3">
+                        <h3>Inclusión y Apoyos</h3>
+                        <label><span>Tipo de Discapacidad:</span><input type="text" name="tipo_discapacidad"></label>
+                        <label><span>Diagnóstico:</span><textarea name="diagnostico"></textarea></label>
+                        <label><span>Adaptaciones:</span><textarea name="adaptaciones"></textarea></label>
+                        <label><span>Recursos Asignados:</span><textarea name="recursos_asignados"></textarea></label>
+                        
+                        <label><span>Profesional Asignado:</span>
+                            <input type="text" name="profesional_asignado_nombre" list="profesionales-list" id="profesionalAsignadoNombre" required>
+                            <input type="hidden" name="profesional_asignado_id" id="profesionalAsignadoId">
+                            <datalist id="profesionales-list">
+                                <?php foreach ($profesionales as $profesional): ?>
+                                    <option data-id="<?php echo $profesional['id']; ?>" value="<?php echo htmlspecialchars($profesional['nombre']); ?>">
+                                <?php endforeach; ?>
+                            </datalist>
+                        </label>
+                        <div id="profesionalError" class="validation-message-small"></div>
+                    </div>
+
+                    <div class="form-page" data-page="4">
+                        <h3>Seguimiento Inicial</h3>
+                        <label><span>Fecha de Ingreso:</span><input type="date" name="fecha_ingreso"></label>
+                        <label><span>Estado Inicial:</span><input type="text" name="estado_inicial"></label>
+                        <label><span>Observaciones Iniciales:</span><textarea name="observaciones_iniciales"></textarea></label>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="pagination-info">
+                Hoja <span id="currentPageNumber">1</span> de 4
+            </div>
+            <div class="pagination-buttons">
+                <button type="button" class="btn-pagination btn-prev" style="display: none;">
+                    <ion-icon name="arrow-back-outline"></ion-icon> Anterior
+                </button>
+                <button type="button" class="btn-pagination btn-next">
+                    Siguiente <ion-icon name="arrow-forward-outline"></ion-icon>
+                </button>
+            </div>
+            <div id="formValidationMessage" class="validation-message-global"></div>
+        </div>
+    </div>
+    
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <div class="modal-body">
+                <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
+                <h2 class="success-title">¡Registro Exitoso!</h2>
+                <p>El nuevo beneficiario ha sido guardado correctamente.</p>
+                <p>Serás redirigido a la lista de beneficiarios en 3 segundos.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" id="closeContact">&times;</span>
+                <h2>Información de Contacto</h2>
+            </div>
+            <div class="modal-body">
+                <h3>Orlando Jair - Ingeniero en Sistemas</h3>
+                <p></p>
+                <div class="socialMedia">
+                    <a class="socialIcon" href="https://github.com/MeetsEvil" target="_blank"><i class="fab fa-github"></i></a>
+                    <a class="socialIcon" href="https://www.linkedin.com/in/orlandojgarciap-17a612289/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a class="socialIcon" href="mailto:orlandojgarciap@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn">&times;</span>
+                <h2>Cierre de sesión</h2>
+            </div>
+            <div class="modal-body">
+                <p>¿Confirmas que deseas cerrar sesión?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelBtn" class="btn-cancel">Cancelar</button>
+                <a href="../../modules/auth/logout.php" class="btn-confirm">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/main.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        // Modal de Contacto (lógica mantenida)
+        var contactModal = document.getElementById("contactModal");
+        var closeContact = document.getElementById("closeContact");
+        var cancelContactBtn = document.getElementById("cancelContactBtn");
+
+        function mostrarInfo() {
+            contactModal.style.display = "flex";
+        }
+
+        closeContact.onclick = function() {
+            contactModal.style.display = "none";
+        }
+
+        cancelContactBtn.onclick = function() {
+            contactModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == contactModal) {
+                contactModal.style.display = "none";
+            }
+        }
+
+        // Modal de Cerrar Sesión (lógica mantenida)
+        var logoutModal = document.getElementById("logoutModal");
+        var closeLogoutBtn = document.querySelector("#logoutModal .close-btn");
+        var cancelBtn = document.getElementById("cancelBtn");
+
+        function showLogoutModal() {
+            logoutModal.style.display = "flex";
+        }
+
+        closeLogoutBtn.onclick = function() {
+            logoutModal.style.display = "none";
+        }
+
+        cancelBtn.onclick = function() {
+            logoutModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == logoutModal) {
+                logoutModal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

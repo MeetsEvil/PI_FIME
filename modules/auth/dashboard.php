@@ -1,5 +1,13 @@
 <?php
 session_start();
+include '../../config/db.php'; // Ajusta la ruta según tu proyecto
+
+// Consulta para contar beneficiarios activos
+$query_count = "SELECT COUNT(*) AS total_activos FROM beneficiarios WHERE estatus_academico = 'Activo'";
+$result_count = mysqli_query($conex, $query_count);
+$row_count = mysqli_fetch_assoc($result_count);
+$total_activos = $row_count['total_activos'];
+
 if (!isset($_SESSION['usuarioingresando'])) {
     header("Location: ../auth/index.php");
     exit();
@@ -118,9 +126,9 @@ $user = $_SESSION['usuarioingresando'];
         <div class="module-box" id="beneficiarios-box">
             <div class="content-wrapper">
                 <div class="text-content">
-                    <h2>N° de Beneficiarios<br><span>Activos: 210</span></h2>
+                    <h2>N° de Beneficiarios<br><span>Activos: <?php echo number_format($total_activos); ?></span></h2>
                     <p>El Programa de Coordinación de Inclusión apoya a beneficiarios mediante estrategias sociales, fomentando igualdad de oportunidades y desarrollo comunitario.</p>
-                    <a href="#" class="btn-consultar">Consultar información</a>
+                    <a href="../../modules/beneficiarios/index_beneficiarios.php" class="btn-consultar">Consultar información</a>
                 </div>
                 <div class="image-content">
                     <img src="../../assets/images/Dibujo_Mujer.png" alt="Dibujo">
