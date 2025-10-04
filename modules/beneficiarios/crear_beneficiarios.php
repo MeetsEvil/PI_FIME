@@ -44,7 +44,7 @@ if (isset($conex)) {
             ];
         }
         mysqli_free_result($result);
-    } 
+    }
 }
 ?>
 
@@ -58,6 +58,7 @@ if (isset($conex)) {
     <title>Registrar Beneficiario</title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 
 <body>
@@ -210,14 +211,14 @@ if (isset($conex)) {
                         <label><span>Diagnóstico:</span><textarea name="diagnostico"></textarea></label>
                         <label><span>Adaptaciones:</span><textarea name="adaptaciones"></textarea></label>
                         <label><span>Recursos Asignados:</span><textarea name="recursos_asignados"></textarea></label>
-                        
+
                         <label><span>Profesional Asignado:</span>
                             <input type="text" name="profesional_asignado_nombre" list="profesionales-list" id="profesionalAsignadoNombre" required>
                             <input type="hidden" name="profesional_asignado_id" id="profesionalAsignadoId">
                             <datalist id="profesionales-list">
                                 <?php foreach ($profesionales as $profesional): ?>
                                     <option data-id="<?php echo $profesional['id']; ?>" value="<?php echo htmlspecialchars($profesional['nombre']); ?>">
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
                             </datalist>
                         </label>
                         <div id="profesionalError" class="validation-message-small"></div>
@@ -247,7 +248,7 @@ if (isset($conex)) {
             <div id="formValidationMessage" class="validation-message-global"></div>
         </div>
     </div>
-    
+
     <div id="successModal" class="modal">
         <div class="modal-content success">
             <div class="modal-body">
@@ -258,92 +259,11 @@ if (isset($conex)) {
             </div>
         </div>
     </div>
-    
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close-btn" id="closeContact">&times;</span>
-                <h2>Información de Contacto</h2>
-            </div>
-            <div class="modal-body">
-                <h3>Orlando Jair - Ingeniero en Sistemas</h3>
-                <p></p>
-                <div class="socialMedia">
-                    <a class="socialIcon" href="https://github.com/MeetsEvil" target="_blank"><i class="fab fa-github"></i></a>
-                    <a class="socialIcon" href="https://www.linkedin.com/in/orlandojgarciap-17a612289/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a class="socialIcon" href="mailto:orlandojgarciap@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="logoutModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close-btn">&times;</span>
-                <h2>Cierre de sesión</h2>
-            </div>
-            <div class="modal-body">
-                <p>¿Confirmas que deseas cerrar sesión?</p>
-            </div>
-            <div class="modal-footer">
-                <button id="cancelBtn" class="btn-cancel">Cancelar</button>
-                <a href="../../modules/auth/logout.php" class="btn-confirm">Cerrar Sesión</a>
-            </div>
-        </div>
-    </div>
 
     <script src="../../assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-    <script>
-        // Modal de Contacto (lógica mantenida)
-        var contactModal = document.getElementById("contactModal");
-        var closeContact = document.getElementById("closeContact");
-        var cancelContactBtn = document.getElementById("cancelContactBtn");
-
-        function mostrarInfo() {
-            contactModal.style.display = "flex";
-        }
-
-        closeContact.onclick = function() {
-            contactModal.style.display = "none";
-        }
-
-        cancelContactBtn.onclick = function() {
-            contactModal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == contactModal) {
-                contactModal.style.display = "none";
-            }
-        }
-
-        // Modal de Cerrar Sesión (lógica mantenida)
-        var logoutModal = document.getElementById("logoutModal");
-        var closeLogoutBtn = document.querySelector("#logoutModal .close-btn");
-        var cancelBtn = document.getElementById("cancelBtn");
-
-        function showLogoutModal() {
-            logoutModal.style.display = "flex";
-        }
-
-        closeLogoutBtn.onclick = function() {
-            logoutModal.style.display = "none";
-        }
-
-        cancelBtn.onclick = function() {
-            logoutModal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == logoutModal) {
-                logoutModal.style.display = "none";
-            }
-        }
-    </script>
 </body>
+
 </html>

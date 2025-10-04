@@ -911,3 +911,19 @@ body {
     margin-bottom: 5px;
 }
 
+/* Estilos para campos de formulario de solo lectura */
+input[readonly], 
+textarea[readonly] {
+    color: #555; /* Un gris oscuro para el texto */
+    background-color: #f0f0f0; /* Un fondo gris claro para el campo */
+    cursor: not-allowed; /* Muestra un cursor de "prohibido" */
+}
+
+/* Estilos para campos de formulario deshabilitados */
+input[disabled], 
+textarea[disabled], 
+select[disabled] {
+    color: #555; /* Un gris oscuro para el texto */
+    background-color: #f0f0f0; /* Un fondo gris claro para el campo */
+    cursor: not-allowed; /* Muestra un cursor de "prohibido" */
+}
