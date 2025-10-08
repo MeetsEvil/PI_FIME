@@ -1114,3 +1114,78 @@ select[disabled] {
 .no-results {
     color: #c9302c;
 }
+
+
+#tablaDiagnosticos {
+  width: 100%;
+  border-collapse: collapse; /* quita espacios entre bordes */
+  margin-top: 30px;
+  font-family: Arial, sans-serif;
+  font-size: 0.95em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#tablaDiagnosticos th,
+#tablaDiagnosticos td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#tablaDiagnosticos th {
+  background-color: #239358;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+#tablaDiagnosticos tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+#tablaDiagnosticos tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.btn-action-nuevo {
+  /* Mismo estilo de fondo que el botón de información */
+  background: linear-gradient(90deg, #239358, #0d4d28);
+  /* Mismo estilo de borde, solo que este botón es redondo */
+  border: none;
+  color: white; /* Color de la fuente blanco */
+  font-weight: 650;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 20px;
+
+  /* Mantiene las dimensiones y bordes circulares */
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.btn-action-nuevo:hover {
+  /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
+  background: linear-gradient(90deg, #1f7b48, #0c4323);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-action-nuevo ion-icon {
+  /* El color del ícono debe ser blanco para que se vea */
+  color: white;
+  font-size: 1.2em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
+  padding-right: 4px;
+}
+
+.header-section-tabla {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
