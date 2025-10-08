@@ -69,6 +69,7 @@ if (isset($conex)) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -85,14 +86,22 @@ if (isset($conex)) {
     <div class="container">
         <div class="navigation">
             <ul>
-                <!-- Navegación SideBar omitida por brevedad, asumiendo que es la misma que la de crear/ver -->
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="school-outline"></ion-icon>
+                        </span>
+                        <span class="title">FIME Inclusivo</span>
+                    </a>
+                </li>
+
                 <li class="<?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
                     <a href="../../modules/auth/dashboard.php" data-tooltip="Inicio">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">Inicio</span>
                     </a>
                 </li>
-                
+
                 <li class="<?php echo ($currentPage == 'index_beneficiarios.php' or $currentPage == 'crear_beneficiarios.php') ? 'active' : ''; ?>">
                     <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
                         <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
@@ -134,6 +143,7 @@ if (isset($conex)) {
                         <span class="title">Reportes</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
                         <span class="icon">
@@ -151,7 +161,7 @@ if (isset($conex)) {
             <div class="toggle">
                 <ion-icon name="menu-outline"></ion-icon>
             </div>
-            <h2 class="page-title">Programa de Inclusión</h2>
+            <h2 class="page-title">PROGRAMA DE INCLUSIÓN</h2>
             <div class="user-box">
                 <div class="user-info">
                     <div class="user-name"><?php echo htmlspecialchars($user); ?></div>
@@ -165,7 +175,17 @@ if (isset($conex)) {
 
         <div class="beneficiary-container">
             <div class="header-section">
-                <h2 class="section-title">Editar Beneficiario ID: <?php echo $beneficiario['id_beneficiario']; ?></h2>
+                <?php
+                // --- CÓDIGO AÑADIDO/MODIFICADO AQUÍ ---
+                $nombre_completo_beneficiario = trim(
+                    $beneficiario['nombre'] . ' ' .
+                        $beneficiario['apellido_paterno'] . ' ' .
+                        ($beneficiario['apellido_materno'] ?? '')
+                );
+                ?>
+                <h2 class="section-title">Editar Beneficiario:
+                    <?php echo htmlspecialchars($beneficiario['id_beneficiario'] . ' - ' . $nombre_completo_beneficiario); ?>
+                </h2>
                 <a href="../../modules/beneficiarios/index_beneficiarios.php" class="btn-regresar">
                     <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
                 </a>
@@ -288,9 +308,6 @@ if (isset($conex)) {
         </div>
     </div>
 
-    <!-- MODALES DE CONTACTO Y CERRAR SESIÓN -->
-    <!-- (Debes asegurar que estos modales también estén aquí si no lo están ya, para que el main.js funcione) -->
-    <!-- ... (Modales contactModal y logoutModal) ... -->
 
     <script src="../../assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

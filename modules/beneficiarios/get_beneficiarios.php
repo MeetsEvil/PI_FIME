@@ -1,5 +1,5 @@
 <?php
-include '../../config/db.php'; // ajusta la ruta según tu proyecto
+include '../../config/db.php'; 
 
 $query = "SELECT 
             id_beneficiario,

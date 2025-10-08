@@ -20,16 +20,15 @@
 body {
   min-height: 100vh;
   overflow-x: hidden;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex; /* Usamos flexbox para posicionar el contenido */
-    background-color: #e6ecdb;
-    background-size: cover; /* Cubre toda la ventana */
-    background-attachment: fixed;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex; /* Usamos flexbox para posicionar el contenido */
+  background-color: #e6ecdb;
+  background-size: cover; /* Cubre toda la ventana */
+  background-attachment: fixed;
 }
-
 
 .container {
   position: relative;
@@ -73,13 +72,12 @@ body {
   pointer-events: none;
 }
 
-
 .navigation ul li a {
   display: flex;
   align-items: center;
-  width: 100%;       /* Área completa para hover */
+  width: 100%; /* Área completa para hover */
   height: 60px;
-  padding: 0 15px;   /* Padding lateral para tooltip */
+  padding: 0 15px; /* Padding lateral para tooltip */
   position: relative; /* Referencia para tooltip */
   text-decoration: none;
   color: white;
@@ -145,7 +143,6 @@ body {
   opacity: 1;
   transform: translateY(-50%) translateX(5px);
 }
-
 
 /* ===================== Main ===================== */
 .main {
@@ -218,7 +215,6 @@ body {
   cursor: pointer;
 }
 
-
 .user img {
   position: absolute;
   top: 0;
@@ -268,286 +264,282 @@ body {
 }
 
 .user-box {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    border: 1px solid #000; /* borde negro */
-    margin-left: auto; 
-    margin-right: 20px;
-    margin-top: 20px;
-    padding: 8px 15px;  
-    border-radius: 25px;
-    font-size: 1.2em;   
-    gap: 10px; /* separación interna en lugar de tanto padding */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #000; /* borde negro */
+  margin-left: auto;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 1.2em;
+  gap: 10px; /* separación interna en lugar de tanto padding */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* efecto hover */
 .user-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
-
-
-
-
 
 /* Nombre y rol */
 .user-info {
-    display: flex;
-    flex-direction: column;
-    margin-right: 10px;
-    text-align: right;
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  text-align: right;
 }
 
 .user-name {
-    font-weight: bold;
-    color: #1e6d40; /* verde oscuro */
-    font-size: 1em;
+  font-weight: bold;
+  color: #1e6d40; /* verde oscuro */
+  font-size: 1em;
 }
 
 .user-role {
-    font-size: 0.8em;
-    color: #3b8a5b; /* verde más claro */
-
+  font-size: 0.8em;
+  color: #3b8a5b; /* verde más claro */
 }
 
 /* Botón info */
 .info-btn {
-    background: linear-gradient(90deg, #239358, #0d4d28);
-    border: none;
-    color: white;
-    width: 37px;   /* lo hago un poco más grande */
-    height: 37px;
-    border-radius: 50%;
-    font-size: 1.2em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: linear-gradient(90deg, #239358, #0d4d28);
+  border: none;
+  color: white;
+  width: 37px; /* lo hago un poco más grande */
+  height: 37px;
+  border-radius: 50%;
+  font-size: 1.2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 /* --- Estilos para el contenedor central del dashboard --- */
 .module-box {
-    margin: 30px auto;
-    margin-top: 50px;
-    margin-left: 170px;
-    margin-right: 10px;
-    padding: 30px;
-    border: 1px solid #000; /* borde negro */
-    /* Degradado y bordes */
-    background: linear-gradient(90deg, #239358, #0d4d28);
-    border: 2px solid #adabab;
-    border-radius: 25px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  margin: 30px auto;
+  margin-top: 50px;
+  margin-left: 170px;
+  margin-right: 10px;
+  padding: 30px;
+  border: 1px solid #000; /* borde negro */
+  /* Degradado y bordes */
+  background: linear-gradient(90deg, #239358, #0d4d28);
+  border: 2px solid #adabab;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 
-    /* Dimensiones */
-    width: calc(95% - 200px);
-    min-height: 85px;
-    height: 740px;
-    
+  /* Dimensiones */
+  width: calc(95% - 200px);
+  min-height: 85px;
+  height: 740px;
 
-    /* Configuración del layout interno */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* Configuración del layout interno */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .module-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 /* Contenedor interno para alinear el contenido */
 .module-box .content-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 20px;
-    color: #fff; /* Color del texto para contraste */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  color: #fff; /* Color del texto para contraste */
 }
 
 /* Sección del texto */
 .module-box .text-content {
-    flex: 1;
-    max-width: 60%; /* Ajustado para dar espacio a la imagen */
+  flex: 1;
+  max-width: 60%; /* Ajustado para dar espacio a la imagen */
 }
 
-
 .module-box h2 {
-    font-size: 3.5em;
-    font-weight: 700;
-    line-height: 1.1;
-    color: #fff;
-    margin-bottom: 25px;
+  font-size: 3.5em;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 25px;
 }
 
 .module-box h2 span {
-    display: block;
-    font-size: 1em;
+  display: block;
+  font-size: 1em;
 }
 
 .module-box p {
-    font-size: 1.2em;
-    font-weight: 300;
-    line-height: 1.5;
-    margin-bottom: 30px;
-    color: #fff;
+  font-size: 1.2em;
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  color: #fff;
 }
 
 /* Botón de consulta */
 .btn-consultar {
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: #ff5722;
-    color: #fff;
-    font-size: 1.1em;
-    font-weight: 500;
-    text-decoration: none;
-    border-radius: 50px;
-    transition: background-color 0.3s ease;
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: #ff5722;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-consultar:hover {
-    background-color: #e64a19;
+  background-color: #e64a19;
 }
 
 /* Sección de la imagen */
 .module-box .image-content {
-    flex: 1; /* Le permite tomar el espacio restante */
-    display: flex;
-    justify-content: flex-end; /* Alinea la imagen a la derecha */
-    align-items: center;
-    padding-left: 20px; /* Un poco de espacio entre el texto y la imagen */
+  flex: 1; /* Le permite tomar el espacio restante */
+  display: flex;
+  justify-content: flex-end; /* Alinea la imagen a la derecha */
+  align-items: center;
+  padding-left: 20px; /* Un poco de espacio entre el texto y la imagen */
 }
 
 .module-box .image-content img {
-    max-width: 100%; /* Asegura que la imagen no se desborde del contenedor */
-    height: auto; /* Mantiene la proporción de la imagen */
-    display: block;
+  max-width: 100%; /* Asegura que la imagen no se desborde del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  display: block;
 
-    /* --- Aquí es donde controlas el tamaño --- */
-    /* Puedes usar un porcentaje del contenedor padre (image-content) */
-    width: 82%; /* Por ejemplo, 80% del espacio disponible para la imagen */
+  /* --- Aquí es donde controlas el tamaño --- */
+  /* Puedes usar un porcentaje del contenedor padre (image-content) */
+  width: 82%; /* Por ejemplo, 80% del espacio disponible para la imagen */
 
-    /* O un valor fijo si lo prefieres, aunque no se recomienda para responsive */
-    /* width: 350px; */
-    /* height: 350px; */ /* Si usas height, asegúrate de que 'height: auto' esté comentado o eliminado */
+  /* O un valor fijo si lo prefieres, aunque no se recomienda para responsive */
+  /* width: 350px; */
+  /* height: 350px; */ /* Si usas height, asegúrate de que 'height: auto' esté comentado o eliminado */
 }
 
 .page-title {
-    /* Elimina 'position: left;' y 'padding-left: 560px;' */
-    position: absolute; /* Usamos posicionamiento absoluto para colocar el título */
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2.2em;
-    font-weight: 600;
-    font-family: Georgia;
-    color: #1e6d40;
-    margin-top: 40px;
-    
+  /* Elimina 'position: left;' y 'padding-left: 560px;' */
+  position: absolute; /* Usamos posicionamiento absoluto para colocar el título */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2em;
+  font-weight: 600;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #092201;
+  margin-top: 40px;
 }
 
 /* ================= Modal de Confirmación ================= */
 .modal {
-    display: none; /* Oculto por defecto */
-    position: fixed; /* Se mantiene en su lugar */
-    z-index: 1000; /* Alto z-index para que esté encima de todo */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5); /* Fondo semitransparente oscuro */
-    justify-content: center;
-    align-items: center;
+  display: none; /* Oculto por defecto */
+  position: fixed; /* Se mantiene en su lugar */
+  z-index: 1000; /* Alto z-index para que esté encima de todo */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente oscuro */
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
-    background-color: #fefefe;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    width: 90%;
-    max-width: 450px;
-    text-align: center;
-    animation: fadeIn 0.3s;
+  background-color: #fefefe;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  animation: fadeIn 0.3s;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .modal-header {
-    background: linear-gradient(90deg, #239358, #0d4d28);
-    color: white;
-    padding: 15px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    position: relative;
+  background: linear-gradient(90deg, #239358, #0d4d28);
+  color: white;
+  padding: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
 }
 
 .modal-header h2 {
-    font-size: 1.5em;
-    margin: 0;
+  font-size: 1.5em;
+  margin: 0;
 }
 
 .modal-body {
-    padding: 25px;
+  padding: 25px;
 }
 
 .modal-body p {
-    font-size: 1.1em;
-    color: #333;
-    margin: 0;
+  font-size: 1.1em;
+  color: #333;
+  margin: 0;
 }
 
 .modal-footer {
-    padding: 15px;
-    border-top: 1px solid #eee;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+  padding: 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
 .close-btn {
-    position: absolute;
-    right: 20px;
-    top: 5px;
-    font-size: 2em;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
 }
 
 .btn-cancel,
 .btn-confirm {
-    padding: 10px 25px;
-    border: none;
-    border-radius: 5px;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s, transform 0.2s;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn-cancel {
-    background-color: #7e7d7d;
-    color: white;
+  background-color: #7e7d7d;
+  color: white;
 }
 
 .btn-cancel:hover {
-    background-color: #888;
+  background-color: #888;
 }
 
 .btn-confirm {
-    background-color: #dc3545; /* Rojo para confirmar salida */
-    color: white;
+  background-color: #dc3545; /* Rojo para confirmar salida */
+  color: white;
 }
 
 .btn-confirm:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }
-
-
 
 /* Botón de cerrar */
 .close {
@@ -565,7 +557,6 @@ body {
 /* Íconos sociales */
 .socialMedia {
   margin-top: 20px;
-
 }
 
 .socialIcon {
@@ -582,348 +573,544 @@ body {
 
 /* Animación */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 /* ================= Contenedor de la página de Beneficiarios ================= */
 .beneficiary-container {
-    margin: 30px auto;
-    margin-top: 50px;
-    margin-left: 170px;
-    margin-right: 10px;
-    margin-bottom: 90px;
-    padding: 30px;
-    border: 1px solid #000; /* borde negro */
-    /* Degradado y bordes */
-    background: white;
-    border: 2px solid #adabab;
-    border-radius: 25px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  margin: 30px auto;
+  margin-top: 50px;
+  margin-left: 170px;
+  margin-right: 10px;
+  margin-bottom: 90px;
+  padding: 30px;
+  border: 1px solid #000; /* borde negro */
+  /* Degradado y bordes */
+  background: white;
+  border: 2px solid #adabab;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 
+  /* Dimensiones */
+  width: calc(95% - 200px);
+  min-height: 95px;
+  height: 740px;
 
-    /* Dimensiones */
-    width: calc(95% - 200px);
-    min-height: 95px;
-    height: 740px;
-    
-    /* Configuración del layout interno */
-    display: flex;
-    flex-direction: column; /* Cambiado para apilar los elementos verticalmente */
-    /* Aquí se elimina justify-content: center y align-items: center */
+  /* Configuración del layout interno */
+  display: flex;
+  flex-direction: column; /* Cambiado para apilar los elementos verticalmente */
+  /* Aquí se elimina justify-content: center y align-items: center */
 }
 
 .beneficiary-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* ================= Estilos de los elementos internos ================= */
 
 /* Contenedor del título y botón "Nuevo" */
 .header-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .section-title {
-    font-size: 2.5em;
-    font-weight: 700;
-    color: #000000;
-    margin: 0;
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
 }
 
 .btn-new {
-    /* Mismo estilo de fondo que el botón de información */
-    background: linear-gradient(90deg, #239358, #0d4d28);
-    /* Mismo estilo de borde, solo que este botón es redondo */
-    border: none;
-    color: white; /* Color de la fuente blanco */
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    
-    /* Mantiene las dimensiones y bordes circulares */
-    padding: 10px 20px;
-    border-radius: 50px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
+  /* Mismo estilo de fondo que el botón de información */
+  background: linear-gradient(90deg, #239358, #0d4d28);
+  /* Mismo estilo de borde, solo que este botón es redondo */
+  border: none;
+  color: white; /* Color de la fuente blanco */
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  /* Mantiene las dimensiones y bordes circulares */
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
 }
 
 .btn-new:hover {
-    /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
-    background: linear-gradient(90deg, #1f7b48, #0c4323);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
+  background: linear-gradient(90deg, #1f7b48, #0c4323);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-new ion-icon {
-    /* El color del ícono debe ser blanco para que se vea */
-    color: white;
-    font-size: 1.2em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
+  /* El color del ícono debe ser blanco para que se vea */
+  color: white;
+  font-size: 1.2em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
 }
 
 .btn-regresar {
-    /* Mismo estilo de fondo que el botón de información */
-    background: gray;
-    /* Mismo estilo de borde, solo que este botón es redondo */
-    border: none;
-    color: white; /* Color de la fuente blanco */
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    
-    /* Mantiene las dimensiones y bordes circulares */
-    padding: 10px 20px;
-    border-radius: 50px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
+  /* Mismo estilo de fondo que el botón de información */
+  background: rgb(185, 52, 52);
+  /* Mismo estilo de borde, solo que este botón es redondo */
+  border: none;
+  color: white; /* Color de la fuente blanco */
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  /* Mantiene las dimensiones y bordes circulares */
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(160, 15, 15, 0.2);
+  transition: background-color 0.3s;
 }
 
 .btn-regresar:hover {
-    /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
-    background: rgba(10, 10, 10, 0.3);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
+  background: rgba(255, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-regresa ion-icon {
-    /* El color del ícono debe ser blanco para que se vea */
-    color: white;
-    font-size: 1.4em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
+  /* El color del ícono debe ser blanco para que se vea */
+  color: white;
+  font-size: 1.4em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
 }
 
 #tablaBeneficiarios {
   padding-top: 20px;
-    margin-top: 70px;
-    width: 100%;
-    border-collapse: collapse; /* quita espacios entre bordes */
-    margin-top: 30px;
-    font-family: Arial, sans-serif;
-    font-size: 0.95em;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-top: 70px;
+  width: 100%;
+  border-collapse: collapse; /* quita espacios entre bordes */
+  margin-top: 30px;
+  font-family: Arial, sans-serif;
+  font-size: 0.95em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#tablaBeneficiarios th, #tablaBeneficiarios td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+#tablaBeneficiarios th,
+#tablaBeneficiarios td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 #tablaBeneficiarios th {
-    background-color: #239358;
-    color: white;
-    font-weight: 600;
-    text-transform: uppercase;
+  background-color: #239358;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 #tablaBeneficiarios tr:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
+  background-color: #f1f1f1;
+  cursor: pointer;
 }
 
 #tablaBeneficiarios tr:nth-child(even) {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 /* Botones generales */
 .btn-action2 {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 5px;
-    margin-right: 5px;
-    text-decoration: none;
-    color: #545454; /* ícono gris */
-    font-size: 16px;
-    transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  margin-right: 5px;
+  text-decoration: none;
+  color: #545454; /* ícono gris */
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-action2 i {
-    pointer-events: none; /* para que el ícono no interfiera con el click */
+  pointer-events: none; /* para que el ícono no interfiera con el click */
 }
 
 /* Botón Editar */
 .btn-edit {
-    background-color: #ffde59; /* amarillo */
+  background-color: #ffde59; /* amarillo */
 }
 
 .btn-edit:hover {
-    filter: brightness(90%);
+  filter: brightness(90%);
 }
 
 /* Botón Ver */
 .btn-view {
-    background-color: #c1ff72; /* verde lima */
+  background-color: #c1ff72; /* verde lima */
 }
 
 .btn-view:hover {
-    filter: brightness(90%);
+  filter: brightness(90%);
 }
 /* Contenedor de la paginación */
 .form-pagination-container {
-    width: 100%;
-    margin: 20px auto 30px auto;
-    padding: 15px 20px;
-    min-height: 95px;
-    height: 600px;
-    background-color: #f9f9f9;
-    border: 1px solid #adabab;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  margin: 20px auto 30px auto;
+  padding: 15px 20px;
+  min-height: 95px;
+  height: 600px;
+  background-color: #f9f9f9;
+  border: 1px solid #adabab;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Número de hoja */
 /* REEMPLAZA ESTA REGLA (línea 247) */
 .pagination-info {
-    font-size: 1.1em;
-    font-weight: 600;
-    color: #1e6d40;
-    margin-bottom: 10px;
-    /* Las siguientes líneas causaban el problema, las eliminamos */
-    /* position: relative; */
-    /* justify-content: center; */
-    /* align-items: center; */
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #1e6d40;
+  margin-bottom: 10px;
+  /* Las siguientes líneas causaban el problema, las eliminamos */
+  /* position: relative; */
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 
 /* Contenedor de botones */
 .pagination-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
 }
 
 /* Botones de paginación */
 .btn-pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding: 10px 25px;
-    font-size: 1em;
-    font-weight: 600;
-    border-radius: 50px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-    color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 25px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
 }
 
 .btn-next {
-    background: linear-gradient(90deg, #239358, #0d4d28);
+  background: linear-gradient(90deg, #239358, #0d4d28);
 }
 
 .btn-next:hover {
-    background: linear-gradient(90deg, #1f7b48, #0c4323);
+  background: linear-gradient(90deg, #1f7b48, #0c4323);
 }
 
 .btn-prev {
-    background: gray;
+  background: gray;
 }
 
 .btn-prev:hover {
-    background: rgba(80, 80, 80, 0.7);
+  background: rgba(80, 80, 80, 0.7);
 }
 
 .btn-pagination ion-icon {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 
 /* Páginas del formulario */
 /* Título de sección */
 .form-page h3 {
-    font-size: 1.5em;       /* más grande */
-    color: #003366;         /* azul fuerte */
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: 700;
+  font-size: 1.5em; /* más grande */
+  color: #003366; /* azul fuerte */
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 700;
 }
 
 /* Etiquetas y campos alineados horizontalmente */
 .form-page label {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 15px;
-    width: 100%;
-    font-weight: 600;
-    color: #000000; /* negro fuerte */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+  width: 100%;
+  font-weight: 600;
+  color: #000000; /* negro fuerte */
 }
 
 /* Nombre del campo a la izquierda */
 .form-page label span {
-    width: 180px;       /* ancho fijo para alinear todos los campos */
-    margin-right: 15px;
-    text-align: right;
+  width: 180px; /* ancho fijo para alinear todos los campos */
+  margin-right: 15px;
+  text-align: right;
 }
 
 /* Inputs, selects y textarea */
-.form-page input, 
-.form-page select, 
+.form-page input,
+.form-page select,
 .form-page textarea {
-    flex: 1;            /* ocupa el espacio restante */
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1em;
+  flex: 1; /* ocupa el espacio restante */
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
 }
 .form-page {
-    display: none; /* Oculta todas las páginas del formulario por defecto */
+  display: none; /* Oculta todas las páginas del formulario por defecto */
 }
 
 .form-page.is-active {
-    display: block; /* Muestra solo la página que tenga la clase 'is-active' */
+  display: block; /* Muestra solo la página que tenga la clase 'is-active' */
 }
 
-
-
 .modal-content.success {
-    max-width: 400px;
-    padding: 30px;
-    border: 2px solid #239358;
-    display: flex; /* Habilita el layout flexible */
-    justify-content: center; /* Centrado horizontal */
-    align-items: center; /* Centrado vertical */
+  max-width: 400px;
+  padding: 30px;
+  border: 2px solid #239358;
+  display: flex; /* Habilita el layout flexible */
+  justify-content: center; /* Centrado horizontal */
+  align-items: center; /* Centrado vertical */
 }
 
 .success-icon {
-    font-size: 5em;
-    color: #239358; /* Color verde de éxito */
-    margin-bottom: 10px;
+  font-size: 5em;
+  color: #239358; /* Color verde de éxito */
+  margin-bottom: 10px;
 }
 
 .success-title {
-    font-size: 1.8em;
-    color: #0d4d28;
-    margin-bottom: 5px;
+  font-size: 1.8em;
+  color: #0d4d28;
+  margin-bottom: 5px;
 }
 
 /* Estilos para campos de formulario de solo lectura */
-input[readonly], 
+input[readonly],
 textarea[readonly] {
-    color: #555; /* Un gris oscuro para el texto */
-    background-color: #f0f0f0; /* Un fondo gris claro para el campo */
-    cursor: not-allowed; /* Muestra un cursor de "prohibido" */
+  color: #555; /* Un gris oscuro para el texto */
+  background-color: #f0f0f0; /* Un fondo gris claro para el campo */
+  cursor: not-allowed; /* Muestra un cursor de "prohibido" */
 }
 
 /* Estilos para campos de formulario deshabilitados */
-input[disabled], 
-textarea[disabled], 
+input[disabled],
+textarea[disabled],
 select[disabled] {
-    color: #555; /* Un gris oscuro para el texto */
-    background-color: #f0f0f0; /* Un fondo gris claro para el campo */
-    cursor: not-allowed; /* Muestra un cursor de "prohibido" */
+  color: #555; /* Un gris oscuro para el texto */
+  background-color: #f0f0f0; /* Un fondo gris claro para el campo */
+  cursor: not-allowed; /* Muestra un cursor de "prohibido" */
+}
+
+.diagnosticos-container {
+  margin: 30px auto;
+  margin-top: 50px;
+  margin-left: 170px;
+  margin-right: 10px;
+  margin-bottom: 90px;
+  padding: 30px;
+  border: 1px solid #000; /* borde negro */
+  /* Degradado y bordes */
+  background: white;
+  border: 2px solid #adabab;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+  /* Dimensiones */
+  width: calc(95% - 200px);
+  height: 740px;
+
+  /* Configuración del layout interno */
+  display: flex;
+  flex-direction: column; /* Cambiado para apilar los elementos verticalmente */
+  /* Aquí se elimina justify-content: center y align-items: center */
+  margin-bottom: 20px;
+}
+
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el buscador y los resultados */
+    padding: 20px;
+    background-color: #fcfcfc;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    min-height: 585px;
+}
+
+.buscador {
+  max-width: 600px;
+  margin: 30px auto;
+  /* Centrar en el contenedor */
+  width: 90%;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.search-label {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #1e6d40;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.input-group-custom {
+    display: flex;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 70%;
+    margin: 0 auto; /* Centra el input */
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#searchInput {
+    flex-grow: 1;
+    padding: 14px 20px;
+    border: 1px solid #ddd;
+    border-right: none;
+    outline: none;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.btn-search-icon {
+    background-color: #239358;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.results-card {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    max-width: 70%;
+    margin: 25px auto 0; /* Centra el contenedor de resultados y le da margen superior */
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.results-list-container {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.search-results-summary {
+    font-size: 0.9em;
+    font-weight: 700;
+    color: #0d4d28;
+    padding: 10px 15px 5px;
+    width: 100%;
+    text-align: left;
+}
+
+.result-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: #333;
+    transition: background-color 0.1s, font-weight 0.1s;
+}
+
+.result-item:hover {
+    background-color: #e6f7ef;
+    color: #0d4d28;
+    font-weight: 600;
+}
+
+/* Estilos de botones de acción */
+.action-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 40px;
+    padding: 10px;
+}
+
+.btn-action-main {
+    display: flex;
+    align-items: center;
+    padding: 15px 35px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+/* Botón Visualizar/Histórico (Unificado con estilo degradado) */
+#viewHistoryBtn {
+    background: linear-gradient(45deg, #239358, #0d4d28);
+    color: white;
+}
+
+#viewHistoryBtn:hover {
+    background: linear-gradient(45deg, #1f7b48, #0c4323);
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* Botón CANCELAR (Rojo para indicar reinicio/limpieza) */
+#cancelSelectionBtn {
+    background-color: #dc3545; /* Rojo de Bootstrap para peligro/cancelación */
+    color: white;
+}
+
+#cancelSelectionBtn:hover {
+    background-color: #c82333;
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* Mensajes y placeholders */
+.result-placeholder {
+    padding: 15px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    margin: 0;
+}
+.no-results {
+    color: #c9302c;
 }

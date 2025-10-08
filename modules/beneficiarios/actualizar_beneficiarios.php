@@ -40,7 +40,7 @@ function get_post_value($conex, $key) {
 // ID del beneficiario (CAMPO REQUERIDO)
 $id_beneficiario_raw = trim(get_post_value($conex, 'id_beneficiario'), "'");
 if (!is_numeric($id_beneficiario_raw) || empty($id_beneficiario_raw)) {
-     return_error($conex, 'ID del beneficiario no proporcionado o inválido.');
+    return_error($conex, 'ID del beneficiario no proporcionado o inválido.');
 }
 $id_beneficiario = $id_beneficiario_raw; // Usamos el valor INT sin comillas para el WHERE
 
@@ -79,7 +79,7 @@ $observaciones_iniciales = get_post_value($conex, 'observaciones_iniciales');
 
 // --- 3. VALIDACIÓN DE CAMPOS REQUERIDOS (la validación JS ya lo hace, pero el backend siempre debe validar) ---
 if ($nombre == 'NULL' || $apellido_paterno == 'NULL' || $curp == 'NULL' || $fecha_nacimiento == 'NULL' || $genero == 'NULL' || $matricula == 'NULL' || $carrera == 'NULL' || $semestre == 'NULL' || $estatus_academico == 'NULL' || $profesional_asignado == 'NULL') {
-     return_error($conex, 'Faltan campos obligatorios para la actualización.');
+    return_error($conex, 'Faltan campos obligatorios para la actualización.');
 }
 
 

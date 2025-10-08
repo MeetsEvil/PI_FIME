@@ -110,7 +110,7 @@ $user = $_SESSION['usuarioingresando'];
             <div class="toggle">
                 <ion-icon name="menu-outline"></ion-icon>
             </div>
-            <h2 class="page-title">Programa de Inclusión</h2>
+            <h2 class="page-title">PROGRAMA DE INCLUSIÓN</h2>
             <div class="user-box">
                 <div class="user-info">
                     <div class="user-name"><?php echo htmlspecialchars($user); ?></div>

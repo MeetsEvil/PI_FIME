@@ -122,7 +122,7 @@ $user = $_SESSION['usuarioingresando'];
             <div class="toggle">
                 <ion-icon name="menu-outline"></ion-icon>
             </div>
-            <h2 class="page-title">Programa de Inclusión</h2>
+            <h2 class="page-title">PROGRAMA DE INCLUSIÓN</h2>
             <div class="user-box">
                 <div class="user-info">
                     <div class="user-name"><?php echo htmlspecialchars($user); ?></div>
@@ -136,7 +136,7 @@ $user = $_SESSION['usuarioingresando'];
 
         <div class="beneficiary-container">
             <div class="header-section">
-                <h2 class="section-title">Beneficiario</h2>
+                <h2 class="section-title">Beneficiarios</h2>
                 <a href="../../modules/beneficiarios/crear_beneficiarios.php" class="btn-new">
                     <ion-icon name="add-circle-outline"></ion-icon> Nuevo
                 </a>
@@ -145,7 +145,7 @@ $user = $_SESSION['usuarioingresando'];
             <table id="tablaBeneficiarios" class="tabla-beneficiarios" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Folio</th>
                         <th>Nombre</th>
                         <th>Edad</th>
                         <th>Género</th>
