@@ -73,81 +73,111 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+
 </head>
 
 <body>
-    <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="school-outline"></ion-icon>
-                        </span>
-                        <span class="title">FIME Inclusivo</span>
-                    </a>
-                </li>
+    <div class="navigation">
+        <?php
+        // Obtiene solo el archivo actual sin parámetros
+        $currentPage = basename($_SERVER['PHP_SELF']);
+        ?>
+        <ul>
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="school-outline"></ion-icon>
+                    </span>
+                    <span class="title">FIME Inclusivo</span>
+                </a>
+            </li>
 
-                <li class="<?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
-                    <a href="../../modules/auth/dashboard.php" data-tooltip="Inicio">
-                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">Inicio</span>
-                    </a>
-                </li>
+            <li class="<?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
+                <a href="../../modules/auth/dashboard.php" data-tooltip="Inicio">
+                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                    <span class="title">Inicio</span>
+                </a>
+            </li>
 
-                <li class="<?php echo ($currentPage == 'index_beneficiarios.php' or $currentPage == 'crear_beneficiarios.php') ? 'active' : ''; ?>">
-                    <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
-                        <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
-                        <span class="title">Beneficiarios</span>
-                    </a>
-                </li>
+            <?php
+            // Beneficiarios
+            $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
+            ?>
+            <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
+                <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
+                    <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                    <span class="title">Beneficiarios</span>
+                </a>
+            </li>
 
-                <li class="<?php echo ($currentPage == 'index_diagnosticos.php') ? 'active' : ''; ?>">
-                    <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
-                        <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                        <span class="title">Diagnósticos</span>
-                    </a>
-                </li>
+            <?php
+            // Diagnosticos
+            $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
+            ?>
+            <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
+                <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
+                    <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
+                    <span class="title">Diagnósticos</span>
+                </a>
+            </li>
 
-                <li class="<?php echo ($currentPage == 'index_adaptaciones.php') ? 'active' : ''; ?>">
-                    <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
-                        <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
-                        <span class="title">Adaptaciones</span>
-                    </a>
-                </li>
+            <?php
+            // Adaptaciones
+            $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
+            ?>
+            <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
+                <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
+                    <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
+                    <span class="title">Adaptaciones</span>
+                </a>
+            </li>
 
-                <li class="<?php echo ($currentPage == 'index_intervenciones.php') ? 'active' : ''; ?>">
-                    <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
-                        <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
-                        <span class="title">Intervenciones</span>
-                    </a>
-                </li>
+            <?php
+            // Intervenciones
+            $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
+            ?>
+            <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
+                <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
+                    <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
+                    <span class="title">Intervenciones</span>
+                </a>
+            </li>
 
-                <li class="<?php echo ($currentPage == 'index_profesionales.php') ? 'active' : ''; ?>">
-                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                        <span class="title">Profesionales</span>
-                    </a>
-                </li>
+            <?php
+            // Profesionales
+            $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+            ?>
+            <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
+                <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
+                    <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
+                    <span class="title">Profesionales</span>
+                </a>
+            </li>
 
-                <li class="<?php echo ($currentPage == 'index_reportes.php') ? 'active' : ''; ?>">
-                    <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
-                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
-                        <span class="title">Reportes</span>
-                    </a>
-                </li>
+            <?php
+            // Reportes
+            $reportesPages = ['index_reportes.php', 'generar_reportes.php'];
+            ?>
+            <li class="<?php echo in_array($currentPage, $reportesPages) ? 'active' : ''; ?>">
+                <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
+                    <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
+                    <span class="title">Reportes</span>
+                </a>
+            </li>
 
-                <li>
-                    <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
-                        <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </span>
-                        <span class="title">Cerrar Sesión</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+            <li>
+                <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
+                    <span class="icon">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </span>
+                    <span class="title">Cerrar Sesión</span>
+                </a>
+            </li>
+        </ul>
     </div>
+
 
     <div class="main">
         <div class="topbar">
@@ -175,13 +205,11 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
                     </button>
                 </div>
             </div>
-
-
             <!-- TABLA DE HISTÓRICO DE DIAGNÓSTICOS -->
             <table id="tablaDiagnosticos" class="tabla-beneficiarios" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID Reg.</th>
+                        <th>ID</th>
                         <th>Tipo Diagnóstico</th>
                         <th>Fecha Consulta</th>
                         <th>Profesional Asignado</th>
@@ -226,7 +254,12 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
                         "searchable": false
                     }
                 ],
-                "pageLength": 10,
+                // --- CAMBIOS REALIZADOS AQUÍ ---
+                "pageLength": 7, // <-- Ahora muestra 7 registros por defecto
+                "lengthMenu": [
+                    [7, 14, 28, 50, -1],
+                    [7, 14, 28, 50, "Todos"]
+                ], // <-- Opciones de 7 en 7
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
                 },
@@ -248,7 +281,7 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
                         className: 'btn btn-sm btn-danger',
                         orientation: 'landscape',
                         pageSize: 'A4',
-                        title: 'Histórico de Diagnósticos - ID: <?php echo $beneficiario_id; ?>' // Título del PDF
+                        title: 'Histórico de Diagnósticos - ID: <?php echo $beneficiario_id; ?>'
                     }
                 ]
             });

@@ -423,17 +423,6 @@ body {
   /* height: 350px; */ /* Si usas height, asegúrate de que 'height: auto' esté comentado o eliminado */
 }
 
-.page-title {
-  /* Elimina 'position: left;' y 'padding-left: 560px;' */
-  position: absolute; /* Usamos posicionamiento absoluto para colocar el título */
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2.2em;
-  font-weight: 600;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  color: #092201;
-  margin-top: 40px;
-}
 
 /* ================= Modal de Confirmación ================= */
 .modal {
@@ -521,6 +510,7 @@ body {
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.3s, transform 0.2s;
+  font-size: 1.1em; 
 }
 
 .btn-cancel {
@@ -623,12 +613,34 @@ body {
   margin-bottom: 20px;
 }
 
-.section-title {
-  font-size: 2.5em;
-  font-weight: 700;
-  color: #000000;
-  margin: 0;
+.page-title {
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* CAMBIO CLAVE DE FUENTE */
+    font-family: 'Playfair Display', Georgia, serif;
+    
+    font-size: 3em; /* Lo hacemos un poco más grande */
+    font-weight: 700; /* Negrita */
+    
+    color: #0d4d28; 
+    
+    margin-top: 40px;
+    letter-spacing: 2px; /* Aumentamos el espaciado para un look premium */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
+
+
+/* Título de las Secciones (Beneficiarios, Diagnósticos, etc.) */
+.section-title {
+    /* Mantenemos un tamaño grande, pero menor al título principal */
+    font-size: 2.3em; /* Ligeramente más pequeño que el .page-title (2.5em -> 2.3em) */
+    font-weight: 700;
+    color: #000000; /* Negro estándar para el título de la sección */
+    margin: 0;
+}
+
 
 .btn-new {
   /* Mismo estilo de fondo que el botón de información */
@@ -1000,7 +1012,7 @@ select[disabled] {
     border: 1px solid #ddd;
     border-right: none;
     outline: none;
-    font-size: 1em;
+    font-size: 1.2em;
     transition: all 0.3s;
 }
 
@@ -1036,7 +1048,7 @@ select[disabled] {
 }
 
 .search-results-summary {
-    font-size: 0.9em;
+    font-size: 1.2em;
     font-weight: 700;
     color: #0d4d28;
     padding: 10px 15px 5px;
@@ -1045,10 +1057,10 @@ select[disabled] {
 }
 
 .result-item {
-    padding: 12px 15px;
+    padding: 10px 12px;
     border-bottom: 1px solid #f0f0f0;
     cursor: pointer;
-    font-size: 0.95em;
+    font-size: 1.2em;
     color: #333;
     transition: background-color 0.1s, font-weight 0.1s;
 }
@@ -1056,7 +1068,7 @@ select[disabled] {
 .result-item:hover {
     background-color: #e6f7ef;
     color: #0d4d28;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* Estilos de botones de acción */
@@ -1105,7 +1117,7 @@ select[disabled] {
 
 /* Mensajes y placeholders */
 .result-placeholder {
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     color: #888;
     font-style: italic;
@@ -1119,7 +1131,7 @@ select[disabled] {
 #tablaDiagnosticos {
   width: 100%;
   border-collapse: collapse; /* quita espacios entre bordes */
-  margin-top: 30px;
+  margin-top: 20px;
   font-family: Arial, sans-serif;
   font-size: 0.95em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -1127,7 +1139,7 @@ select[disabled] {
 
 #tablaDiagnosticos th,
 #tablaDiagnosticos td {
-  padding: 12px 15px;
+  padding: 10px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -1161,7 +1173,7 @@ select[disabled] {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 
   /* Mantiene las dimensiones y bordes circulares */
   padding: 15px 25px;
@@ -1189,3 +1201,33 @@ select[disabled] {
   align-items: center;
   margin-bottom: 5px;
 }
+
+/* Modal oculto por defecto */
+#successModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5); /* Fondo semi-transparente */
+    display: none; /* Oculto por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Contenido del modal centrado */
+.modal-content.success {
+    max-width: 400px;
+    width: 90%;
+    padding: 30px;
+    border: 2px solid #239358;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+

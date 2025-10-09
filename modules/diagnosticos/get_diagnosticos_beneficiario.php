@@ -47,10 +47,10 @@ if ($stmt = mysqli_prepare($conex, $query)) {
         
         // Añadir la columna de opciones con botones Editar y Ver
         $row['opciones'] = '
-            <a href="editar_diagnostico.php?id=' . $row['id_diagnostico'] . '" class="btn-action2 btn-edit" title="Editar">
+            <a href="editar_diagnosticos.php?id=' . $row['id_diagnostico'] . '" class="btn-action2 btn-edit" title="Editar">
                 <i class="fas fa-pencil-alt"></i>
             </a>
-            <a href="ver_diagnostico.php?id=' . $row['id_diagnostico'] . '" class="btn-action2 btn-view" title="Ver">
+            <a href="ver_diagnosticos.php?id=' . $row['id_diagnostico'] . '" class="btn-action2 btn-view" title="Ver">
                 <i class="fas fa-eye"></i>
             </a>
         ';

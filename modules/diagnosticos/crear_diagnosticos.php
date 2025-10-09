@@ -43,8 +43,8 @@ if (!$beneficiario) {
 // Generar el nombre completo para el título
 $nombre_completo_beneficiario = trim(
     $beneficiario['nombre'] . ' ' .
-    $beneficiario['apellido_paterno'] . ' ' .
-    ($beneficiario['apellido_materno'] ?? '')
+        $beneficiario['apellido_paterno'] . ' ' .
+        ($beneficiario['apellido_materno'] ?? '')
 );
 $titulo_seccion = "Nuevo Diagnóstico para: " . htmlspecialchars($nombre_completo_beneficiario);
 
@@ -84,6 +84,8 @@ if (isset($conex) && $conex) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $titulo_seccion; ?></title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Librerías opcionales para DataPicker y validación -->
 </head>
@@ -92,6 +94,10 @@ if (isset($conex) && $conex) {
     <div class="container">
         <!-- Sidebar Navigation -->
         <div class="navigation">
+            <?php
+            // Obtiene solo el archivo actual sin parámetros
+            $currentPage = basename($_SERVER['PHP_SELF']);
+            ?>
             <ul>
                 <li>
                     <a href="#">
@@ -109,42 +115,66 @@ if (isset($conex) && $conex) {
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_beneficiarios.php') ? 'active' : ''; ?>">
+                <?php
+                // Beneficiarios
+                $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
                         <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
                         <span class="title">Beneficiarios</span>
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_diagnosticos.php') ? 'active' : ''; ?>">
+                <?php
+                // Diagnosticos
+                $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                         <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
                         <span class="title">Diagnósticos</span>
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_adaptaciones.php') ? 'active' : ''; ?>">
+                <?php
+                // Adaptaciones
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
                         <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
                         <span class="title">Adaptaciones</span>
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_intervenciones.php') ? 'active' : ''; ?>">
+                <?php
+                // Intervenciones
+                $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
                         <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
                         <span class="title">Intervenciones</span>
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_profesionales.php') ? 'active' : ''; ?>">
+                <?php
+                // Profesionales
+                $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
                         <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
                         <span class="title">Profesionales</span>
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_reportes.php') ? 'active' : ''; ?>">
+                <?php
+                // Reportes
+                $reportesPages = ['index_reportes.php', 'generar_reportes.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $reportesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
                         <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
                         <span class="title">Reportes</span>
@@ -161,6 +191,7 @@ if (isset($conex) && $conex) {
                 </li>
             </ul>
         </div>
+
     </div>
     <div class="main">
         <div class="topbar">
@@ -279,98 +310,9 @@ if (isset($conex) && $conex) {
         </div>
     </div>
     <!-- MODALES Y SCRIPTS -->
-    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/main_diagnosticos.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-<script>
-    // Usamos jQuery para adjuntar el evento al botón por ID
-    $(document).ready(function() {
-        $('#submitDiagnosisBtn').on('click', function(e) {
-            e.preventDefault(); // Prevenimos la acción por defecto
-            
-            const form = document.getElementById('beneficiaryForm');
-            const profesionalInput = document.getElementById('profesionalAsignadoNombre');
-            const profesionalList = document.getElementById('profesionales-list');
-            const profesionalIdField = document.getElementById('profesionalAsignadoId');
-            const profesionalErrorDiv = document.getElementById('profesionalError');
-            
-            let isFormValid = true;
-
-            // 1. VALIDACIÓN ESPECÍFICA DEL PROFESIONAL (llama a la función en main.js)
-            // Asumiendo que validateProfesional() está en main.js y accesible globalmente
-            if (profesionalInput && typeof validateProfesional === 'function') {
-                if (!validateProfesional(profesionalInput, profesionalList, profesionalIdField, profesionalErrorDiv)) {
-                    isFormValid = false;
-                    profesionalInput.reportValidity();
-                }
-            }
-            
-            // 2. VALIDACIÓN HTML GENERAL
-            const isValid = Array.from(form.querySelectorAll('[required]')).every(field => field.checkValidity());
-
-            if (!isValid) {
-                // Si la validación HTML falla, encontramos el primer campo inválido y lo reportamos
-                form.querySelector('[required]:invalid').reportValidity();
-                isFormValid = false;
-            }
-            
-            // 3. SI AMBAS VALIDACIONES SON OK, PROCEDEMOS CON AJAX
-            if (isFormValid) {
-                submitDiagnosticFormAjax(); // Llamamos a la función AJAX de guardado
-            }
-        });
-    });
-
-    // Función que contiene el proceso AJAX de guardado
-    function submitDiagnosticFormAjax() {
-        const form = document.getElementById('beneficiaryForm');
-        // El resto del código es idéntico a su función submitDiagnosticForm anterior:
-        (async function() {
-            const nextBtn = form.closest('.diagnosticos-container').querySelector('#submitDiagnosisBtn'); // Usamos el ID
-            const globalValidationMessage = form.closest('.diagnosticos-container').querySelector('#formValidationMessage');
-            const successModal = document.getElementById('successModal');
-            const formData = new FormData(form);
-
-            nextBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
-            nextBtn.disabled = true;
-
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    // Muestra el modal de éxito y redirige al histórico
-                    if (successModal) {
-                        const redirectId = form.querySelector('input[name="beneficiario_id"]').value;
-                        const title = successModal.querySelector('.success-title');
-                        const message = successModal.querySelector('.modal-body p');
-                        
-                        if (title) title.textContent = '¡Diagnóstico Registrado!';
-                        if (message) message.textContent = 'El nuevo diagnóstico ha sido guardado correctamente.';
-
-                        successModal.style.display = 'flex';
-                        setTimeout(() => {
-                            window.location.href = 'historico_diagnosticos.php?id=' + redirectId;
-                        }, 3000);
-                    }
-                } else {
-                    globalValidationMessage.textContent = result.message || 'Error desconocido al guardar el diagnóstico.';
-                }
-            } catch (error) {
-                globalValidationMessage.textContent = 'Inténtalo de nuevo.';
-                console.error('Error AJAX:', error);
-            } finally {
-                nextBtn.innerHTML = 'Guardar Diagnóstico <ion-icon name="checkmark-circle-outline"></ion-icon>';
-                nextBtn.disabled = false;
-            }
-        })();
-    }
-</script>
 
 
 </body>

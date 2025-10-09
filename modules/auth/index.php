@@ -43,7 +43,7 @@ if (isset($_SESSION['usuarioingresando'])) {
                         <select name="txtrol" required class="CajaTexto" id="selectRol">
                             <option value="Administrador">Administrador</option>
                             <option value="Profesional">Profesional</option>
-                            <option value="Academico">Academico</option>
+                            <option value="Académico">Académico</option>
                         </select>
                         <span class="custom-arrow">&#9662;</span> <!-- Flecha ▼ -->
                     </div>

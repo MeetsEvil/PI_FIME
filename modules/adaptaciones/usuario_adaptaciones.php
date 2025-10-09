@@ -79,6 +79,8 @@ if (isset($conex)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adaptaciones</title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
@@ -191,23 +193,23 @@ if (isset($conex)) {
                 </a>
             </div>
 
-    <!-- Incluye el modal de éxito para mostrar la confirmación después de la actualización -->
-    <div id="successModal" class="modal">
-        <div class="modal-content success">
-            <div class="modal-body">
-                <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
-                <h2 class="success-title">¡Actualización Exitosa!</h2>
-                <p>Los cambios del beneficiario se han guardado correctamente.</p>
-                <p>Serás redirigido a la lista de beneficiarios en 3 segundos.</p>
+            <!-- Incluye el modal de éxito para mostrar la confirmación después de la actualización -->
+            <div id="successModal" class="modal">
+                <div class="modal-content success">
+                    <div class="modal-body">
+                        <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
+                        <h2 class="success-title">¡Actualización Exitosa!</h2>
+                        <p>Los cambios del beneficiario se han guardado correctamente.</p>
+                        <p>Serás redirigido a la lista de beneficiarios en 3 segundos.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
 
 
-    <script src="../../assets/js/main.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+            <script src="../../assets/js/main.js"></script>
+            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

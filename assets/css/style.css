@@ -7,7 +7,7 @@ body {
     display: flex; /* Usamos flexbox para posicionar el contenido */
     
     /* CORRECCIÓN: Estilos del fondo para que cubra el 100% de la página */
-    background: url(../../assets/images/login_oso.png) no-repeat center center fixed;
+    background: url(../../assets/images/login_oso2.png) no-repeat center center fixed;
     background-size: cover; /* Cubre toda la ventana */
     background-attachment: fixed;
 }
@@ -197,4 +197,3 @@ h1 {
     font-size: 1em;
     color: #1e6d40;
 }
-
