@@ -117,7 +117,11 @@ body {
 
 /* ================= Minimizado y Tooltips ================= */
 .navigation.active ul li a .title {
-  opacity: 0; /* Oculta el título */
+  display: none !important; /* Oculta completamente el título */
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  visibility: hidden;
 }
 
 /* Tooltip solo para sidebar minimizado */
@@ -126,22 +130,121 @@ body {
   position: absolute;
   left: 100%; /* A la derecha del <a> */
   top: 50%;
-  transform: translateY(-50%) translateX(10px);
-  background-color: #000; /* Fondo negro */
-  color: #fff; /* Letras blancas */
-  padding: 6px 12px;
-  border-radius: 4px;
+  transform: translateY(-50%) translateX(15px);
+  background: #ff0000; /* Rojo para debugging - temporal */
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s;
-  z-index: 999;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999; /* Z-index más alto para debugging */
+  font-size: 0.9em;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 2px solid #000; /* Borde negro para debugging */
 }
 
-/* Mostrar tooltip al pasar el cursor */
+/* Flecha del tooltip */
+.navigation.active ul li a::before {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%) translateX(7px);
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid #2c3e50;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+/* Mostrar tooltip al pasar el cursor - funciona en todo el li */
 .navigation.active ul li:hover a::after {
-  opacity: 1;
-  transform: translateY(-50%) translateX(5px);
+  opacity: 1 !important; /* Forzar visibilidad para debugging */
+  transform: translateY(-50%) translateX(10px);
+  transition-delay: 0s; /* Sin delay para debugging */
+}
+
+.navigation.active ul li:hover a::before {
+  opacity: 1 !important; /* Forzar visibilidad para debugging */
+  transform: translateY(-50%) translateX(4px);
+  transition-delay: 0s; /* Sin delay para debugging */
+}
+
+/* Asegurar que el área de hover funcione en todo el ancho del li cuando está minimizado */
+.navigation.active ul li {
+  position: relative;
+}
+
+.navigation.active ul li a {
+  position: relative;
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centra el ícono cuando está minimizado */
+}
+
+/* Asegurar que solo se vea el ícono cuando está minimizado */
+.navigation.active ul li a .icon {
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Asegurar que el título esté completamente oculto */
+.navigation.active ul li a .title {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Efecto visual cuando se pasa el cursor sobre el área minimizada */
+.navigation.active ul li:hover {
+  background-color: rgba(230, 236, 219, 0.1); /* Fondo sutil al hacer hover */
+  border-radius: 15px;
+}
+
+.navigation.active ul li:hover a {
+  color: #0d4d28;
+}
+
+/* Asegurar que el ícono sea más visible cuando está minimizado */
+.navigation.active ul li a .icon {
+  font-size: 1.8rem; /* Ligeramente más grande cuando está minimizado */
+  transition: all 0.3s ease;
+}
+
+.navigation.active ul li:hover a .icon {
+  transform: scale(1.1); /* Efecto de zoom sutil al hacer hover */
+}
+
+/* DEBUGGING: Forzar que los tooltips sean visibles cuando el sidebar está minimizado */
+.navigation.active ul li a::after {
+  display: block !important;
+  visibility: visible !important;
+  content: attr(data-tooltip) !important;
+}
+
+/* DEBUGGING: Hacer que el tooltip sea visible al hacer hover */
+.navigation.active ul li:hover a::after {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  content: attr(data-tooltip) !important;
+}
+
+/* Asegurar que el tooltip tenga el contenido correcto */
+.navigation.active ul li a[data-tooltip]::after {
+  content: attr(data-tooltip) !important;
 }
 
 /* ===================== Main ===================== */

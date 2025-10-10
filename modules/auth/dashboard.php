@@ -43,7 +43,7 @@ $user = $_SESSION['usuarioingresando'];
             ?>
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="#" data-tooltip="FIME Inclusivo">
                         <span class="icon">
                             <ion-icon name="school-outline"></ion-icon>
                         </span>
