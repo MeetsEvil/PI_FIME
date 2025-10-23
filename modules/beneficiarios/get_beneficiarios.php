@@ -3,11 +3,11 @@ include '../../config/db.php';
 
 $query = "SELECT 
             id_beneficiario,
+            matricula,
             CONCAT(nombre, ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS nombre_completo,
             TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) AS edad,
             genero,
             tipo_discapacidad AS tipo_apoyo,
-            fecha_ingreso,
             observaciones_iniciales AS ultima_actualizacion
         FROM beneficiarios";
 

@@ -46,7 +46,7 @@ $nombre_completo_beneficiario = trim(
         $beneficiario['apellido_paterno'] . ' ' .
         ($beneficiario['apellido_materno'] ?? '')
 );
-$titulo_seccion = "Nuevo Diagnóstico para: " . htmlspecialchars($nombre_completo_beneficiario);
+$titulo_seccion = "Nuevo Seguimiento para: " . htmlspecialchars($nombre_completo_beneficiario);
 
 // --- 3. Consulta para obtener los profesionales activos ---
 $profesionales = [];
@@ -133,7 +133,7 @@ if (isset($conex) && $conex) {
                 <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                         <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                        <span class="title">Diagnósticos</span>
+                        <span class="title">Seguimiento</span>
                     </a>
                 </li>
 
@@ -160,26 +160,20 @@ if (isset($conex) && $conex) {
                 </li>
 
                 <?php
-                // Profesionales
-                $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                // Profesionales - Solo visible para Administradores
+                if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
+                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    ?>
+                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
+                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
+                            <span class="title">Profesionales</span>
+                        </a>
+                    </li>
+                    <?php
+                }
                 ?>
-                <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                        <span class="title">Profesionales</span>
-                    </a>
-                </li>
 
-                <?php
-                // Reportes
-                $reportesPages = ['index_reportes.php', 'generar_reportes.php'];
-                ?>
-                <li class="<?php echo in_array($currentPage, $reportesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
-                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
-                        <span class="title">Reportes</span>
-                    </a>
-                </li>
 
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
@@ -232,7 +226,7 @@ if (isset($conex) && $conex) {
 
                     <!-- Única Página: Datos del Diagnóstico -->
                     <div class="form-page is-active" data-page="1">
-                        <h3>Detalles del Diagnóstico</h3>
+                        <h3>Detalles de Seguimiento</h3>
 
                         <!-- NUEVOS CAMPOS DE VISUALIZACIÓN DE CONTEXTO -->
                         <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
@@ -250,9 +244,9 @@ if (isset($conex) && $conex) {
                         </div>
                         <!-- FIN NUEVOS CAMPOS -->
 
-                        <label><span>Fecha de Diagnóstico:</span><input type="date" name="fecha_diagnostico" required></label>
+                        <label><span>Fecha de Seguimiento:</span><input type="date" name="fecha_diagnostico" required></label>
 
-                        <label><span>Tipo de Diagnóstico:</span>
+                        <label><span>Tipo de Seguimiento:</span>
                             <select name="tipo_diagnostico" required>
                                 <option value="">Selecciona...</option>
                                 <option value="Médico General">Médico General</option>
@@ -276,7 +270,7 @@ if (isset($conex) && $conex) {
                         </label>
                         <div id="profesionalError" class="validation-message-small"></div>
 
-                        <label><span>Resultado (Detalles):</span><textarea name="resultado" required placeholder="Descripción detallada del diagnóstico y hallazgos."></textarea></label>
+                        <label><span>Resultado (Detalles):</span><textarea name="resultado" required placeholder="Descripción detallada del seguimiento y hallazgos."></textarea></label>
 
                         <label><span>Observaciones:</span><textarea name="observaciones" placeholder="Recomendaciones, próximos pasos o notas adicionales."></textarea></label>
 

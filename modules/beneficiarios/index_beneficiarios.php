@@ -84,7 +84,7 @@ $user = $_SESSION['usuarioingresando'];
                 <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                         <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                        <span class="title">Diagnósticos</span>
+                        <span class="title">Seguimiento</span>
                     </a>
                 </li>
 
@@ -111,26 +111,20 @@ $user = $_SESSION['usuarioingresando'];
                 </li>
 
                 <?php
-                // Profesionales
-                $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                // Profesionales - Solo visible para Administradores
+                if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
+                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    ?>
+                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
+                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
+                            <span class="title">Profesionales</span>
+                        </a>
+                    </li>
+                    <?php
+                }
                 ?>
-                <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                        <span class="title">Profesionales</span>
-                    </a>
-                </li>
 
-                <?php
-                // Reportes
-                $reportesPages = ['index_reportes.php', 'generar_reportes.php'];
-                ?>
-                <li class="<?php echo in_array($currentPage, $reportesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
-                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
-                        <span class="title">Reportes</span>
-                    </a>
-                </li>
 
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
@@ -173,12 +167,12 @@ $user = $_SESSION['usuarioingresando'];
             <table id="tablaBeneficiarios" class="tabla-beneficiarios" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Folio</th>
+                        <th>ID</th>
+                        <th>Matrícula</th>
                         <th>Nombre</th>
                         <th>Edad</th>
                         <th>Género</th>
                         <th>Tipo de Apoyo</th>
-                        <th>Fecha Inscripción</th>
                         <th>Última Actualización</th>
                         <th>Opciones</th>
                     </tr>
@@ -193,6 +187,9 @@ $user = $_SESSION['usuarioingresando'];
                             "data": "id_beneficiario"
                         },
                         {
+                            "data": "matricula"
+                        },
+                        {
                             "data": "nombre_completo"
                         },
                         {
@@ -203,9 +200,6 @@ $user = $_SESSION['usuarioingresando'];
                         },
                         {
                             "data": "tipo_apoyo"
-                        },
-                        {
-                            "data": "fecha_ingreso"
                         },
                         {
                             "data": "ultima_actualizacion"

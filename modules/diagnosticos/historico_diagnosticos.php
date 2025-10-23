@@ -41,7 +41,7 @@ $nombre_completo_beneficiario = trim(
         $beneficiario['apellido_paterno'] . ' ' .
         ($beneficiario['apellido_materno'] ?? '')
 );
-$titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_completo_beneficiario);
+$titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_completo_beneficiario);
 ?>
 
 <!DOCTYPE html>
@@ -119,7 +119,7 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
             <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                 <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                     <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                    <span class="title">Diagnósticos</span>
+                        <span class="title">Seguimiento</span>
                 </a>
             </li>
 
@@ -146,26 +146,20 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
             </li>
 
             <?php
-            // Profesionales
-            $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+            // Profesionales - Solo visible para Administradores
+            if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
+                $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
+                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
+                        <span class="title">Profesionales</span>
+                    </a>
+                </li>
+                <?php
+            }
             ?>
-            <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                    <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                    <span class="title">Profesionales</span>
-                </a>
-            </li>
 
-            <?php
-            // Reportes
-            $reportesPages = ['index_reportes.php', 'generar_reportes.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $reportesPages) ? 'active' : ''; ?>">
-                <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
-                    <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
-                    <span class="title">Reportes</span>
-                </a>
-            </li>
 
             <li>
                 <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
@@ -199,9 +193,9 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
             <div class="header-section-tabla">
                 <h2 class="section-title"><?php echo $titulo_seccion; ?></h2>
                 <div class="action-buttons-container">
-                    <button id="newRecordBtn" class="btn-action-nuevo"
+                    <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
                         onclick="window.location.href='crear_diagnosticos.php?beneficiario_id=' + $('#beneficiarioId').val();">
-                        <i class="fas fa-plus-circle"></i> Nuevo Registro
+                        <ion-icon name="add-circle-outline"></ion-icon> Nuevo
                     </button>
                 </div>
             </div>
@@ -210,7 +204,7 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Tipo Diagnóstico</th>
+                        <th>Tipo Seguimiento</th>
                         <th>Fecha Consulta</th>
                         <th>Profesional Asignado</th>
                         <th>Acciones</th>
@@ -281,7 +275,7 @@ $titulo_seccion = "Histórico de Diagnósticos: " . htmlspecialchars($nombre_com
                         className: 'btn btn-sm btn-danger',
                         orientation: 'landscape',
                         pageSize: 'A4',
-                        title: 'Histórico de Diagnósticos - ID: <?php echo $beneficiario_id; ?>'
+                        title: 'Histórico de Seguimiento - ID: <?php echo $beneficiario_id; ?>'
                     }
                 ]
             });

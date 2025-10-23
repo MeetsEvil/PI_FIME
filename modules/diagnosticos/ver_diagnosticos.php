@@ -43,7 +43,7 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ver Diagnóstico #<?php echo htmlspecialchars($id_diagnostico); ?></title>
+    <title>Ver Seguimiento #<?php echo htmlspecialchars($id_diagnostico); ?></title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
@@ -92,7 +92,7 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
                 <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                         <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                        <span class="title">Diagnósticos</span>
+                        <span class="title">Seguimiento</span>
                     </a>
                 </li>
 
@@ -119,26 +119,20 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
                 </li>
 
                 <?php
-                // Profesionales
-                $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                // Profesionales - Solo visible para Administradores
+                if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
+                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    ?>
+                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
+                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
+                            <span class="title">Profesionales</span>
+                        </a>
+                    </li>
+                    <?php
+                }
                 ?>
-                <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                        <span class="title">Profesionales</span>
-                    </a>
-                </li>
 
-                <?php
-                // Reportes
-                $reportesPages = ['index_reportes.php', 'generar_reportes.php'];
-                ?>
-                <li class="<?php echo in_array($currentPage, $reportesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
-                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
-                        <span class="title">Reportes</span>
-                    </a>
-                </li>
 
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
@@ -156,18 +150,21 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
     <div class="main">
         <div class="topbar">
             <div class="toggle"><ion-icon name="menu-outline"></ion-icon></div>
-            <h2 class="page-title">Ver Diagnóstico</h2>
+            <h2 class="page-title">PROGRAMA DE INCLUSIÓN</h2>
             <div class="user-box">
                 <div class="user-info">
                     <div class="user-name"><?php echo htmlspecialchars($user); ?></div>
                     <div class="user-role"><?php echo htmlspecialchars($_SESSION['rol']); ?></div>
                 </div>
+                <button class="info-btn" onclick="mostrarInfo()">
+                    <ion-icon name="information-outline"></ion-icon>
+                </button>
             </div>
         </div>
 
         <div class="diagnosticos-container" style="min-height: 85vh;">
             <div class="header-section">
-                <h2 class="section-title">Diagnóstico de <?php echo htmlspecialchars($beneficiario_nombre); ?></h2>
+                <h2 class="section-title">Seguimiento de <?php echo htmlspecialchars($beneficiario_nombre); ?></h2>
                 <a href="historico_diagnosticos.php?id=<?php echo $beneficiario_id; ?>" class="btn-regresar">
                     <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
                 </a>
@@ -176,7 +173,7 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
             <div class="form-pagination-container">
                 <form>
                     <div class="form-page is-active" data-page="1">
-                        <h3>Detalles del Diagnóstico</h3>
+                        <h3>Detalles de Seguimiento</h3>
 
                         <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
                             <label style="flex:1;"><span>ID de Registro:</span>
@@ -187,11 +184,11 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
                             </label>
                         </div>
 
-                        <label><span>Fecha de Diagnóstico:</span>
+                        <label><span>Fecha de Seguimiento:</span>
                             <input type="date" value="<?php echo htmlspecialchars($diagnostico['fecha_diagnostico']); ?>" readonly style="background-color:#f0f0f0;">
                         </label>
 
-                        <label><span>Tipo de Diagnóstico:</span>
+                        <label><span>Tipo de Seguimiento:</span>
                             <input type="text" value="<?php echo htmlspecialchars($diagnostico['tipo_diagnostico']); ?>" readonly style="background-color:#f0f0f0;">
                         </label>
 

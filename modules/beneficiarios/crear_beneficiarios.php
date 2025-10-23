@@ -104,7 +104,7 @@ if (isset($conex)) {
                 <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                         <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                        <span class="title">Diagnósticos</span>
+                        <span class="title">Seguimiento</span>
                     </a>
                 </li>
 
@@ -131,26 +131,20 @@ if (isset($conex)) {
                 </li>
 
                 <?php
-                // Profesionales
-                $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                // Profesionales - Solo visible para Administradores
+                if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
+                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    ?>
+                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
+                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
+                            <span class="title">Profesionales</span>
+                        </a>
+                    </li>
+                    <?php
+                }
                 ?>
-                <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                        <span class="title">Profesionales</span>
-                    </a>
-                </li>
 
-                <?php
-                // Reportes
-                $reportesPages = ['index_reportes.php', 'generar_reportes.php'];
-                ?>
-                <li class="<?php echo in_array($currentPage, $reportesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
-                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
-                        <span class="title">Reportes</span>
-                    </a>
-                </li>
 
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">

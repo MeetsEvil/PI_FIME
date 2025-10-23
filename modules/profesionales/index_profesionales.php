@@ -60,7 +60,7 @@ $currentPage = basename($_SERVER['REQUEST_URI']);
                 <li class="<?php echo ($currentPage == 'index_diagnosticos.php') ? 'active' : ''; ?>">
                     <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                         <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                        <span class="title">Diagnósticos</span>
+                        <span class="title">Seguimiento</span>
                     </a>
                 </li>
 
@@ -85,12 +85,6 @@ $currentPage = basename($_SERVER['REQUEST_URI']);
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_reportes.php') ? 'active' : ''; ?>">
-                    <a href="../../modules/reportes/index_reportes.php" data-tooltip="Reportes">
-                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
-                        <span class="title">Reportes</span>
-                    </a>
-                </li>
 
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
