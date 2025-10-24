@@ -114,14 +114,14 @@ $user = $_SESSION['usuarioingresando'];
                 // Profesionales - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
                     $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
-                    ?>
+                ?>
                     <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
                         <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
                             <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
                             <span class="title">Profesionales</span>
                         </a>
                     </li>
-                    <?php
+                <?php
                 }
                 ?>
 
@@ -159,9 +159,17 @@ $user = $_SESSION['usuarioingresando'];
         <div class="beneficiary-container">
             <div class="header-section">
                 <h2 class="section-title">Beneficiarios</h2>
-                <a href="../../modules/beneficiarios/crear_beneficiarios.php" class="btn-new">
-                    <ion-icon name="add-circle-outline"></ion-icon> Nuevo
-                </a>
+                <div style="display: flex; gap: 10px;">
+                    <a href="exportar_completo.php"
+                    style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
+                    
+                    
+                    <ion-icon name="download-outline"></ion-icon> Exportar Completo
+                    </a>
+                    <a href="../../modules/beneficiarios/crear_beneficiarios.php" class="btn-new">
+                        <ion-icon name="add-circle-outline"></ion-icon> Nuevo
+                    </a>
+                </div>
             </div>
             <!-- Tabla HTML -->
             <table id="tablaBeneficiarios" class="tabla-beneficiarios" style="width:100%">

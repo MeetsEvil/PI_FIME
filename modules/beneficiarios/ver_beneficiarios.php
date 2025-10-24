@@ -224,7 +224,7 @@ if (isset($conex)) {
                         <label><span>Apellido Paterno:</span><input type="text" name="apellido_paterno" value="<?php echo htmlspecialchars($beneficiario['apellido_paterno'] ?? ''); ?>" readonly></label>
                         <label><span>Apellido Materno:</span><input type="text" name="apellido_materno" value="<?php echo htmlspecialchars($beneficiario['apellido_materno'] ?? ''); ?>" readonly></label>
                         <label><span>CURP:</span><input type="text" name="curp" value="<?php echo htmlspecialchars($beneficiario['curp'] ?? ''); ?>" readonly></label>
-                        <label><span>Fecha de nacimiento:</span><input type="date" name="fecha_nacimiento" value="<?php echo htmlspecialchars($beneficiario['fecha_nacimiento'] ?? ''); ?>" readonly></label>
+                        <label><span>Fecha de Nacimiento:</span><input type="date" name="fecha_nacimiento" value="<?php echo htmlspecialchars($beneficiario['fecha_nacimiento'] ?? ''); ?>" readonly></label>
                         <label><span>Género:</span>
                             <select name="genero" readonly disabled>
                                 <option value="">Selecciona...</option>
@@ -234,7 +234,7 @@ if (isset($conex)) {
                             </select>
                         </label>
                         <label><span>Teléfono:</span><input type="tel" name="telefono" value="<?php echo htmlspecialchars($beneficiario['telefono'] ?? ''); ?>" readonly></label>
-                        <label><span>Correo Institucional:</span><input type="email" name="correo_institucional" value="<?php echo htmlspecialchars($beneficiario['correo_institucional'] ?? ''); ?>" readonly></label>
+                        <label><span>Correo Personal:</span><input type="email" name="correo_institucional" value="<?php echo htmlspecialchars($beneficiario['correo_institucional'] ?? ''); ?>" readonly></label>
                     </div>
 
                     <div class="form-page" data-page="2">
@@ -248,6 +248,7 @@ if (isset($conex)) {
                                 <?php endforeach; ?>
                             </select>
                         </label>
+                        <label><span>Plan de Estudio:</span><input type="text" name="plan_de_estudio" value="<?php echo htmlspecialchars($beneficiario['plan_de_estudio'] ?? ''); ?>" readonly></label>
                         <label><span>Semestre:</span><input type="number" name="semestre" value="<?php echo htmlspecialchars($beneficiario['semestre'] ?? ''); ?>" readonly></label>
                         <label><span>Estatus Académico:</span>
                             <select name="estatus_academico" readonly disabled>
@@ -282,12 +283,37 @@ if (isset($conex)) {
                         <label><span>Estado Inicial:</span><input type="text" name="estado_inicial" value="<?php echo htmlspecialchars($beneficiario['estado_inicial'] ?? ''); ?>" readonly></label>
                         <label><span>Observaciones Iniciales:</span><textarea name="observaciones_iniciales" readonly><?php echo htmlspecialchars($beneficiario['observaciones_iniciales'] ?? ''); ?></textarea></label>
                     </div>
+                    <div class="form-page" data-page="5">
+                        <h3>Contacto de Emergencia</h3>
+
+                        <label><span>Nombre del Contacto:</span>
+                            <input type="text" name="nombre_emergencia" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras y espacios." maxlength="100" required  value="<?php echo htmlspecialchars($beneficiario['nombre_emergencia'] ?? ''); ?>" readonly>
+                        </label>
+
+                        <label><span>Teléfono del Contacto:</span>
+                            <input type="tel" name="telefono_emergencia" minlength="10" maxlength="10" pattern="\d{10}" title="El teléfono debe tener 10 dígitos." required value="<?php echo htmlspecialchars($beneficiario['telefono_emergencia'] ?? ''); ?>" readonly>
+                        </label>
+
+                        <label><span>Parentesco:</span>
+                            <select name="parentesco_emergencia" readonly disabled>
+                                <option value="">Selecciona...</option>
+                                <option value="Madre" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Madre' ? 'selected' : ''; ?>>Madre</option>
+                                <option value="Padre" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Padre' ? 'selected' : ''; ?>>Padre</option>
+                                <option value="Hermano(a)" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Hermano(a)' ? 'selected' : ''; ?>>Hermano(a)</option>        
+                                <option value="Tío(a)" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Tío(a)' ? 'selected' : ''; ?>>Tío(a)</option>
+
+                                <option value="Abuelo(a)" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Abuelo(a)' ? 'selected' : ''; ?>>Abuelo(a)</option>        
+                                <option value="Amigo(a)" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Amigo(a)' ? 'selected' : ''; ?>>Amigo(a)</option>        
+                                <option value="Otro" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Otro' ? 'selected' : ''; ?>>Otro</option>        
+                            </select>
+                        </label>
+                    </div>
 
                 </form>
             </div>
 
             <div class="pagination-info">
-                Hoja <span id="currentPageNumber">1</span> de 4
+                Hoja <span id="currentPageNumber">1</span> de 5
             </div>
             <div class="pagination-buttons">
                 <button type="button" class="btn-pagination btn-prev" style="display: none;">

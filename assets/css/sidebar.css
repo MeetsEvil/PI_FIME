@@ -745,59 +745,6 @@ body {
 }
 
 
-.btn-new {
-  /* Mismo estilo de fondo que el botón de información */
-  background: linear-gradient(90deg, #239358, #0d4d28);
-  /* Mismo estilo de borde, solo que este botón es redondo */
-  border: none;
-  color: white; /* Color de la fuente blanco */
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-
-  /* Mantiene las dimensiones y bordes circulares */
-  padding: 10px 20px;
-  border-radius: 50px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s;
-}
-
-.btn-new:hover {
-  /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
-  background: linear-gradient(90deg, #1f7b48, #0c4323);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.btn-new ion-icon {
-  /* El color del ícono debe ser blanco para que se vea */
-  color: white;
-  font-size: 1.2em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
-}
-
-.btn-regresar {
-  /* Mismo estilo de fondo que el botón de información */
-  background: rgb(185, 52, 52);
-  /* Mismo estilo de borde, solo que este botón es redondo */
-  border: none;
-  color: white; /* Color de la fuente blanco */
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-
-  /* Mantiene las dimensiones y bordes circulares */
-  padding: 10px 20px;
-  border-radius: 50px;
-  box-shadow: 0 2px 5px rgba(160, 15, 15, 0.2);
-  transition: background-color 0.3s;
-}
 
 .btn-regresar:hover {
   /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
@@ -1354,3 +1301,95 @@ button.btn-action-nuevo.btn-new,
     text-align: center;
 }
 
+
+#tablaAdaptaciones {
+  width: 100%;
+  border-collapse: collapse; /* quita espacios entre bordes */
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 0.95em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#tablaAdaptaciones th,
+#tablaAdaptaciones td {
+  padding: 10px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#tablaAdaptaciones th {
+  background-color: #239358;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+#tablaAdaptaciones tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+#tablaAdaptaciones tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ================= BOTONES DE ACCIÓN - DEGRADADOS ================= */
+
+/* Botón Nuevo - Degradado Verde */
+.btn-new {
+  background: linear-gradient(90deg, #239358, #0d4d28) !important;
+  border: none;
+  color: white !important;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.btn-new:hover {
+  background: linear-gradient(90deg, #1f7b48, #0c4323) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-new ion-icon {
+  color: white !important;
+  font-size: 1.2em;
+}
+
+/* Botón Exportar - Degradado Azul */
+.exportar{
+  background: linear-gradient(90deg, #2196F3, #0D47A1) !important;
+  border: none;
+  color: white !important;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.exportar:hover {
+  background: linear-gradient(90deg, #1976D2, #0A3A7A) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.exportar ion-icon {
+  color: white !important;
+  font-size: 1.2em;
+}

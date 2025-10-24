@@ -44,6 +44,7 @@ $nombre_completo_beneficiario = trim(
 $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_completo_beneficiario);
 ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -52,33 +53,80 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $titulo_seccion; ?></title>
-    <link rel="stylesheet" href="../../assets/css/sidebar.css">
+    <!-- Asumiendo que esta ruta es correcta para tu sidebar -->
+    <link rel="stylesheet" href="../../assets/css/sidebar.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <!-- DataTables CSS -->
+    <!-- DataTables CSS (Necesario) -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <!-- Extensión Botones CSS -->
+    <!-- Extensión Botones CSS (Necesario) -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 
-    <!-- jQuery -->
+    <!-- Custom Font (Mantenido) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <!-- *** CSS INTEGRADO AQUÍ PARA GARANTIZAR ESPECIFICIDAD Y ORDEN DE CARGA *** -->
+    <style>
+        /* Aumentamos la especificidad incluyendo el prefijo dataTable de la librería */
+        #tablaAdaptaciones,
+        table.dataTable#tablaAdaptaciones {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 0.95em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #tablaAdaptaciones th,
+        #tablaAdaptaciones td,
+        table.dataTable#tablaAdaptaciones th,
+        table.dataTable#tablaAdaptaciones td {
+            padding: 10px 15px;
+            text-align: left;
+            /* Eliminé el border-bottom para usar el de DataTables y evitar doble línea, pero puedes descomentarlo si lo necesitas */
+            /* border-bottom: 1px solid #ddd; */
+        }
+
+        #tablaAdaptaciones th,
+        table.dataTable#tablaAdaptaciones th {
+            background-color: #239358;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Usamos la clase de DataTables para las filas impares/pares si el ID selector no funciona en todas las versiones */
+        #tablaAdaptaciones tbody tr:hover,
+        table.dataTable#tablaAdaptaciones tbody tr:hover {
+            background-color: #f1f1f1 !important; /* Usamos !important para asegurar el hover */
+            cursor: pointer;
+        }
+        
+        /* DataTables usa la clase .even para las filas pares. Puedes usarla o tu selector nth-child */
+        #tablaAdaptaciones tr:nth-child(even),
+        table.dataTable#tablaAdaptaciones tr.even {
+            background-color: #f9f9f9;
+        }
+        div.dt-buttons .dt-button {
+            margin-bottom: 25px;
+        }
+
+
+    </style>
+
+    <!-- jQuery (Necesario) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables JS -->
+    <!-- DataTables JS (Necesario) -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-    <!-- Dependencias de Botones y Exportación -->
+    <!-- Dependencias de Botones y Exportación (Necesarias) -->
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <style>
-            div.dt-buttons .dt-button {
-            margin-bottom: 10px;
-        }
-    </style>
 
 </head>
 
@@ -129,7 +177,7 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
 
             <?php
             // Adaptaciones
-            $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
+            $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
             ?>
             <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                 <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
@@ -198,18 +246,18 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
                 <h2 class="section-title"><?php echo $titulo_seccion; ?></h2>
                 <div class="action-buttons-container">
                     <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
-                        onclick="window.location.href='crear_diagnosticos.php?beneficiario_id=' + $('#beneficiarioId').val();">
+                        onclick="window.location.href='crear_adaptaciones.php?beneficiario_id=' + $('#beneficiarioId').val();">
                         <ion-icon name="add-circle-outline"></ion-icon> Nuevo
                     </button>
                 </div>
             </div>
-            <!-- TABLA DE HISTÓRICO DE DIAGNÓSTICOS -->
-            <table id="tablaDiagnosticos" class="tabla-beneficiarios" style="width:100%">
+            <!-- TABLA DE HISTÓRICO DE ADAPTACIONES-->
+            <table id="tablaAdaptaciones" class="tablaAdaptaciones" style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Tipo Seguimiento</th>
-                        <th>Fecha Consulta</th>
+                        <th>Tipo Adaptación</th>
+                        <th>Fecha Implementación</th>
                         <th>Profesional Asignado</th>
                         <th>Acciones</th>
                     </tr>
@@ -232,16 +280,16 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
         $(document).ready(function() {
             const beneficiarioId = $('#beneficiarioId').val();
 
-            $('#tablaDiagnosticos').DataTable({
-                "ajax": "get_diagnosticos_beneficiario.php?id=" + beneficiarioId,
+            $('#tablaAdaptaciones').DataTable({
+                "ajax": "get_adaptaciones_beneficiario.php?id=" + beneficiarioId,
                 "columns": [{
-                        "data": "id_diagnostico"
+                        "data": "id_adaptacion"
                     },
                     {
-                        "data": "tipo_diagnostico"
+                        "data": "tipo_adaptacion"
                     },
                     {
-                        "data": "fecha_diagnostico"
+                        "data": "fecha_implementacion"
                     },
                     {
                         "data": "nombre_profesional"
@@ -279,7 +327,7 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
                         className: 'btn btn-sm btn-danger',
                         orientation: 'landscape',
                         pageSize: 'A4',
-                        title: 'Histórico de Seguimiento - ID: <?php echo $beneficiario_id; ?>'
+                        title: 'Histórico de Adaptaciones - ID: <?php echo $beneficiario_id; ?>'
                     }
                 ]
             });

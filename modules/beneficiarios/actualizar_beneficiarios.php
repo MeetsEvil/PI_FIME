@@ -17,8 +17,8 @@ function return_error($conex, $message) {
 // --- 1. VERIFICACIÓN DE ACCESO Y MÉTODO ---
 
 // Solo se permite la edición a Administradores (por seguridad)
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
-    return_error($conex, 'Acceso denegado. Solo Administradores pueden actualizar beneficiarios.');
+if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], ['Administrador', 'Profesional'])) {
+    return_error($conex, 'Acceso denegado. Solo Administradores o Profesionales pueden actualizar beneficiarios.');
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -57,6 +57,7 @@ $correo_institucional = get_post_value($conex, 'correo_institucional');
 // Datos Académicos
 $matricula = get_post_value($conex, 'matricula');
 $carrera = get_post_value($conex, 'carrera');
+$plan_de_estudio = get_post_value($conex, 'plan_de_estudio');
 $semestre = get_post_value($conex, 'semestre');
 $estatus_academico = get_post_value($conex, 'estatus_academico');
 
@@ -75,6 +76,10 @@ if ($profesional_asignado !== 'NULL') {
 $fecha_ingreso = get_post_value($conex, 'fecha_ingreso');
 $estado_inicial = get_post_value($conex, 'estado_inicial');
 $observaciones_iniciales = get_post_value($conex, 'observaciones_iniciales');
+
+$nombre_emergencia = get_post_value($conex, 'nombre_emergencia');
+$telefono_emergencia = get_post_value($conex, 'telefono_emergencia');
+$parentesco_emergencia = get_post_value($conex, 'parentesco_emergencia');
 
 
 // --- 3. VALIDACIÓN DE CAMPOS REQUERIDOS (la validación JS ya lo hace, pero el backend siempre debe validar) ---
@@ -96,6 +101,7 @@ $query = "UPDATE beneficiarios SET
     correo_institucional = $correo_institucional,
     matricula = $matricula,
     carrera = $carrera,
+    plan_de_estudio = $plan_de_estudio,
     semestre = $semestre,
     estatus_academico = $estatus_academico,
     tipo_discapacidad = $tipo_discapacidad,
@@ -105,7 +111,10 @@ $query = "UPDATE beneficiarios SET
     profesional_asignado = $profesional_asignado,
     fecha_ingreso = $fecha_ingreso,
     estado_inicial = $estado_inicial,
-    observaciones_iniciales = $observaciones_iniciales
+    observaciones_iniciales = $observaciones_iniciales,
+    nombre_emergencia = $nombre_emergencia,
+    telefono_emergencia = $telefono_emergencia,
+    parentesco_emergencia = $parentesco_emergencia
 WHERE id_beneficiario = $id_beneficiario";
 
 $resultado = mysqli_query($conex, $query);

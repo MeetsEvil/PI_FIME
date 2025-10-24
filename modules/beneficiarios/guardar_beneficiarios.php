@@ -19,9 +19,10 @@ function return_error($conex, $message) {
 // --- 1. VERIFICACIÓN DE ACCESO Y MÉTODO ---
 
 // Solo se permite el registro a Administradores (por seguridad)
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
-    return_error($conex, 'Acceso denegado. Solo Administradores pueden registrar beneficiarios.');
+if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], ['Administrador', 'Profesional'])) {
+    return_error($conex, 'Acceso denegado. Solo Administradores o Profesionales pueden actualizar beneficiarios.');
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     return_error($conex, 'Método de solicitud no válido.');
@@ -52,6 +53,7 @@ $correo_institucional = get_post_value($conex, 'correo_institucional');
 // Datos Académicos
 $matricula = get_post_value($conex, 'matricula');
 $carrera = get_post_value($conex, 'carrera');
+$plan_de_estudio = get_post_value($conex, 'plan_de_estudio');
 $semestre = get_post_value($conex, 'semestre');
 $estatus_academico = get_post_value($conex, 'estatus_academico');
 
@@ -73,6 +75,11 @@ $fecha_ingreso = get_post_value($conex, 'fecha_ingreso');
 $estado_inicial = get_post_value($conex, 'estado_inicial');
 $observaciones_iniciales = get_post_value($conex, 'observaciones_iniciales');
 
+$nombre_emergencia = get_post_value($conex, 'nombre_emergencia');
+$telefono_emergencia = get_post_value($conex, 'telefono_emergencia');
+$parentesco_emergencia = get_post_value($conex, 'parentesco_emergencia');
+
+
 
 // --- 3. VALIDACIÓN DE CAMPOS REQUERIDOS ---
 
@@ -86,12 +93,15 @@ if ($nombre == 'NULL' || $apellido_paterno == 'NULL' || $curp == 'NULL' || $fech
 
 $query = "INSERT INTO beneficiarios (
     nombre, apellido_paterno, apellido_materno, curp, fecha_nacimiento, genero, telefono, correo_institucional, 
-    matricula, carrera, semestre, estatus_academico, tipo_discapacidad, diagnostico, adaptaciones, 
-    recursos_asignados, profesional_asignado, fecha_ingreso, estado_inicial, observaciones_iniciales
+    matricula, carrera, plan_de_estudio, semestre, estatus_academico, tipo_discapacidad, diagnostico, adaptaciones, 
+    recursos_asignados, profesional_asignado, fecha_ingreso, estado_inicial, observaciones_iniciales, nombre_emergencia,
+    telefono_emergencia, parentesco_emergencia
 ) VALUES (
     $nombre, $apellido_paterno, $apellido_materno, $curp, $fecha_nacimiento, $genero, $telefono, $correo_institucional, 
-    $matricula, $carrera, $semestre, $estatus_academico, $tipo_discapacidad, $diagnostico, $adaptaciones, 
-    $recursos_asignados, $profesional_asignado, $fecha_ingreso, $estado_inicial, $observaciones_iniciales
+    $matricula, $carrera, $plan_de_estudio, $semestre, $estatus_academico, $tipo_discapacidad, $diagnostico, $adaptaciones, 
+    $recursos_asignados, $profesional_asignado, $fecha_ingreso, $estado_inicial, $observaciones_iniciales, 
+    $nombre_emergencia, $telefono_emergencia, $parentesco_emergencia
+
 )";
 
 $resultado = mysqli_query($conex, $query);

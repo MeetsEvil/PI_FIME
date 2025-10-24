@@ -228,7 +228,7 @@ if (form && pages.length > 0 && nextBtn && prevBtn) {
                 globalValidationMessage.textContent = result.message || 'Error desconocido al procesar el beneficiario.';
             }
         } catch (error) {
-            globalValidationMessage.textContent = 'Error de conexión con el servidor. Inténtalo de nuevo.';
+            globalValidationMessage.textContent = 'Error de conexión con el servidor.';
             console.error('Error al enviar formulario:', error);
         } finally {
             // Restaura el botón
