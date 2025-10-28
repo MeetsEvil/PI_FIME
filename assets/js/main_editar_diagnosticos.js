@@ -1,3 +1,17 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.querySelector(".toggle");
+    const navigation = document.querySelector(".navigation");
+    const main = document.querySelector(".main");
+
+    if (toggle && navigation && main) {
+        toggle.onclick = () => {
+            navigation.classList.toggle("active");
+            main.classList.toggle("active");
+        };
+    }
+});
+
+
 // main_editar_diagnosticos.js (reemplaza/pega)
 $(document).ready(function () {
     const $btn = $('#updateDiagnosisBtn');

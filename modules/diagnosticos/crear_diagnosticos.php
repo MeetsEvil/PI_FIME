@@ -65,15 +65,32 @@ if (isset($conex) && $conex) { // Añadida verificación de $conex
     }
 }
 
-// --- 4. CALCULAR EL PRÓXIMO ID DEL DIAGNÓSTICO (Para mostrarlo al usuario) ---
-$next_diagnostico_id = '';
-if (isset($conex) && $conex) {
-    $result_max = mysqli_query($conex, "SELECT MAX(id_diagnostico) AS max_id FROM diagnosticos");
-    if ($result_max) {
-        $row_max = mysqli_fetch_assoc($result_max);
-        $next_diagnostico_id = ($row_max['max_id'] === null) ? 1 : $row_max['max_id'] + 1;
+// --- 4. CALCULAR EL PRÓXIMO NÚMERO DE SEGUIMIENTO (Diagnóstico) ---
+// El número de seguimiento es el conteo de registros existentes + 1.
+$next_numero_seguimiento = '';
+$numero_de_registros = 0;
+
+// Solo ejecuta la consulta si el ID del beneficiario es válido y la conexión existe
+if ($beneficiario_id !== null && isset($conex) && $conex) {
+    // Consulta: Cuenta cuántos diagnósticos existen para ESTE beneficiario
+    $query_count = "SELECT COUNT(id_diagnostico) AS total FROM diagnosticos WHERE beneficiario_id = ?";
+
+    if ($stmt_count = mysqli_prepare($conex, $query_count)) {
+        mysqli_stmt_bind_param($stmt_count, "i", $beneficiario_id);
+        mysqli_stmt_execute($stmt_count);
+        $result_count = mysqli_stmt_get_result($stmt_count);
+
+        if ($row_count = mysqli_fetch_assoc($result_count)) {
+            $numero_de_registros = intval($row_count['total']);
+        }
+        mysqli_stmt_close($stmt_count);
     }
 }
+
+// El próximo número de seguimiento es (Registros existentes) + 1
+$next_numero_seguimiento = $numero_de_registros + 1;
+// El valor ahora debe ser asignado al campo de lectura en el HTML.
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -163,14 +180,14 @@ if (isset($conex) && $conex) {
                 // Profesionales - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
                     $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
-                    ?>
+                ?>
                     <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
                         <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
                             <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
                             <span class="title">Profesionales</span>
                         </a>
                     </li>
-                    <?php
+                <?php
                 }
                 ?>
 
@@ -232,8 +249,8 @@ if (isset($conex) && $conex) {
                         <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
                             <!-- ID del Diagnóstico (Calculado) -->
                             <label style="flex: 1;">
-                                <span>ID de Registro:</span>
-                                <input type="text" value="<?php echo $next_diagnostico_id; ?>" readonly style="background-color: #f0f0f0;">
+                                <span>N° de Seguimiento:</span>
+                                <input type="text" value="<?php echo $next_numero_seguimiento; ?>" readonly name="numero_diagnostico" style="background-color: #f0f0f0; font-weight: 700;">
                             </label>
 
                             <!-- Beneficiario (Nombre Completo) -->
@@ -298,8 +315,8 @@ if (isset($conex) && $conex) {
             <div class="modal-body">
                 <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
                 <h2 class="success-title">¡Registro Exitoso!</h2>
-                <p>El nuevo beneficiario ha sido guardado correctamente.</p>
-                <p>Serás redirigido a la lista de beneficiarios en 3 segundos.</p>
+                <p>El nuevo registro de seguimiento ha sido guardado correctamente.</p>
+                <p>Serás redirigido a la lista de seguimiento en 3 segundos.</p>
             </div>
         </div>
     </div>
@@ -307,7 +324,20 @@ if (isset($conex) && $conex) {
     <script src="../../assets/js/main_diagnosticos.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggle = document.querySelector(".toggle");
+            const navigation = document.querySelector(".navigation");
+            const main = document.querySelector(".main");
 
+            if (toggle && navigation && main) {
+                toggle.onclick = () => {
+                    navigation.classList.toggle("active");
+                    main.classList.toggle("active");
+                };
+            }
+        });
+    </script>
 
 </body>
 

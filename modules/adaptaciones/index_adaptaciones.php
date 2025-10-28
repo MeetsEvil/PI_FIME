@@ -24,6 +24,11 @@ $currentPage = basename($_SERVER['REQUEST_URI']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- jQuery es necesario para el manejo de AJAX -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- ESTILOS TEMPORALES PARA DEBUGGING -->
+    <style>
+        
+    </style>
 </head>
 
 <body>

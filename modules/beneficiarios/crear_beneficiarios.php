@@ -56,10 +56,40 @@ if (isset($conex)) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Beneficiario</title>
-    <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/sidebar.css">
+    
+    <!-- ESTILOS TEMPORALES PARA DEBUGGING -->
+    <style>
+        .btn-regresar {
+            background: linear-gradient(90deg, #ce2828, #720202) !important;
+            border: none !important;
+            color: white !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            text-decoration: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px !important;
+            padding: 10px 20px !important;
+            border-radius: 50px !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+            transition: all 0.3s !important;
+        }
 
+        .btn-regresar:hover {
+            background: linear-gradient(90deg, #b52323, #5a0101) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .btn-regresar ion-icon {
+            color: white !important;
+            font-size: 1.4em !important;
+        }
+    </style>
 </head>
 
 <body>

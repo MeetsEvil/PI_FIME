@@ -65,15 +65,30 @@ if (isset($conex) && $conex) { // Añadida verificación de $conex
     }
 }
 
-// --- 4. CALCULAR EL PRÓXIMO ID DE LA ADAPTACION (Para mostrarlo al usuario) ---
-$next_adaptacion_id = '';
-if (isset($conex) && $conex) {
-    $result_max = mysqli_query($conex, "SELECT MAX(id_adaptacion) AS max_id FROM adaptaciones");
-    if ($result_max) {
-        $row_max = mysqli_fetch_assoc($result_max);
-        $next_adaptacion_id = ($row_max['max_id'] === null) ? 1 : $row_max['max_id'] + 1;
+// --- 4. CALCULAR EL PRÓXIMO NÚMERO DE ADAPTACIÓN (Para mostrarlo al usuario) ---
+// El número de adaptación es el conteo de registros existentes para ESTE beneficiario + 1.
+$next_numero_adaptacion = '';
+$numero_de_registros = 0;
+
+// Solo ejecuta la consulta si el ID del beneficiario es válido y la conexión existe
+if ($beneficiario_id !== null && isset($conex) && $conex) {
+    // Consulta: Cuenta cuántas adaptaciones existen para ESTE beneficiario
+    $query_count = "SELECT COUNT(id_adaptacion) AS total FROM adaptaciones WHERE beneficiario_id = ?";
+
+    if ($stmt_count = mysqli_prepare($conex, $query_count)) {
+        mysqli_stmt_bind_param($stmt_count, "i", $beneficiario_id);
+        mysqli_stmt_execute($stmt_count);
+        $result_count = mysqli_stmt_get_result($stmt_count);
+
+        if ($row_count = mysqli_fetch_assoc($result_count)) {
+            $numero_de_registros = intval($row_count['total']);
+        }
+        mysqli_stmt_close($stmt_count);
     }
 }
+
+// El próximo número de adaptación es (Registros existentes) + 1
+$next_numero_adaptacion = $numero_de_registros + 1;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -230,15 +245,10 @@ if (isset($conex) && $conex) {
 
                         <!-- NUEVOS CAMPOS DE VISUALIZACIÓN DE CONTEXTO -->
                         <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
-                            <!-- ID de la Adaptación (Calculado) -->
-                            <label style="flex: 1;">
-                                <span>ID de Registro:</span>
-                                <input type="text" value="<?php echo $next_adaptacion_id; ?>" readonly style="background-color: #f0f0f0;">
+                            <label style="flex: 1;"><span>N° Adaptación:</span><input type="text" value="<?php echo $next_numero_adaptacion; ?>" readonly name="numero_adaptacion" style="background-color: #f0f0f0; font-weight: 700;">
                             </label>
-
-                            <!-- Beneficiario (Nombre Completo) -->
                             <label style="flex: 2;">
-                                <span>Beneficiario Asignado:</span>
+                                <span>Beneficiario:</span>
                                 <input type="text" value="<?php echo htmlspecialchars($nombre_completo_beneficiario); ?>" readonly style="background-color: #f0f0f0;">
                             </label>
                         </div>
@@ -247,13 +257,13 @@ if (isset($conex) && $conex) {
                         <label><span>Fecha de Implementación:</span><input type="date" name="fecha_implementacion" required></label>
 
                         <label><span>Tipo de Adaptación:</span>
-                            <select name="tipo_diagnostico" required>
+                            <select name="tipo_adaptacion" required>¿
                                 <option value="">Selecciona...</option>
-                                <option value="Médico General">Médico General</option>
-                                <option value="Psicológico">Psicológico</option>
-                                <option value="Psicopedagógico">Psicopedagógico</option>
-                                <option value="Oftalmológico">Oftalmológico</option>
-                                <option value="Auditivo">Auditivo</option>
+                                <option value="Curricular">Curricular</option>
+                                <option value="Evaluativa">Evaluativa</option>
+                                <option value="Infraestructura">Infraestructura</option>
+                                <option value="Tecnológica">Tecnológica</option>
+                                <option value="Material didáctico">Material didáctico</option>
                                 <option value="Otro">Otro</option>
                             </select>
                         </label>
@@ -278,9 +288,9 @@ if (isset($conex) && $conex) {
                                 <option value="Finalizada">Finalizada</option>
                             </select>
                         </label>
-                        <label><span>Descripción:</span><textarea name="descripcion" placeholder="Detalles acerca de la adaptación a realizar."></textarea></label>
+                        <label><span>Descripción:</span><textarea name="descripcion" placeholder="Descripción acerca de la adaptación a realizar."></textarea></label>
 
-                        <label><span>Archivo Adjunto (Ruta):</span><input type="text" name="archivo_adjunto" placeholder="Ruta o nombre del archivo adjunto (opcional)"></label>
+                        <label><span>Observaciones:</span><input type="text" name="observaciones" placeholder="Detalles acerca de la adaptación a realizar"></label>
 
                     </div>
 
@@ -304,8 +314,8 @@ if (isset($conex) && $conex) {
             <div class="modal-body">
                 <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
                 <h2 class="success-title">¡Registro Exitoso!</h2>
-                <p>El nuevo beneficiario ha sido guardado correctamente.</p>
-                <p>Serás redirigido a la lista de beneficiarios en 3 segundos.</p>
+                <p>La adaptación ha sido guardada correctamente.</p>
+                <p>Serás redirigido a la lista de adaptaciones en 3 segundos.</p>
             </div>
         </div>
     </div>
@@ -313,6 +323,20 @@ if (isset($conex) && $conex) {
     <script src="../../assets/js/main_adaptaciones.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggle = document.querySelector(".toggle");
+            const navigation = document.querySelector(".navigation");
+            const main = document.querySelector(".main");
+
+            if (toggle && navigation && main) {
+                toggle.onclick = () => {
+                    navigation.classList.toggle("active");
+                    main.classList.toggle("active");
+                };
+            }
+        });
+    </script>
 
 
 </body>

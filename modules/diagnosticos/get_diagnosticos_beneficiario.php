@@ -20,14 +20,16 @@ $beneficiario_id = intval($_GET['id']);
 
 // Consulta: Selecciona diagnósticos y une la tabla de profesionales para obtener el nombre
 $query = "SELECT 
+            d.numero_diagnostico,  -- Usar la columna ALMACENADA
             d.id_diagnostico,
             d.tipo_diagnostico,
             d.fecha_diagnostico,
             CONCAT(p.nombre, ' ', p.apellido_paterno) AS nombre_profesional
-          FROM diagnosticos d
-          LEFT JOIN profesionales p ON d.profesional_id = p.id_profesional
-          WHERE d.beneficiario_id = ?
-          ORDER BY d.fecha_diagnostico DESC";
+        FROM diagnosticos d
+        LEFT JOIN profesionales p ON d.profesional_id = p.id_profesional
+        WHERE d.beneficiario_id = ?
+        ORDER BY d.numero_diagnostico ASC";
+
 
 $data = array();
 

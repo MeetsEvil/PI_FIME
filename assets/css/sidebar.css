@@ -744,19 +744,37 @@ body {
     margin: 0;
 }
 
+.header-section .btn-regresar,
+a.btn-regresar {
+  background: linear-gradient(90deg, #ce2828, #720202) !important;
+  border: none;
+  color: white !important;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
 
-
-.btn-regresar:hover {
-  /* Mismo estilo de hover, pero con un color de fondo ligeramente diferente */
-  background: rgba(255, 0, 0, 0.3);
+.header-section .btn-regresar:hover,
+a.btn-regresar:hover {
+  background: linear-gradient(90deg, #b52323, #5a0101) !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
 }
 
-.btn-regresa ion-icon {
-  /* El color del ícono debe ser blanco para que se vea */
-  color: white;
-  font-size: 1.4em; /* Puedes ajustar el tamaño del ícono si lo necesitas */
+.header-section .btn-regresar ion-icon,
+a.btn-regresar ion-icon {
+  color: white !important;
+  font-size: 1.4em;
 }
+
 
 #tablaBeneficiarios {
   padding-top: 20px;
@@ -1124,7 +1142,6 @@ select[disabled] {
 /* Estilos de botones de acción */
 .action-buttons-container {
     display: flex;
-    font-size: 1.5em;
     justify-content: center;
     gap: 20px;
     margin-top: 40px;
@@ -1393,3 +1410,4 @@ button.btn-action-nuevo.btn-new,
   color: white !important;
   font-size: 1.2em;
 }
+

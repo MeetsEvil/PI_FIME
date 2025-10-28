@@ -196,7 +196,11 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
         <div class="diagnosticos-container">
             <div class="header-section-tabla">
                 <h2 class="section-title"><?php echo $titulo_seccion; ?></h2>
-                <div class="action-buttons-container">
+                <div class="action-buttons-container" style="display: flex; gap: 10px;">
+                <a href="exportar_completo2.php"
+                    style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
+                    <ion-icon name="download-outline"></ion-icon> Exportar Completo
+                    </a>
                     <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
                         onclick="window.location.href='crear_diagnosticos.php?beneficiario_id=' + $('#beneficiarioId').val();">
                         <ion-icon name="add-circle-outline"></ion-icon> Nuevo
@@ -207,7 +211,7 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             <table id="tablaDiagnosticos" class="tabla-beneficiarios" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>N°</th>
                         <th>Tipo Seguimiento</th>
                         <th>Fecha Consulta</th>
                         <th>Profesional Asignado</th>
@@ -235,7 +239,7 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             $('#tablaDiagnosticos').DataTable({
                 "ajax": "get_diagnosticos_beneficiario.php?id=" + beneficiarioId,
                 "columns": [{
-                        "data": "id_diagnostico"
+                        "data": "numero_diagnostico"
                     },
                     {
                         "data": "tipo_diagnostico"
@@ -252,6 +256,23 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
                         "searchable": false
                     }
                 ],
+                // ==============================================================
+                // === CAMBIOS CLAVE AÑADIDOS: columnDefs y order inicial ===
+                // ==============================================================
+
+                // 1. Define la columna 0 (numero_adaptacion) como NUMÉRICA
+                "columnDefs": [{
+                    "type": "num",
+                    "targets": 0
+                }],
+
+                // 2. Ordena la tabla inicialmente por la columna 0 (N°) ascendente (asc)
+                "order": [
+                    [0, "asc"]
+                ],
+
+                // ==============================================================
+
                 // --- CAMBIOS REALIZADOS AQUÍ ---
                 "pageLength": 7, // <-- Ahora muestra 7 registros por defecto
                 "lengthMenu": [

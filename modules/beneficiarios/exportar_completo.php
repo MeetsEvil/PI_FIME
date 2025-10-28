@@ -1,76 +1,80 @@
 <?php
-session_start();
-if (!isset($_SESSION['usuarioingresando'])) {
-    header("Location: ../auth/index.php");
-    exit();
-}
-
+require '../../vendor/autoload.php';
 include '../../config/db.php';
 
-// Configuración para descarga de Excel
-header('Content-Type: application/vnd.ms-excel; charset=UTF-8');
-header('Content-Disposition: attachment; filename="beneficiarios_completo_'.date('Y-m-d').'.xls"');
-header('Pragma: no-cache');
-header('Expires: 0');
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
-// Consulta con TODOS los campos
-$query = "SELECT 
-            id_beneficiario AS 'ID',
-            matricula AS 'Matrícula',
-            nombre AS 'Nombre',
-            apellido_paterno AS 'Apellido Paterno',
-            apellido_materno AS 'Apellido Materno',
-            curp AS 'CURP',
-            fecha_nacimiento AS 'Fecha de Nacimiento',
-            TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) AS 'Edad',
-            genero AS 'Género',
-            telefono AS 'Teléfono',
-            correo_institucional AS 'Correo Institucional',
-            carrera AS 'Carrera',
-            semestre AS 'Semestre',
-            plan_de_estudio AS 'Plan de Estudio',
-            estatus_academico AS 'Estatus Académico',
-            tipo_discapacidad AS 'Tipo de Discapacidad',
-            diagnostico AS 'Diagnóstico',
-            adaptaciones AS 'Adaptaciones',
-            recursos_asignados AS 'Recursos Asignados',
-            profesional_asignado AS 'ID Profesional',
-            fecha_ingreso AS 'Fecha de Ingreso',
-            estado_inicial AS 'Estado Inicial',
-            observaciones_iniciales AS 'Observaciones Iniciales',
-            nombre_emergencia AS 'Contacto de Emergencia',
-            telefono_emergencia AS 'Teléfono de Emergencia',
-            parentesco_emergencia AS 'Parentesco'
-        FROM beneficiarios
-        ORDER BY id_beneficiario";
-
+// Consulta
+$query = "SELECT * FROM beneficiarios ORDER BY id_beneficiario";
 $resultado = mysqli_query($conex, $query);
 
-if (!$resultado) {
-    die("Error en la consulta: " . mysqli_error($conex));
-}
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
 
-// Crear tabla HTML para Excel
-echo '<table border="1">';
-echo '<thead><tr>';
+// Estilo encabezado
+$headerStyle = [
+    'font' => [
+        'bold' => true,
+        'color' => ['rgb' => 'FFFFFF'],
+        'size' => 11,
+    ],
+    'fill' => [
+        'fillType' => Fill::FILL_SOLID,
+        'startColor' => ['rgb' => '239358'], // Verde similar a tu CSS
+    ],
+    'alignment' => [
+        'horizontal' => Alignment::HORIZONTAL_LEFT,
+        'vertical' => Alignment::VERTICAL_CENTER,
+    ],
+];
+
+// Estilo filas alternadas
+$evenRowStyle = [
+    'fill' => [
+        'fillType' => Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'F9F9F9'], // gris claro
+    ],
+];
 
 // Encabezados
 $fields = mysqli_fetch_fields($resultado);
+$col = 'A';
 foreach ($fields as $field) {
-    echo '<th style="background-color: #4CAF50; color: white; font-weight: bold;">' . utf8_decode($field->name) . '</th>';
+    $sheet->setCellValue($col.'1', $field->name);
+    $sheet->getStyle($col.'1')->applyFromArray($headerStyle);
+    $col++;
 }
-echo '</tr></thead><tbody>';
 
 // Datos
+$rowNum = 2;
 while ($row = mysqli_fetch_assoc($resultado)) {
-    echo '<tr>';
+    $col = 'A';
     foreach ($row as $value) {
-        echo '<td>' . utf8_decode($value ?? '') . '</td>';
+        $sheet->setCellValue($col.$rowNum, $value);
+        $col++;
     }
-    echo '</tr>';
+    // Estilo alternado de filas
+    if ($rowNum % 2 == 0) {
+        $sheet->getStyle("A$rowNum:".chr(64 + count($fields))."$rowNum")->applyFromArray($evenRowStyle);
+    }
+    $rowNum++;
 }
 
-echo '</tbody></table>';
+// Ajustar ancho de columnas automáticamente
+foreach (range('A', chr(64 + count($fields))) as $col) {
+    $sheet->getColumnDimension($col)->setAutoSize(true);
+}
 
-mysqli_close($conex);
+// Enviar al navegador como .xlsx
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="beneficiarios_completo_'.date('Y-m-d').'.xlsx"');
+header('Cache-Control: max-age=0');
+
+$writer = new Xlsx($spreadsheet);
+$writer->save('php://output');
+exit;
 ?>

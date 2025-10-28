@@ -1,4 +1,16 @@
-// ==================== SCRIPT PRINCIPAL PARA CREAR / EDITAR DIAGNÓSTICOS ====================
+document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.querySelector(".toggle");
+    const navigation = document.querySelector(".navigation");
+    const main = document.querySelector(".main");
+
+    if (toggle && navigation && main) {
+        toggle.onclick = () => {
+            navigation.classList.toggle("active");
+            main.classList.toggle("active");
+        };
+    }
+});
+
 
 // Esperar a que el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {

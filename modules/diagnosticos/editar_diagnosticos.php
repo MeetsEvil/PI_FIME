@@ -16,11 +16,11 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $id_diagnostico = intval($_GET['id']);
 
 // --- 2. Obtener los datos del diagnóstico ---
-$query = "SELECT d.*, 
-                CONCAT(b.nombre, ' ', b.apellido_paterno, ' ', IFNULL(b.apellido_materno, '')) AS beneficiario_nombre
-        FROM diagnosticos d
-        INNER JOIN beneficiarios b ON b.id_beneficiario = d.beneficiario_id
-        WHERE d.id_diagnostico = ?";
+$query = "SELECT d.*, d.numero_diagnostico, -- Agregamos el campo de numeración
+CONCAT(b.nombre, ' ', b.apellido_paterno, ' ', IFNULL(b.apellido_materno, '')) AS beneficiario_nombre
+FROM diagnosticos d
+INNER JOIN beneficiarios b ON b.id_beneficiario = d.beneficiario_id
+WHERE d.id_diagnostico = ?";
 $stmt = mysqli_prepare($conex, $query);
 mysqli_stmt_bind_param($stmt, "i", $id_diagnostico);
 mysqli_stmt_execute($stmt);
@@ -39,7 +39,7 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
 // --- 3. Obtener lista de profesionales activos ---
 $profesionales = [];
 $query = "SELECT id_profesional, nombre, apellido_paterno, apellido_materno 
-          FROM profesionales WHERE estado = 'Activo'";
+        FROM profesionales WHERE estado = 'Activo'";
 $result = mysqli_query($conex, $query);
 while ($row = mysqli_fetch_assoc($result)) {
     $nombre_completo = trim($row['nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
@@ -136,14 +136,14 @@ while ($row = mysqli_fetch_assoc($result)) {
                 // Profesionales - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
                     $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
-                    ?>
+                ?>
                     <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
                         <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
                             <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
                             <span class="title">Profesionales</span>
                         </a>
                     </li>
-                    <?php
+                <?php
                 }
                 ?>
 
@@ -192,8 +192,13 @@ while ($row = mysqli_fetch_assoc($result)) {
                             <h3>Detalles de Seguimiento</h3>
 
                             <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
-                                <label style="flex:1;"><span>ID de Registro:</span>
-                                    <input type="text" value="<?php echo htmlspecialchars($id_diagnostico); ?>" readonly style="background-color:#f0f0f0;">
+                                <label style="flex:1;"><span>N° Seguimiento:</span>
+                                    <!-- Mostramos el número de seguimiento, es de solo lectura y crucial -->
+                                    <input type="text"
+                                        value="<?php echo htmlspecialchars($diagnostico['numero_diagnostico']); ?>"
+                                        readonly
+                                        name="numero_diagnostico"
+                                        style="background-color:#f0f0f0; font-weight: 700;">
                                 </label>
                                 <label style="flex:2;"><span>Beneficiario Asignado:</span>
                                     <input type="text" value="<?php echo htmlspecialchars($beneficiario_nombre); ?>" readonly style="background-color:#f0f0f0;">
@@ -271,8 +276,8 @@ while ($row = mysqli_fetch_assoc($result)) {
             <div class="modal-body">
                 <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
                 <h2 class="success-title">¡Actualización Exitosa!</h2>
-                <p>Los cambios del diagnóstico se han guardado correctamente.</p>
-                <p>Serás redirigido al historial de diagnósticos en 3 segundos.</p>
+                <p>Los cambios del seguimiento se han guardado correctamente.</p>
+                <p>Serás redirigido al historial de seguimiento en 3 segundos.</p>
             </div>
         </div>
     </div>
@@ -281,6 +286,20 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script src="../../assets/js/main_editar_diagnosticos.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggle = document.querySelector(".toggle");
+            const navigation = document.querySelector(".navigation");
+            const main = document.querySelector(".main");
+
+            if (toggle && navigation && main) {
+                toggle.onclick = () => {
+                    navigation.classList.toggle("active");
+                    main.classList.toggle("active");
+                };
+            }
+        });
+    </script>
 </body>
 
 </html>

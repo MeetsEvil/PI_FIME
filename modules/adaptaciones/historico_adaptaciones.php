@@ -31,7 +31,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 // Si no se encuentra el beneficiario, redirigir
 if (!$beneficiario) {
-    header("Location: index_diagnosticos.php"); // Redirigir al buscador de diagnósticos
+    header("Location: index_adaptaciones.php");
     exit();
 }
 
@@ -41,7 +41,7 @@ $nombre_completo_beneficiario = trim(
         $beneficiario['apellido_paterno'] . ' ' .
         ($beneficiario['apellido_materno'] ?? '')
 );
-$titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_completo_beneficiario);
+$titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_completo_beneficiario);
 ?>
 
 
@@ -53,8 +53,7 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $titulo_seccion; ?></title>
-    <!-- Asumiendo que esta ruta es correcta para tu sidebar -->
-    <link rel="stylesheet" href="../../assets/css/sidebar.css"> 
+    <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- DataTables CSS (Necesario) -->
@@ -84,8 +83,6 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
         table.dataTable#tablaAdaptaciones td {
             padding: 10px 15px;
             text-align: left;
-            /* Eliminé el border-bottom para usar el de DataTables y evitar doble línea, pero puedes descomentarlo si lo necesitas */
-            /* border-bottom: 1px solid #ddd; */
         }
 
         #tablaAdaptaciones th,
@@ -96,23 +93,20 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             text-transform: uppercase;
         }
 
-        /* Usamos la clase de DataTables para las filas impares/pares si el ID selector no funciona en todas las versiones */
         #tablaAdaptaciones tbody tr:hover,
         table.dataTable#tablaAdaptaciones tbody tr:hover {
-            background-color: #f1f1f1 !important; /* Usamos !important para asegurar el hover */
+            background-color: #f1f1f1 !important;
             cursor: pointer;
         }
-        
-        /* DataTables usa la clase .even para las filas pares. Puedes usarla o tu selector nth-child */
+
         #tablaAdaptaciones tr:nth-child(even),
         table.dataTable#tablaAdaptaciones tr.even {
             background-color: #f9f9f9;
         }
+
         div.dt-buttons .dt-button {
             margin-bottom: 25px;
         }
-
-
     </style>
 
     <!-- jQuery (Necesario) -->
@@ -133,7 +127,6 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
 <body>
     <div class="navigation">
         <?php
-        // Obtiene solo el archivo actual sin parámetros
         $currentPage = basename($_SERVER['PHP_SELF']);
         ?>
         <ul>
@@ -154,7 +147,6 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             </li>
 
             <?php
-            // Beneficiarios
             $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
             ?>
             <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
@@ -165,18 +157,16 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             </li>
 
             <?php
-            // Diagnosticos
             $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
             ?>
             <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                 <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                     <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                        <span class="title">Seguimiento</span>
+                    <span class="title">Seguimiento</span>
                 </a>
             </li>
 
             <?php
-            // Adaptaciones
             $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
             ?>
             <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
@@ -187,7 +177,6 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             </li>
 
             <?php
-            // Intervenciones
             $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
             ?>
             <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
@@ -198,20 +187,18 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             </li>
 
             <?php
-            // Profesionales - Solo visible para Administradores
             if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
                 $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
-                ?>
+            ?>
                 <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
                         <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
                         <span class="title">Profesionales</span>
                     </a>
                 </li>
-                <?php
+            <?php
             }
             ?>
-
 
             <li>
                 <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
@@ -244,7 +231,11 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
         <div class="diagnosticos-container">
             <div class="header-section-tabla">
                 <h2 class="section-title"><?php echo $titulo_seccion; ?></h2>
-                <div class="action-buttons-container">
+                <div class="action-buttons-container" style="display: flex; gap: 10px;">
+                <a href="exportar_completo3.php"
+                    style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
+                    <ion-icon name="download-outline"></ion-icon> Exportar Completo
+                    </a>
                     <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
                         onclick="window.location.href='crear_adaptaciones.php?beneficiario_id=' + $('#beneficiarioId').val();">
                         <ion-icon name="add-circle-outline"></ion-icon> Nuevo
@@ -255,7 +246,7 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             <table id="tablaAdaptaciones" class="tablaAdaptaciones" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>N°</th>
                         <th>Tipo Adaptación</th>
                         <th>Fecha Implementación</th>
                         <th>Profesional Asignado</th>
@@ -283,7 +274,7 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
             $('#tablaAdaptaciones').DataTable({
                 "ajax": "get_adaptaciones_beneficiario.php?id=" + beneficiarioId,
                 "columns": [{
-                        "data": "id_adaptacion"
+                        "data": "numero_adaptacion"
                     },
                     {
                         "data": "tipo_adaptacion"
@@ -300,16 +291,36 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
                         "searchable": false
                     }
                 ],
-                // --- CAMBIOS REALIZADOS AQUÍ ---
-                "pageLength": 7, // <-- Ahora muestra 7 registros por defecto
+
+                // ==============================================================
+                // === CAMBIOS CLAVE AÑADIDOS: columnDefs y order inicial ===
+                // ==============================================================
+
+                // 1. Define la columna 0 (numero_adaptacion) como NUMÉRICA
+                "columnDefs": [{
+                    "type": "num",
+                    "targets": 0
+                }],
+
+                // 2. Ordena la tabla inicialmente por la columna 0 (N°) ascendente (asc)
+                "order": [
+                    [0, "asc"]
+                ],
+
+                // ==============================================================
+
+                "pageLength": 7,
                 "lengthMenu": [
                     [7, 14, 28, 50, -1],
                     [7, 14, 28, 50, "Todos"]
-                ], // <-- Opciones de 7 en 7
+                ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
                 },
-                // --- CONFIGURACIÓN DE BOTONES DE EXPORTACIÓN ---
+
+                // NOTA: Se comenta el orden anterior para usar el nuevo orden por columna 0:
+                // "order": [[2, "desc"]], // Ordena por fecha de implementación (columna 2) descendente
+
                 dom: 'Bfrtip',
                 buttons: [{
                         extend: 'copyHtml5',
@@ -327,7 +338,7 @@ $titulo_seccion = "Histórico de Seguimiento: " . htmlspecialchars($nombre_compl
                         className: 'btn btn-sm btn-danger',
                         orientation: 'landscape',
                         pageSize: 'A4',
-                        title: 'Histórico de Adaptaciones - ID: <?php echo $beneficiario_id; ?>'
+                        title: 'Histórico de Adaptaciones - ' + '<?php echo htmlspecialchars($nombre_completo_beneficiario); ?>'
                     }
                 ]
             });

@@ -18,8 +18,10 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $beneficiario_id = intval($_GET['id']);
 
-// Consulta: Selecciona adaptacion y une la tabla de profesionales para obtener el nombre
+// Consulta: Selecciona adaptación y calcula el número de adaptación del beneficiario
+// Usamos ROW_NUMBER() simulado con variables de MySQL
 $query = "SELECT 
+            d.numero_adaptacion,    -- USAR la columna almacenada
             d.id_adaptacion,
             d.tipo_adaptacion,
             d.fecha_implementacion,
@@ -27,7 +29,7 @@ $query = "SELECT
         FROM adaptaciones d
         LEFT JOIN profesionales p ON d.profesional_id = p.id_profesional
         WHERE d.beneficiario_id = ?
-        ORDER BY d.fecha_implementacion DESC";
+        ORDER BY d.numero_adaptacion ASC"; 
 
 $data = array();
 

@@ -14,7 +14,8 @@ try {
     // --- 1. Recibir y validar los datos ---
     $id_diagnostico = isset($_POST['id_diagnostico']) ? intval($_POST['id_diagnostico']) : 0;
     $beneficiario_id = isset($_POST['beneficiario_id']) ? intval($_POST['beneficiario_id']) : 0;
-
+    // Nuevo: Capturar el número de seguimiento (pero no lo actualizaremos)
+    $numero_diagnostico = isset($_POST['numero_diagnostico']) ? intval($_POST['numero_diagnostico']) : null;
     $fecha_diagnostico = $_POST['fecha_diagnostico'] ?? null;
     $tipo_diagnostico = $_POST['tipo_diagnostico'] ?? null;
     $resultado = $_POST['resultado'] ?? null;
