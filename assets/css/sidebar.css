@@ -148,7 +148,7 @@ body {
 
 /* Flecha del tooltip */
 .navigation.active ul li a::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 100%;
   top: 50%;
@@ -526,7 +526,6 @@ body {
   /* height: 350px; */ /* Si usas height, asegúrate de que 'height: auto' esté comentado o eliminado */
 }
 
-
 /* ================= Modal de Confirmación ================= */
 .modal {
   display: none; /* Oculto por defecto */
@@ -613,7 +612,7 @@ body {
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.3s, transform 0.2s;
-  font-size: 1.1em; 
+  font-size: 1.1em;
 }
 
 .btn-cancel {
@@ -717,31 +716,30 @@ body {
 }
 
 .page-title {
-    position: absolute; 
-    left: 50%;
-    transform: translateX(-50%);
-    
-    /* CAMBIO CLAVE DE FUENTE */
-    font-family: 'Playfair Display', Georgia, serif;
-    
-    font-size: 3em; /* Lo hacemos un poco más grande */
-    font-weight: 700; /* Negrita */
-    
-    color: #0d4d28; 
-    
-    margin-top: 40px;
-    letter-spacing: 2px; /* Aumentamos el espaciado para un look premium */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-}
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 
+  /* CAMBIO CLAVE DE FUENTE */
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: 3em; /* Lo hacemos un poco más grande */
+  font-weight: 700; /* Negrita */
+
+  color: #0d4d28;
+
+  margin-top: 40px;
+  letter-spacing: 2px; /* Aumentamos el espaciado para un look premium */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
 
 /* Título de las Secciones (Beneficiarios, Diagnósticos, etc.) */
 .section-title {
-    /* Mantenemos un tamaño grande, pero menor al título principal */
-    font-size: 2.3em; /* Ligeramente más pequeño que el .page-title (2.5em -> 2.3em) */
-    font-weight: 700;
-    color: #000000; /* Negro estándar para el título de la sección */
-    margin: 0;
+  /* Mantenemos un tamaño grande, pero menor al título principal */
+  font-size: 2.3em; /* Ligeramente más pequeño que el .page-title (2.5em -> 2.3em) */
+  font-weight: 700;
+  color: #000000; /* Negro estándar para el título de la sección */
+  margin: 0;
 }
 
 .header-section .btn-regresar,
@@ -774,7 +772,6 @@ a.btn-regresar ion-icon {
   color: white !important;
   font-size: 1.4em;
 }
-
 
 #tablaBeneficiarios {
   padding-top: 20px;
@@ -1028,17 +1025,16 @@ select[disabled] {
   margin-bottom: 20px;
 }
 
-
 .search-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centra el buscador y los resultados */
-    padding: 20px;
-    background-color: #fcfcfc;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    border: 1px solid #ddd;
-    min-height: 585px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el buscador y los resultados */
+  padding: 20px;
+  background-color: #fcfcfc;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  border: 1px solid #ddd;
+  min-height: 585px;
 }
 
 .buscador {
@@ -1052,149 +1048,147 @@ select[disabled] {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-
 .search-label {
-    font-size: 1.6em;
-    font-weight: 700;
-    color: #1e6d40;
-    margin-bottom: 15px;
-    text-align: center;
-    width: 100%;
-    margin-top: 20px;
+  font-size: 1.6em;
+  font-weight: 700;
+  color: #1e6d40;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .input-group-custom {
-    display: flex;
-    margin-top: 10px;
-    width: 100%;
-    max-width: 70%;
-    margin: 0 auto; /* Centra el input */
-    border-radius: 50px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 70%;
+  margin: 0 auto; /* Centra el input */
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 #searchInput {
-    flex-grow: 1;
-    padding: 14px 20px;
-    border: 1px solid #ddd;
-    border-right: none;
-    outline: none;
-    font-size: 1.2em;
-    transition: all 0.3s;
+  flex-grow: 1;
+  padding: 14px 20px;
+  border: 1px solid #ddd;
+  border-right: none;
+  outline: none;
+  font-size: 1.2em;
+  transition: all 0.3s;
 }
 
 .btn-search-icon {
-    background-color: #239358;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    cursor: pointer;
-    font-size: 1.2em;
-    transition: background-color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: #239358;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .results-card {
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    max-width: 70%;
-    margin: 25px auto 0; /* Centra el contenedor de resultados y le da margen superior */
-    border-radius: 10px;
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  max-width: 70%;
+  margin: 25px auto 0; /* Centra el contenedor de resultados y le da margen superior */
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .results-list-container {
-    max-height: 250px;
-    overflow-y: auto;
+  max-height: 250px;
+  overflow-y: auto;
 }
 
 .search-results-summary {
-    font-size: 1.2em;
-    font-weight: 700;
-    color: #0d4d28;
-    padding: 10px 15px 5px;
-    width: 100%;
-    text-align: left;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #0d4d28;
+  padding: 10px 15px 5px;
+  width: 100%;
+  text-align: left;
 }
 
 .result-item {
-    padding: 10px 12px;
-    border-bottom: 1px solid #f0f0f0;
-    cursor: pointer;
-    font-size: 1.2em;
-    color: #333;
-    transition: background-color 0.1s, font-weight 0.1s;
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #333;
+  transition: background-color 0.1s, font-weight 0.1s;
 }
 
 .result-item:hover {
-    background-color: #e6f7ef;
-    color: #0d4d28;
-    font-weight: 700;
+  background-color: #e6f7ef;
+  color: #0d4d28;
+  font-weight: 700;
 }
 
 /* Estilos de botones de acción */
 .action-buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 40px;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  padding: 10px;
 }
 
 .btn-action-main {
-    display: flex;
-    align-items: center;
-    padding: 15px 35px;
-    font-size: 1.2em;
-    font-weight: 600;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    gap: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  padding: 15px 35px;
+  font-size: 1.2em;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 /* Botón Visualizar/Histórico (Unificado con estilo degradado) */
 #viewHistoryBtn {
-    background: linear-gradient(45deg, #239358, #0d4d28);
-    color: white;
+  background: linear-gradient(45deg, #239358, #0d4d28);
+  color: white;
 }
 
 #viewHistoryBtn:hover {
-    background: linear-gradient(45deg, #1f7b48, #0c4323);
-    transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(45deg, #1f7b48, #0c4323);
+  transform: translateY(-3px) scale(1.02);
 }
 
 /* Botón CANCELAR (Rojo para indicar reinicio/limpieza) */
 #cancelSelectionBtn {
-    background-color: #dc3545; /* Rojo de Bootstrap para peligro/cancelación */
-    color: white;
+  background-color: #dc3545; /* Rojo de Bootstrap para peligro/cancelación */
+  color: white;
 }
 
 #cancelSelectionBtn:hover {
-    background-color: #c82333;
-    transform: translateY(-3px) scale(1.02);
+  background-color: #c82333;
+  transform: translateY(-3px) scale(1.02);
 }
 
 /* Mensajes y placeholders */
 .result-placeholder {
-    padding: 10px;
-    text-align: center;
-    color: #888;
-    font-style: italic;
-    margin: 0;
+  padding: 10px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin: 0;
 }
 .no-results {
-    color: #c9302c;
+  color: #c9302c;
 }
-
 
 #tablaDiagnosticos {
   width: 100%;
@@ -1291,33 +1285,32 @@ button.btn-action-nuevo.btn-new,
 
 /* Modal oculto por defecto */
 #successModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5); /* Fondo semi-transparente */
-    display: none; /* Oculto por defecto */
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  display: none; /* Oculto por defecto */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 /* Contenido del modal centrado */
 .modal-content.success {
-    max-width: 400px;
-    width: 90%;
-    padding: 30px;
-    border: 2px solid #239358;
-    background: #fff;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  max-width: 400px;
+  width: 90%;
+  padding: 30px;
+  border: 2px solid #239358;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
-
 
 #tablaAdaptaciones {
   width: 100%;
@@ -1349,6 +1342,151 @@ button.btn-action-nuevo.btn-new,
 
 #tablaAdaptaciones tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+/* ================= SECCIÓN DE PERMISOS CON CHECKBOXES ================= */
+
+.permisos-section {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.permisos-title h4 {
+  font-size: 1.5em;
+  color: #003366;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+
+
+.permisos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas */
+  grid-template-rows: auto auto; /* Dos filas */
+  gap: 15px;
+  margin-top: 15px;
+  grid-auto-flow: column; /* Llena por columnas, no por filas */
+}
+
+/* Estilo del label del checkbox */
+.checkbox-label {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 12px 15px;
+  background-color: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+}
+
+.checkbox-label:hover {
+  border-color: #239358;
+  background-color: #f0f8f4;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(35, 147, 88, 0.2);
+}
+
+/* Ocultar el checkbox nativo */
+.checkbox-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Checkbox personalizado */
+.checkbox-custom {
+  position: relative;
+  height: 22px;
+  width: 22px;
+  background-color: white;
+  border: 2px solid #239358;
+  border-radius: 4px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+/* Cuando el checkbox está marcado */
+.checkbox-label input[type="checkbox"]:checked ~ .checkbox-custom {
+  background-color: #239358;
+  border-color: #239358;
+}
+
+/* Marca de verificación (checkmark) */
+.checkbox-custom::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Mostrar la marca cuando está checked */
+.checkbox-label input[type="checkbox"]:checked ~ .checkbox-custom::after {
+  display: block;
+}
+
+/* Texto del checkbox */
+.checkbox-text {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: #333;
+  user-select: none;
+  width: auto !important;
+  text-align: left !important;
+  margin-right: 0 !important;
+}
+
+/* Cuando el checkbox está marcado, cambiar color del texto */
+.checkbox-label input[type="checkbox"]:checked ~ .checkbox-text {
+  color: #0d4d28;
+}
+
+/* Efecto de focus para accesibilidad */
+.checkbox-label input[type="checkbox"]:focus ~ .checkbox-custom {
+  box-shadow: 0 0 0 3px rgba(35, 147, 88, 0.2);
+}
+
+/* Mensaje de validación pequeño */
+.validation-message-small {
+  display: none;
+  color: #e74c3c;
+  font-size: 0.9em;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  padding-left: 195px;
+  font-weight: 500;
+}
+
+/* Mensaje de validación global */
+.validation-message-global {
+  display: none;
+  color: #e74c3c;
+  font-size: 1em;
+  text-align: center;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #ffe6e6;
+  border: 1px solid #e74c3c;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
 /* ================= BOTONES DE ACCIÓN - DEGRADADOS ================= */
@@ -1383,8 +1521,8 @@ button.btn-action-nuevo.btn-new,
 }
 
 /* Botón Exportar - Degradado Azul */
-.exportar{
-  background: linear-gradient(90deg, #2196F3, #0D47A1) !important;
+.exportar {
+  background: linear-gradient(90deg, #2196f3, #0d47a1) !important;
   border: none;
   color: white !important;
   font-weight: 600;
@@ -1401,7 +1539,7 @@ button.btn-action-nuevo.btn-new,
 }
 
 .exportar:hover {
-  background: linear-gradient(90deg, #1976D2, #0A3A7A) !important;
+  background: linear-gradient(90deg, #1976d2, #0a3a7a) !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transform: translateY(-2px);
 }
@@ -1411,3 +1549,117 @@ button.btn-action-nuevo.btn-new,
   font-size: 1.2em;
 }
 
+/* ========================================
+   ESTILOS PARA MÓDULO DE USUARIOS
+   ======================================== */
+
+/* Asterisco rojo para campos obligatorios */
+.required-asterisk {
+  color: #e74c3c;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+/* Contenedor para campo de contraseña con botón de ojo */
+.password-field {
+  position: relative;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #2c3e50;
+}
+
+.toggle-password .eye-icon {
+  font-size: 20px;
+}
+
+/* Grid de permisos en dos columnas */
+.permisos-grid-two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 60px; /* gap vertical de 20px, horizontal de 60px */
+  margin-top: 15px;
+}
+
+/* Estilo para cada checkbox con su etiqueta */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.checkbox-label input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+}
+
+.checkbox-text {
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+  margin-right: auto;
+}
+
+.checkbox-label input[type="checkbox"]:disabled ~ .checkbox-text {
+  color: #999;
+}
+
+/* Sección de permisos */
+.permisos-section {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.permisos-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Responsive para checkboxes */
+@media (max-width: 768px) {
+  .permisos-grid-two-columns {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
