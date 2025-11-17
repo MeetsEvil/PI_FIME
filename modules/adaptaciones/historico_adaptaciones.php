@@ -64,48 +64,229 @@ $titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_comp
     <!-- Custom Font (Mantenido) -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
-    <!-- *** CSS INTEGRADO AQUÍ PARA GARANTIZAR ESPECIFICIDAD Y ORDEN DE CARGA *** -->
     <style>
-        /* Aumentamos la especificidad incluyendo el prefijo dataTable de la librería */
-        #tablaAdaptaciones,
-        table.dataTable#tablaAdaptaciones {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-family: Arial, sans-serif;
-            font-size: 0.95em;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .diagnosticos-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+            display: flex;
+            flex-direction: column;
         }
 
-        #tablaAdaptaciones th,
-        #tablaAdaptaciones td,
-        table.dataTable#tablaAdaptaciones th,
-        table.dataTable#tablaAdaptaciones td {
-            padding: 10px 15px;
-            text-align: left;
+        .table-wrapper {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 570px;
         }
 
-        #tablaAdaptaciones th,
-        table.dataTable#tablaAdaptaciones th {
-            background-color: #239358;
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
+        .header-section-tabla {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            border-bottom: 2px solid #f0f0f0 !important;
         }
 
-        #tablaAdaptaciones tbody tr:hover,
-        table.dataTable#tablaAdaptaciones tbody tr:hover {
-            background-color: #f1f1f1 !important;
-            cursor: pointer;
+        .section-title {
+            font-size: 2.3em;
+            font-weight: 700;
+            color: #000000;
+            margin: 0;
         }
 
-        #tablaAdaptaciones tr:nth-child(even),
-        table.dataTable#tablaAdaptaciones tr.even {
-            background-color: #f9f9f9;
+        .btn-new, .btn-action-nuevo {
+            background: #239358 !important;
+            border: none !important;
+            color: white !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px !important;
+            padding: 10px 20px !important;
+            border-radius: 50px !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+            transition: all 0.3s ease !important;
         }
 
-        div.dt-buttons .dt-button {
-            margin-bottom: 25px;
+        .btn-new:hover, .btn-action-nuevo:hover {
+            background: #1a7043 !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .dataTables_wrapper {
+            padding: 20px 0 !important;
+            width: 100% !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border: 2px solid #239358 !important;
+            border-radius: 8px !important;
+            padding: 8px 15px !important;
+            margin-left: 10px !important;
+            font-size: 0.95em !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border: 2px solid #239358 !important;
+            border-radius: 8px !important;
+            padding: 5px 10px !important;
+            margin: 0 10px !important;
+        }
+
+        .dt-buttons {
+            margin-bottom: 10px !important;
+            display: flex !important;
+            gap: 8px !important;
+        }
+
+        .btn-dt {
+            background: #239358 !important;
+            border: none !important;
+            color: white !important;
+            padding: 8px 15px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            font-size: 0.9em !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-dt:hover {
+            background: #1a7043 !important;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        #tablaAdaptaciones {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            background: white !important;
+        }
+
+        #tablaAdaptaciones thead {
+            background: #239358 !important;
+        }
+
+        #tablaAdaptaciones th {
+            background: transparent !important;
+            color: white !important;
+            font-weight: 600 !important;
+            padding: 15px 10px !important;
+            text-align: center !important;
+            font-size: 0.95em !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        #tablaAdaptaciones td {
+            padding: 12px 10px !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+            border-bottom: 1px solid #f0f0f0 !important;
+            font-size: 0.9em !important;
+        }
+
+        #tablaAdaptaciones tbody tr {
+            transition: all 0.2s ease !important;
+        }
+
+        #tablaAdaptaciones tbody tr:hover {
+            background-color: #f0f9f4 !important;
+            transform: scale(1.01) !important;
+            box-shadow: 0 2px 5px rgba(35, 147, 88, 0.1) !important;
+        }
+
+        #tablaAdaptaciones tbody tr:nth-child(even) {
+            background-color: #fafafa !important;
+        }
+
+        #tablaAdaptaciones tbody tr:nth-child(even):hover {
+            background-color: #f0f9f4 !important;
+        }
+
+        #tablaAdaptaciones thead tr:hover {
+            background-color: #239358 !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        #tablaAdaptaciones thead th:hover {
+            background-color: transparent !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate {
+            padding-top: 20px !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 8px 12px !important;
+            margin: 0 3px !important;
+            border-radius: 8px !important;
+            border: 2px solid #239358 !important;
+            background: white !important;
+            color: #239358 !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: linear-gradient(90deg, #2db36a, #239358) !important;
+            color: white !important;
+            border: 2px solid #239358 !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: linear-gradient(90deg, #2db36a, #239358) !important;
+            color: white !important;
+            border: 2px solid #239358 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            padding-top: 20px !important;
+            color: #666 !important;
+            font-size: 0.9em !important;
+        }
+
+        .dataTables_wrapper .dataTables_length label,
+        .dataTables_wrapper .dataTables_filter label {
+            font-weight: 500 !important;
+            color: #333 !important;
+        }
+
+        .btn-action2 {
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-action2:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .btn-edit:hover {
+            background: #e0a800 !important;
+        }
+
+        .btn-view:hover {
+            background: #218838 !important;
         }
     </style>
 
@@ -125,90 +306,100 @@ $titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_comp
 </head>
 
 <body>
-    <div class="navigation">
-        <?php
-        $currentPage = basename($_SERVER['PHP_SELF']);
-        ?>
-        <ul>
-            <li>
-                <a href="#">
-                    <span class="icon">
-                        <ion-icon name="school-outline"></ion-icon>
-                    </span>
-                    <span class="title">FIME Inclusivo</span>
-                </a>
-            </li>
-
-            <li class="<?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
-                <a href="../../modules/auth/dashboard.php" data-tooltip="Inicio">
-                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                    <span class="title">Inicio</span>
-                </a>
-            </li>
-
-            <?php
-            $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
-                <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
-                    <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
-                    <span class="title">Beneficiarios</span>
-                </a>
-            </li>
-
-            <?php
-            $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
-                <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
-                    <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                    <span class="title">Seguimiento</span>
-                </a>
-            </li>
-
-            <?php
-            $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
-                <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
-                    <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
-                    <span class="title">Adaptaciones</span>
-                </a>
-            </li>
-
-            <?php
-            $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
-                <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
-                    <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
-                    <span class="title">Intervenciones</span>
-                </a>
-            </li>
-
-            <?php
-            if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
-            ?>
-                <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                        <span class="title">Profesionales</span>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="school-outline"></ion-icon>
+                        </span>
+                        <span class="title">FIME Inclusivo</span>
                     </a>
                 </li>
-            <?php
-            }
-            ?>
 
-            <li>
-                <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
-                    <span class="icon">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                    </span>
-                    <span class="title">Cerrar Sesión</span>
-                </a>
-            </li>
-        </ul>
+                <li class="<?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/auth/dashboard.php" data-tooltip="Inicio">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Inicio</span>
+                    </a>
+                </li>
+
+                <?php
+                // Beneficiarios
+                $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
+                        <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                        <span class="title">Beneficiarios</span>
+                    </a>
+                </li>
+
+                <?php
+                // Diagnosticos
+                $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
+                        <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
+                        <span class="title">Seguimiento</span>
+                    </a>
+                </li>
+
+                <?php
+                // Adaptaciones
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
+                        <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
+                        <span class="title">Adaptaciones</span>
+                    </a>
+                </li>
+
+                <?php
+                // Intervenciones
+                $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
+                        <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
+                        <span class="title">Intervenciones</span>
+                    </a>
+                </li>
+
+                <?php
+                // Usuarios - Solo visible para Administradores
+                if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
+                ?>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
+                        </a>
+                    </li>
+                <?php
+                }
+                ?>
+
+
+                <li>
+                    <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
     </div>
 
 
@@ -243,27 +434,55 @@ $titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_comp
                 </div>
             </div>
             <!-- TABLA DE HISTÓRICO DE ADAPTACIONES-->
-            <table id="tablaAdaptaciones" class="tablaAdaptaciones" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>N°</th>
-                        <th>Tipo Adaptación</th>
-                        <th>Fecha Implementación</th>
-                        <th>Profesional Asignado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Los datos se cargarán aquí vía AJAX/DataTables -->
-                </tbody>
-            </table>
+            <div class="table-wrapper">
+                <table id="tablaAdaptaciones" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Tipo Adaptación</th>
+                            <th>Fecha Implementación</th>
+                            <th>Profesional Asignado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos se cargarán aquí vía AJAX/DataTables -->
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Campo oculto para DataTables sepa qué beneficiario buscar -->
             <input type="hidden" id="beneficiarioId" value="<?php echo $beneficiario_id; ?>">
         </div>
     </div>
 
-    <!-- Modales y Scripts Externos omitidos por brevedad -->
+    <!-- Modal de confirmación de eliminación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="cerrarModalEliminar()">&times;</span>
+                <h2>Eliminar Adaptación</h2>
+            </div>
+            <div class="modal-body">
+                <p style="color: #000000; font-size: 1em;">¿Estás seguro de que deseas eliminar este registro de adaptación?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalEliminar()">Cancelar</button>
+                <a href="#" id="btnConfirmarEliminar" class="btn-confirm" style="background: #dc3545;">Eliminar</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de éxito al eliminar -->
+    <div id="successDeleteModal" class="modal">
+        <div class="modal-content success">
+            <div class="modal-body">
+                <h2 class="success-title">¡Adaptación Eliminada!</h2>
+                <p style="margin-top: 8px;">El registro de adaptación ha sido eliminado correctamente.</p>
+            </div>
+        </div>
+    </div>
+
     <script src="../../assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -272,7 +491,13 @@ $titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_comp
             const beneficiarioId = $('#beneficiarioId').val();
 
             $('#tablaAdaptaciones').DataTable({
-                "ajax": "get_adaptaciones_beneficiario.php?id=" + beneficiarioId,
+                "ajax": {
+                    "url": "get_adaptaciones_beneficiario.php?id=" + beneficiarioId,
+                    "dataSrc": "data",
+                    "error": function(xhr, error, code) {
+                        console.error('Error al cargar datos:', error);
+                    }
+                },
                 "columns": [{
                         "data": "numero_adaptacion"
                     },
@@ -291,58 +516,70 @@ $titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_comp
                         "searchable": false
                     }
                 ],
-
-                // ==============================================================
-                // === CAMBIOS CLAVE AÑADIDOS: columnDefs y order inicial ===
-                // ==============================================================
-
-                // 1. Define la columna 0 (numero_adaptacion) como NUMÉRICA
                 "columnDefs": [{
                     "type": "num",
                     "targets": 0
                 }],
-
-                // 2. Ordena la tabla inicialmente por la columna 0 (N°) ascendente (asc)
                 "order": [
                     [0, "asc"]
                 ],
-
-                // ==============================================================
-
-                "pageLength": 7,
-                "lengthMenu": [
-                    [7, 14, 28, 50, -1],
-                    [7, 14, 28, 50, "Todos"]
-                ],
+                "pageLength": 10,
+                "lengthMenu": [10, 25, 50, 100],
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "zeroRecords": "No se encontraron registros coincidentes"
                 },
-
-                // NOTA: Se comenta el orden anterior para usar el nuevo orden por columna 0:
-                // "order": [[2, "desc"]], // Ordena por fecha de implementación (columna 2) descendente
-
-                dom: 'Bfrtip',
-                buttons: [{
+                "dom": 'Bfrtip',
+                "buttons": [{
                         extend: 'copyHtml5',
-                        text: 'Copiar',
-                        className: 'btn btn-sm btn-secondary'
+                        text: '<i class="fas fa-copy"></i> Copiar',
+                        className: 'btn-dt',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
                     },
                     {
                         extend: 'excelHtml5',
-                        text: 'Excel',
-                        className: 'btn btn-sm btn-success'
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        className: 'btn-dt',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
                     },
                     {
                         extend: 'pdfHtml5',
-                        text: 'PDF',
-                        className: 'btn btn-sm btn-danger',
+                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        className: 'btn-dt',
                         orientation: 'landscape',
                         pageSize: 'A4',
-                        title: 'Histórico de Adaptaciones - ' + '<?php echo htmlspecialchars($nombre_completo_beneficiario); ?>'
+                        title: 'Histórico de Adaptaciones - <?php echo htmlspecialchars($nombre_completo_beneficiario); ?>',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
                     }
                 ]
             });
+
+            <?php if (isset($_SESSION['success_delete']) && $_SESSION['success_delete'] === true): ?>
+                document.getElementById('successDeleteModal').style.display = 'flex';
+                setTimeout(function() {
+                    document.getElementById('successDeleteModal').style.display = 'none';
+                }, 2000);
+                <?php unset($_SESSION['success_delete']); ?>
+            <?php endif; ?>
         });
+
+        function confirmarEliminar(id) {
+            document.getElementById('deleteModal').style.display = 'flex';
+            document.getElementById('btnConfirmarEliminar').href = 'eliminar_adaptacion.php?id=' + id + '&beneficiario_id=' + $('#beneficiarioId').val();
+        }
+
+        function cerrarModalEliminar() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
     </script>
 </body>
 

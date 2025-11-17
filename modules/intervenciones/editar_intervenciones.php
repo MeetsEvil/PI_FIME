@@ -94,10 +94,11 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
     <div class="container">
-        <?php
-        $currentPage = basename($_SERVER['PHP_SELF']);
-        ?>
         <div class="navigation">
             <ul>
                 <li>
@@ -117,6 +118,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
+                // Beneficiarios
                 $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
@@ -127,6 +129,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
+                // Diagnosticos
                 $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
@@ -137,7 +140,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
-                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
+                // Adaptaciones
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
@@ -147,6 +151,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
+                // Intervenciones
                 $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
@@ -157,18 +162,20 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
                 ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
                 <?php
                 }
                 ?>
+
 
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
@@ -181,6 +188,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             </ul>
         </div>
 
+    </div>
         <div class="main">
             <div class="topbar">
                 <div class="toggle"><ion-icon name="menu-outline"></ion-icon></div>

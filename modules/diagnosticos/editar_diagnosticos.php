@@ -59,17 +59,36 @@ while ($row = mysqli_fetch_assoc($result)) {
     <title>Editar Seguimiento #<?php echo htmlspecialchars($id_diagnostico); ?></title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .diagnosticos-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
     <div class="container">
-        <?php
-        // Obtiene solo el archivo actual sin parámetros
-        $currentPage = basename($_SERVER['PHP_SELF']);
-        ?>
         <div class="navigation">
             <ul>
                 <li>
@@ -133,14 +152,14 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
-                // Profesionales - Solo visible para Administradores
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
                 ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
                 <?php
@@ -159,119 +178,109 @@ while ($row = mysqli_fetch_assoc($result)) {
             </ul>
         </div>
 
+    </div>
 
-        <div class="main">
-            <div class="topbar">
-                <div class="toggle"><ion-icon name="menu-outline"></ion-icon></div>
-                <h2 class="page-title">PROGRAMA DE INCLUSIÓN</h2>
-                <div class="user-box">
-                    <div class="user-info">
-                        <div class="user-name"><?php echo htmlspecialchars($user); ?></div>
-                        <div class="user-role"><?php echo htmlspecialchars($_SESSION['rol']); ?></div>
-                    </div>
-                    <button class="info-btn" onclick="mostrarInfo()">
-                        <ion-icon name="information-outline"></ion-icon>
-                    </button>
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+            <h2 class="page-title">PROGRAMA DE INCLUSIÓN</h2>
+            <div class="user-box">
+                <div class="user-info">
+                    <div class="user-name"><?php echo htmlspecialchars($user); ?></div>
+                    <div class="user-role"><?php echo htmlspecialchars($_SESSION['rol']); ?></div>
                 </div>
+                <button class="info-btn" onclick="mostrarInfo()">
+                    <ion-icon name="information-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="diagnosticos-container" style="min-height: 85vh;">
+            <div class="header-section">
+                <h2 class="section-title">Editar Seguimiento: <?php echo htmlspecialchars($beneficiario_nombre); ?></h2>
+                <a href="historico_diagnosticos.php?id=<?php echo $beneficiario_id; ?>" class="btn-regresar">
+                    <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
+                </a>
             </div>
 
-            <div class="diagnosticos-container" style="min-height: 85vh;">
-                <div class="header-section">
-                    <h2 class="section-title">Editar Seguimiento de <?php echo htmlspecialchars($beneficiario_nombre); ?></h2>
-                    <a href="historico_diagnosticos.php?id=<?php echo $beneficiario_id; ?>" class="btn-regresar">
-                        <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
-                    </a>
-                </div>
+            <div class="form-pagination-container" style="min-height: 500px;">
+                <form id="beneficiaryForm" action="actualizar_diagnostico.php" method="POST" onsubmit="return false;">
+                    
+                    <input type="hidden" name="id_diagnostico" value="<?php echo htmlspecialchars($id_diagnostico); ?>">
+                    <input type="hidden" name="beneficiario_id" value="<?php echo htmlspecialchars($beneficiario_id); ?>">
 
-                <div class="form-pagination-container">
-                    <form id="editDiagnosisForm" action="actualizar_diagnostico.php" method="POST">
-                        <input type="hidden" name="id_diagnostico" value="<?php echo $id_diagnostico; ?>">
-                        <input type="hidden" name="beneficiario_id" value="<?php echo htmlspecialchars($beneficiario_id); ?>">
+                    <div class="form-page is-active" data-page="1">
+                        <h3>Detalles de Seguimiento</h3>
 
-                        <div class="form-page is-active" data-page="1">
-                            <h3>Detalles de Seguimiento</h3>
-
-                            <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
-                                <label style="flex:1;"><span>N° Seguimiento:</span>
-                                    <!-- Mostramos el número de seguimiento, es de solo lectura y crucial -->
-                                    <input type="text"
-                                        value="<?php echo htmlspecialchars($diagnostico['numero_diagnostico']); ?>"
-                                        readonly
-                                        name="numero_diagnostico"
-                                        style="background-color:#f0f0f0; font-weight: 700;">
-                                </label>
-                                <label style="flex:2;"><span>Beneficiario Asignado:</span>
-                                    <input type="text" value="<?php echo htmlspecialchars($beneficiario_nombre); ?>" readonly style="background-color:#f0f0f0;">
-                                </label>
-                            </div>
-
-                            <label><span>Fecha de Seguimiento:</span>
-                                <input type="date" name="fecha_diagnostico" required value="<?php echo htmlspecialchars($diagnostico['fecha_diagnostico']); ?>">
+                        <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
+                            <label style="flex: 1;">
+                                <span>N° de Seguimiento:</span>
+                                <input type="text" value="<?php echo htmlspecialchars($diagnostico['numero_diagnostico'] ?? 'N/A'); ?>" readonly style="background-color: #f0f0f0; font-weight: 700;">
                             </label>
 
-                            <label><span>Tipo de Seguimiento:</span>
-                                <select name="tipo_diagnostico" required>
-                                    <?php
-                                    $tipos = ["Médico General", "Psicológico", "Psicopedagógico", "Oftalmológico", "Auditivo", "Otro"];
-                                    foreach ($tipos as $tipo) {
-                                        $sel = ($diagnostico['tipo_diagnostico'] == $tipo) ? "selected" : "";
-                                        echo "<option value='$tipo' $sel>$tipo</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </label>
-
-                            <label><span>Profesional Asignado:</span>
-                                <input type="text"
-                                    name="profesional_asignado_nombre"
-                                    list="profesionales-list"
-                                    id="profesionalAsignadoNombre"
-                                    value="<?php
-                                            foreach ($profesionales as $p) {
-                                                if ($p['id'] == $diagnostico['profesional_id']) {
-                                                    echo htmlspecialchars($p['nombre']);
-                                                    break;
-                                                }
-                                            }
-                                            ?>"
-                                    required>
-
-                                <input type="hidden" name="profesional_asignado_id" id="profesionalAsignadoId" value="<?php echo htmlspecialchars($diagnostico['profesional_id']); ?>">
-                                <datalist id="profesionales-list">
-                                    <?php foreach ($profesionales as $p): ?>
-                                        <option data-id="<?php echo $p['id']; ?>" value="<?php echo htmlspecialchars($p['nombre']); ?>"></option>
-                                    <?php endforeach; ?>
-                                </datalist>
-                            </label>
-                            <div id="profesionalError" class="validation-message-small"></div>
-
-                            <label><span>Resultado:</span>
-                                <textarea name="resultado" required><?php echo htmlspecialchars($diagnostico['resultado']); ?></textarea>
-                            </label>
-
-                            <label><span>Observaciones:</span>
-                                <textarea name="observaciones"><?php echo htmlspecialchars($diagnostico['observaciones']); ?></textarea>
-                            </label>
-
-                            <label><span>Archivo Adjunto:</span>
-                                <input type="text" name="archivo_adjunto" value="<?php echo htmlspecialchars($diagnostico['archivo_adjunto']); ?>">
+                            <label style="flex: 2;">
+                                <span>Beneficiario Asignado:</span>
+                                <input type="text" value="<?php echo htmlspecialchars($beneficiario_nombre); ?>" readonly style="background-color: #f0f0f0;">
                             </label>
                         </div>
-                    </form>
-                    <div class="pagination-buttons">
-                        <button type="button" class="btn-pagination btn-next" id="updateDiagnosisBtn" style="margin-top: 20px;">
-                            Guardar Cambios <ion-icon name="checkmark-circle-outline"></ion-icon>
-                        </button>
-                    </div>
-                    <div id="formValidationMessage" class="validation-message-global"></div>
-                </div>
 
+                        <label><span>Fecha de Seguimiento:</span><input type="date" name="fecha_diagnostico" value="<?php echo htmlspecialchars($diagnostico['fecha_diagnostico'] ?? ''); ?>" required></label>
+
+                        <label><span>Tipo de Seguimiento:</span>
+                            <select name="tipo_diagnostico" required>
+                                <option value="">Selecciona...</option>
+                                <option value="Médico General" <?php echo ($diagnostico['tipo_diagnostico'] ?? '') == 'Médico General' ? 'selected' : ''; ?>>Médico General</option>
+                                <option value="Psicológico" <?php echo ($diagnostico['tipo_diagnostico'] ?? '') == 'Psicológico' ? 'selected' : ''; ?>>Psicológico</option>
+                                <option value="Psicopedagógico" <?php echo ($diagnostico['tipo_diagnostico'] ?? '') == 'Psicopedagógico' ? 'selected' : ''; ?>>Psicopedagógico</option>
+                                <option value="Oftalmológico" <?php echo ($diagnostico['tipo_diagnostico'] ?? '') == 'Oftalmológico' ? 'selected' : ''; ?>>Oftalmológico</option>
+                                <option value="Auditivo" <?php echo ($diagnostico['tipo_diagnostico'] ?? '') == 'Auditivo' ? 'selected' : ''; ?>>Auditivo</option>
+                                <option value="Otro" <?php echo ($diagnostico['tipo_diagnostico'] ?? '') == 'Otro' ? 'selected' : ''; ?>>Otro</option>
+                            </select>
+                        </label>
+
+                        <label><span>Profesional Asignado:</span>
+                            <input type="text" name="profesional_asignado_nombre" list="profesionales-list" id="profesionalAsignadoNombre" value="<?php
+                                $profesional_nombre = '';
+                                if (!empty($diagnostico['profesional_asignado'])) {
+                                    $profesional_encontrado = array_search($diagnostico['profesional_asignado'], array_column($profesionales, 'id'));
+                                    $profesional_nombre = $profesional_encontrado !== false ? $profesionales[$profesional_encontrado]['nombre'] : '';
+                                }
+                                echo htmlspecialchars($profesional_nombre);
+                            ?>" required>
+                            <input type="hidden" name="profesional_asignado_id" id="profesionalAsignadoId" value="<?php echo htmlspecialchars($diagnostico['profesional_asignado'] ?? ''); ?>">
+                            <datalist id="profesionales-list">
+                                <?php foreach ($profesionales as $profesional): ?>
+                                    <option data-id="<?php echo $profesional['id']; ?>" value="<?php echo htmlspecialchars($profesional['nombre']); ?>">
+                                <?php endforeach; ?>
+                            </datalist>
+                        </label>
+                        <div id="profesionalError" class="validation-message-small"></div>
+
+                        <label><span>Resultado (Detalles):</span><textarea name="resultado" required placeholder="Descripción detallada del seguimiento y hallazgos."><?php echo htmlspecialchars($diagnostico['resultado'] ?? ''); ?></textarea></label>
+
+                        <label><span>Observaciones:</span><textarea name="observaciones" placeholder="Recomendaciones, próximos pasos o notas adicionales."><?php echo htmlspecialchars($diagnostico['observaciones'] ?? ''); ?></textarea></label>
+
+                        <label><span>Archivo Adjunto (Ruta):</span><input type="text" name="archivo_adjunto" value="<?php echo htmlspecialchars($diagnostico['archivo_adjunto'] ?? ''); ?>" placeholder="Ruta o nombre del archivo adjunto (opcional)"></label>
+
+                    </div>
+
+                </form>
             </div>
+
+            <div class="pagination-buttons">
+                <button type="button" class="btn-pagination btn-next" id="submitDiagnosisBtn">
+                    Actualizar Seguimiento <ion-icon name="checkmark-circle-outline"></ion-icon>
+                </button>
+            </div>
+            <div id="formValidationMessage" class="validation-message-global"></div>
+
         </div>
     </div>
 
     <!-- Modal de éxito -->
-    <div id="successModal" class="modal">
+    <div id="successModal" class="modal"></div>
         <div class="modal-content success">
             <div class="modal-body">
                 <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>

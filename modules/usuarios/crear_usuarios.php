@@ -25,6 +25,80 @@ $titulo_seccion = "Nuevo Usuario";
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .diagnosticos-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            /* borde negro */
+            /* Degradado y bordes */
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+            /* Dimensiones */
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+
+            /* Configuración del layout interno */
+            display: flex;
+            flex-direction: column;
+            /* Cambiado para apilar los elementos verticalmente */
+            /* Aquí se elimina justify-content: center y align-items: center */
+        }
+
+        @media (max-width: 1200px) {
+            .page-title {
+                font-size: 1.2em !important;
+            }
+
+            .diagnosticos-container {
+                margin-left: 20px !important;
+                margin-right: 20px !important;
+                width: calc(100% - 40px) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1em !important;
+            }
+
+            .diagnosticos-container {
+                margin: 20px auto !important;
+                margin-left: 10px !important;
+                width: calc(100% - 20px) !important;
+                padding: 15px !important;
+            }
+
+            .section-title {
+                font-size: 1.8em !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 0.9em !important;
+            }
+
+            .diagnosticos-container {
+                margin: 10px auto !important;
+                margin-left: 5px !important;
+                width: calc(100% - 10px) !important;
+                padding: 10px !important;
+            }
+
+            .section-title {
+                font-size: 1.5em !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -155,17 +229,17 @@ $titulo_seccion = "Nuevo Usuario";
                     <div class="form-page is-active" data-page="1">
                         <h3>Datos Personales</h3>
 
-                        <label><span>Nombre: <span class="required-asterisk">*</span></span><input type="text" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras y espacios." maxlength="100" required></label>
+                        <label><span>Nombre:</span><input type="text" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras y espacios." maxlength="100" required></label>
 
-                        <label><span>Apellido Paterno: <span class="required-asterisk">*</span></span><input type="text" name="apellido_paterno" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras y espacios." maxlength="100" required></label>
+                        <label><span>Apellido Paterno:</span><input type="text" name="apellido_paterno" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras y espacios." maxlength="100" required></label>
 
                         <label><span>Apellido Materno:</span><input type="text" name="apellido_materno" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras y espacios." maxlength="100"></label>
 
-                        <label><span>Correo: <span class="required-asterisk">*</span></span><input type="email" name="correo_institucional" required title="Ingresa un correo electrónico válido."></label>
+                        <label><span>Correo:</span><input type="email" name="correo_institucional" required title="Ingresa un correo electrónico válido."></label>
 
-                        <label><span>Teléfono:</span><input type="text" name="telefono" minlength="10" maxlength="10" pattern="[0-9]{10}" title="El teléfono debe tener exactamente 10 dígitos." placeholder="10 dígitos"></label>
+                        <label><span>Teléfono:</span><input type="tel" name="telefono" minlength="10" maxlength="10" pattern="[0-9]{10}" title="El teléfono debe tener exactamente 10 dígitos." placeholder="10 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></label>
 
-                        <label><span>Especialidad: <span class="required-asterisk">*</span></span>
+                        <label><span>Especialidad:</span>
                             <select name="especialidad" required>
                                 <option value="">Selecciona...</option>
                                 <option value="Psicología">Psicología</option>
@@ -182,10 +256,10 @@ $titulo_seccion = "Nuevo Usuario";
                     <div class="form-page" data-page="2">
                         <h3>Datos de Acceso</h3>
 
-                        <label><span>Usuario: <span class="required-asterisk">*</span></span><input type="text" name="usuario" minlength="4" maxlength="50" required title="El usuario debe tener entre 4 y 50 caracteres."></label>
+                        <label><span>Usuario:</span><input type="text" name="usuario" minlength="4" maxlength="50" required title="El usuario debe tener entre 4 y 50 caracteres."></label>
 
                         <label class="password-field">
-                            <span>Contraseña: <span class="required-asterisk">*</span></span>
+                            <span>Contraseña:</span>
                             <div class="password-input-wrapper">
                                 <input type="password" name="contrasena" id="contrasena" required minlength="4" title="La contraseña debe tener al menos 4 caracteres.">
                                 <button type="button" class="toggle-password" onclick="togglePassword('contrasena')">
@@ -195,7 +269,7 @@ $titulo_seccion = "Nuevo Usuario";
                         </label>
 
                         <label class="password-field">
-                            <span>Confirmar Contraseña: <span class="required-asterisk">*</span></span>
+                            <span>Confirmar Contraseña:</span>
                             <div class="password-input-wrapper">
                                 <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required minlength="4" title="Confirma tu contraseña.">
                                 <button type="button" class="toggle-password" onclick="togglePassword('confirmar_contrasena')">
@@ -205,7 +279,7 @@ $titulo_seccion = "Nuevo Usuario";
                         </label>
                         <div id="passwordError" class="validation-message-small"></div>
 
-                        <label><span>Rol: <span class="required-asterisk">*</span></span>
+                        <label><span>Rol:</span>
                             <select name="rol" required>
                                 <option value="">Selecciona...</option>
                                 <option value="Administrador">Administrador</option>
@@ -214,38 +288,34 @@ $titulo_seccion = "Nuevo Usuario";
                             </select>
                         </label>
 
-                        <label><span>Estado: <span class="required-asterisk">*</span></span>
+                        <label><span>Estado:</span>
                             <select name="estado" required>
                                 <option value="Activo">Activo</option>
                                 <option value="Inactivo">Inactivo</option>
                             </select>
                         </label>
 
-                        <div class="permisos-section">
-                            <h4 class="permisos-title" style="  font-size: 1em; color: #003366; text-align: center; margin-bottom: 15px; margin-top: 25px; font-weight: 700;">Permisos de Acceso</h4>
+                        <h4 style="font-size: 1.1em; color: #003366; margin-top: 25px; margin-bottom: 15px; font-weight: 600; text-align: center;">Permisos de Acceso</h4>
 
-                            <div class="permisos-grid-two-columns">
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Beneficiarios</span>
-                                    <input type="checkbox" name="permiso_beneficiario" value="1">
-                                </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="permiso_beneficiario" value="1" style="width: 20px; height: 20px; cursor: pointer;">
+                            <span>Beneficiarios</span>
+                        </label>
 
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Seguimiento</span>
-                                    <input type="checkbox" name="permiso_diagnostico" value="1">
-                                </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="permiso_diagnostico" value="1" style="width: 20px; height: 20px; cursor: pointer;">
+                            <span>Seguimiento</span>
+                        </label>
 
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Adaptaciones</span>
-                                    <input type="checkbox" name="permiso_adaptacion" value="1">
-                                </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="permiso_adaptacion" value="1" style="width: 20px; height: 20px; cursor: pointer;">
+                            <span>Adaptaciones</span>
+                        </label>
 
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Intervenciones</span>
-                                    <input type="checkbox" name="permiso_intervencion" value="1">
-                                </label>
-                            </div>
-                        </div>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="permiso_intervencion" value="1" style="width: 20px; height: 20px; cursor: pointer;">
+                            <span>Intervenciones</span>
+                        </label>
                     </div>
 
                 </form>

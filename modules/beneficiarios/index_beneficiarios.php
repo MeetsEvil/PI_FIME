@@ -39,6 +39,239 @@ $user = $_SESSION['usuarioingresando'];
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
+    <style>
+        .beneficiary-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 570px;
+        }
+
+        .beneficiary-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-section {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-bottom: 17px !important;
+            padding-bottom: 15px !important;
+            border-bottom: 2px solid #f0f0f0 !important;
+        }
+
+        .section-title {
+            font-size: 2.3em;
+            font-weight: 700;
+            color: #000000;
+            margin: 0;
+        }
+
+        .btn-new {
+            background: #239358 !important;
+            border: none !important;
+            color: white !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px !important;
+            padding: 10px 20px !important;
+            border-radius: 50px !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-new:hover {
+            background: #1a7043 !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .dataTables_wrapper {
+            padding: 20px 0 !important;
+            width: 100% !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border: 2px solid #239358 !important;
+            border-radius: 8px !important;
+            padding: 8px 15px !important;
+            margin-left: 10px !important;
+            font-size: 0.95em !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border: 2px solid #239358 !important;
+            border-radius: 8px !important;
+            padding: 5px 10px !important;
+            margin: 0 10px !important;
+        }
+
+        .dt-buttons {
+            margin-bottom: 10px !important;
+            display: flex !important;
+            gap: 8px !important;
+        }
+
+        .btn-dt {
+            background: #239358 !important;
+            border: none !important;
+            color: white !important;
+            padding: 8px 15px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            font-size: 0.9em !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-dt:hover {
+            background: #1a7043 !important;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        #tablaBeneficiarios {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            background: white !important;
+        }
+
+        #tablaBeneficiarios thead {
+            background: #239358 !important;
+        }
+
+        #tablaBeneficiarios th {
+            background: transparent !important;
+            color: white !important;
+            font-weight: 600 !important;
+            padding: 15px 10px !important;
+            text-align: center !important;
+            font-size: 0.95em !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        #tablaBeneficiarios td {
+            padding: 12px 10px !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+            border-bottom: 1px solid #f0f0f0 !important;
+            font-size: 0.9em !important;
+        }
+
+        #tablaBeneficiarios tbody tr {
+            transition: all 0.2s ease !important;
+        }
+
+        #tablaBeneficiarios tbody tr:hover {
+            background-color: #f0f9f4 !important;
+            transform: scale(1.01) !important;
+            box-shadow: 0 2px 5px rgba(35, 147, 88, 0.1) !important;
+        }
+
+        #tablaBeneficiarios tbody tr:nth-child(even) {
+            background-color: #fafafa !important;
+        }
+
+        #tablaBeneficiarios tbody tr:nth-child(even):hover {
+            background-color: #f0f9f4 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate {
+            padding-top: 20px !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 8px 12px !important;
+            margin: 0 3px !important;
+            border-radius: 8px !important;
+            border: 2px solid #239358 !important;
+            background: white !important;
+            color: #239358 !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: linear-gradient(90deg, #2db36a, #239358) !important;
+            color: white !important;
+            border: 2px solid #239358 !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: linear-gradient(90deg, #2db36a, #239358) !important;
+            color: white !important;
+            border: 2px solid #239358 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            padding-top: 20px !important;
+            color: #666 !important;
+            font-size: 0.9em !important;
+        }
+
+        .dataTables_wrapper .dataTables_length label,
+        .dataTables_wrapper .dataTables_filter label {
+            font-weight: 500 !important;
+            color: #333 !important;
+        }
+
+        .btn-action2 {
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-action2:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .btn-edit:hover {
+            background: #e0a800 !important;
+        }
+
+        .btn-view:hover {
+            background: #218838 !important;
+        }
+
+        /* Forzar que el thead no tenga hover blanco */
+        #tablaBeneficiarios thead tr:hover {
+            background-color: #239358 !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        #tablaBeneficiarios thead th:hover {
+            background-color: transparent !important;
+        }
+    </style>
 
 </head>
 
@@ -111,14 +344,14 @@ $user = $_SESSION['usuarioingresando'];
                 </li>
 
                 <?php
-                // Profesionales - Solo visible para Administradores
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
                 ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
                 <?php
@@ -160,37 +393,68 @@ $user = $_SESSION['usuarioingresando'];
             <div class="header-section">
                 <h2 class="section-title">Beneficiarios</h2>
                 <div style="display: flex; gap: 10px;">
-                    <a href="exportar_completo.php"
-                    style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
-                    
-                    
-                    <ion-icon name="download-outline"></ion-icon> Exportar Completo
-                    </a>
-                    <a href="../../modules/beneficiarios/crear_beneficiarios.php" class="btn-new">
-                        <ion-icon name="add-circle-outline"></ion-icon> Nuevo
+                    <a href="crear_beneficiarios.php" class="btn-new">
+                        <ion-icon name="add-circle-outline"></ion-icon> Nuevo Beneficiario
                     </a>
                 </div>
             </div>
-            <!-- Tabla HTML -->
-            <table id="tablaBeneficiarios" class="tabla-beneficiarios" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Matrícula</th>
-                        <th>Nombre</th>
-                        <th>Edad</th>
-                        <th>Género</th>
-                        <th>Tipo de Apoyo</th>
-                        <th>Última Actualización</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-            </table>
+            <!-- Tabla HTML con wrapper para scroll -->
+            <div class="table-wrapper">
+                <table id="tablaBeneficiarios" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Matrícula</th>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Género</th>
+                            <th>Tipo de Apoyo</th>
+                            <th>Estatus</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos se cargarán dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-            <!-- Script SOLO una vez -->
-            <script>
-                $('#tablaBeneficiarios').DataTable({
-                    "ajax": "get_beneficiarios.php",
+        <!-- Script de DataTable -->
+        <script>
+            let tablaBeneficiarios;
+            let mostrandoInactivos = false;
+
+            $(document).ready(function() {
+                cargarTabla(false);
+
+                // Verificar si hay éxito al eliminar
+                <?php if (isset($_SESSION['success_delete']) && $_SESSION['success_delete'] === true): ?>
+                    document.getElementById('successDeleteModal').style.display = 'flex';
+                    setTimeout(function() {
+                        document.getElementById('successDeleteModal').style.display = 'none';
+                    }, 2000);
+                    <?php unset($_SESSION['success_delete']); ?>
+                <?php endif; ?>
+            });
+
+            function cargarTabla(inactivos) {
+                if (tablaBeneficiarios) {
+                    tablaBeneficiarios.destroy();
+                }
+
+                const url = inactivos ? 'get_beneficiarios.php?inactivos=1' : 'get_beneficiarios.php';
+
+                tablaBeneficiarios = $('#tablaBeneficiarios').DataTable({
+                    "ajax": {
+                        "url": url,
+                        "dataSrc": "",
+                        "error": function(xhr, error, code) {
+                            console.error('Error al cargar datos:', error);
+                            console.error('Código:', code);
+                            console.error('Respuesta:', xhr.responseText);
+                        }
+                    },
                     "columns": [{
                             "data": "id_beneficiario"
                         },
@@ -210,39 +474,73 @@ $user = $_SESSION['usuarioingresando'];
                             "data": "tipo_apoyo"
                         },
                         {
-                            "data": "ultima_actualizacion"
+                            "data": "estatus_academico"
                         },
                         {
-                            "data": "opciones"
+                            "data": "opciones",
+                            "orderable": false
                         }
                     ],
-                    "pageLength": 8, // <--- Aquí se define la paginación de 8 registros
-                    "lengthMenu": [8, 16, 32, 50], // opcional: menú para cambiar cantidad
+                    "pageLength": 10,
+                    "lengthMenu": [10, 25, 50, 100],
                     "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                        "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+                        "loadingRecords": "Cargando...",
+                        "processing": "Procesando...",
+                        "emptyTable": "No hay datos disponibles en la tabla",
+                        "zeroRecords": "No se encontraron registros coincidentes"
                     },
-                    dom: 'Bfrtip', // Activa los botones
-                    buttons: [{
+                    "dom": 'Bfrtip',
+                    "buttons": [{
                             extend: 'copyHtml5',
-                            text: 'Copiar',
-                            className: 'btn btn-sm btn-secondary'
+                            text: '<i class="fas fa-copy"></i> Copiar',
+                            className: 'btn-dt',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6]
+                            }
                         },
                         {
                             extend: 'excelHtml5',
-                            text: 'Excel',
-                            className: 'btn btn-sm btn-success'
+                            text: '<i class="fas fa-file-excel"></i> Excel',
+                            className: 'btn-dt',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6]
+                            }
                         },
                         {
                             extend: 'pdfHtml5',
-                            text: 'PDF',
-                            className: 'btn btn-sm btn-danger',
-                            orientation: 'landscape', // opcional
-                            pageSize: 'A4' // opcional
+                            text: '<i class="fas fa-file-pdf"></i> PDF',
+                            className: 'btn-dt',
+                            orientation: 'landscape',
+                            pageSize: 'A4',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6]
+                            }
+                        },
+                        {
+                            text: inactivos ? '<i class="fas fa-eye"></i> Ver Activos' : '<i class="fas fa-eye-slash"></i> Ver Inactivos',
+                            className: 'btn-dt',
+                            action: function() {
+                                mostrandoInactivos = !mostrandoInactivos;
+                                cargarTabla(mostrandoInactivos);
+                            }
                         }
+                    ],
+                    "order": [
+                        [0, 'asc']
                     ]
                 });
-            </script>
-        </div>
+            }
+
+            function confirmarEliminar(id) {
+                document.getElementById('deleteModal').style.display = 'flex';
+                document.getElementById('btnConfirmarEliminar').href = 'eliminar_beneficiario.php?id=' + id;
+            }
+
+            function cerrarModalEliminar() {
+                document.getElementById('deleteModal').style.display = 'none';
+            }
+        </script>
     </div>
     <div id="contactModal" class="modal">
         <div class="modal-content">
@@ -275,6 +573,33 @@ $user = $_SESSION['usuarioingresando'];
             <div class="modal-footer">
                 <button id="cancelBtn" class="btn-cancel">Cancelar</button>
                 <a href="../../modules/auth/logout.php" class="btn-confirm">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación de eliminación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="cerrarModalEliminar()">&times;</span>
+                <h2>Desactivar Beneficiario</h2>
+            </div>
+            <div class="modal-body">
+                <p style="color: #000000; font-size: 1em;">¿Estás seguro de que deseas desactivar este beneficiario?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalEliminar()">Cancelar</button>
+                <a href="#" id="btnConfirmarEliminar" class="btn-confirm" style="background: #dc3545;">Desactivar</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de éxito al eliminar -->
+    <div id="successDeleteModal" class="modal">
+        <div class="modal-content success">
+            <div class="modal-body">
+                <h2 class="success-title">¡Beneficiario Desactivado!</h2>
+                <p style="margin-top: 8px;">El beneficiario ha sido desactivado correctamente.</p>
             </div>
         </div>
     </div>
@@ -327,6 +652,10 @@ $user = $_SESSION['usuarioingresando'];
                 }
                 if (event.target == logoutModal) {
                     logoutModal.style.display = "none";
+                }
+                const deleteModal = document.getElementById('deleteModal');
+                if (event.target == deleteModal) {
+                    cerrarModalEliminar();
                 }
             }
         });

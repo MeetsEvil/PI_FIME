@@ -100,19 +100,36 @@ $next_numero_adaptacion = $numero_de_registros + 1;
     <title><?php echo $titulo_seccion; ?></title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Librerías opcionales para DataPicker y validación -->
+    <style>
+        .diagnosticos-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
     <div class="container">
-        <!-- Sidebar Navigation -->
         <div class="navigation">
-            <?php
-            // Obtiene solo el archivo actual sin parámetros
-            $currentPage = basename($_SERVER['PHP_SELF']);
-            ?>
             <ul>
                 <li>
                     <a href="#">
@@ -154,7 +171,7 @@ $next_numero_adaptacion = $numero_de_registros + 1;
 
                 <?php
                 // Adaptaciones
-                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
@@ -175,14 +192,14 @@ $next_numero_adaptacion = $numero_de_registros + 1;
                 </li>
 
                 <?php
-                // Profesionales - Solo visible para Administradores
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
                 ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
                 <?php

@@ -24,6 +24,7 @@ $currentPage = basename($_SERVER['REQUEST_URI']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- jQuery es necesario para el manejo de AJAX -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -33,10 +34,6 @@ $currentPage = basename($_SERVER['REQUEST_URI']);
     ?>
     <div class="container">
         <div class="navigation">
-            <?php
-            // Obtiene solo el archivo actual sin parámetros
-            $currentPage = basename($_SERVER['PHP_SELF']);
-            ?>
             <ul>
                 <li>
                     <a href="#">
@@ -99,17 +96,17 @@ $currentPage = basename($_SERVER['REQUEST_URI']);
                 </li>
 
                 <?php
-                // Profesionales - Solo visible para Administradores
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
-                    ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
+                ?>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
-                    <?php
+                <?php
                 }
                 ?>
 

@@ -61,6 +61,242 @@ $titulo_seccion = "Ver Usuario";
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        .view-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            /* borde negro */
+            /* Degradado y bordes */
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+            /* Dimensiones */
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+
+            /* Configuración del layout interno */
+            display: flex;
+            flex-direction: column;
+            /* Cambiado para apilar los elementos verticalmente */
+            /* Aquí se elimina justify-content: center y align-items: center */
+        }
+
+        .view-container:hover {
+            box-shadow: 0 6px 20px rgba(35, 147, 88, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .view-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #000000ff;
+            margin: 0;
+        }
+
+        .view-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            margin-bottom: 30px;
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #239358;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #555;
+            min-width: 150px;
+            font-size: 0.95em;
+            padding-right: 5px;
+            margin-right: 10px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 0.95em;
+            flex: 1;
+        }
+
+        .info-value.email {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .info-value.email:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .badge.activo {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.inactivo {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn-action {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-edit {
+            background: linear-gradient(90deg, #FF9800, #E65100);
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: linear-gradient(90deg, #FB8C00, #D84315);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: linear-gradient(90deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: linear-gradient(90deg, #5a6268, #3d4349);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1200px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 1.2em !important;
+            }
+
+            .view-container {
+                margin-left: 20px !important;
+                margin-right: 20px !important;
+                width: calc(100% - 40px) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1em !important;
+            }
+
+            .view-container {
+                margin: 20px auto !important;
+                margin-left: 10px !important;
+                width: calc(100% - 20px) !important;
+                padding: 20px !important;
+            }
+
+            .view-title {
+                font-size: 1.5em !important;
+            }
+
+            .info-section {
+                padding: 20px !important;
+            }
+
+            .action-buttons {
+                flex-direction: column !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 0.9em !important;
+            }
+
+            .view-container {
+                margin: 10px auto !important;
+                margin-left: 5px !important;
+                width: calc(100% - 10px) !important;
+                padding: 15px !important;
+            }
+
+            .view-title {
+                font-size: 1.3em !important;
+            }
+
+            .info-label {
+                min-width: 120px !important;
+                font-size: 0.85em !important;
+            }
+
+            .info-value {
+                font-size: 0.85em !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -151,119 +387,105 @@ $titulo_seccion = "Ver Usuario";
             </div>
         </div>
 
-        <div class="diagnosticos-container" style="min-height: 85vh;">
-            <div class="header-section">
-                <h2 class="section-title"><?php echo $titulo_seccion . ': ' . htmlspecialchars($usuario_data['usuario']); ?></h2>
+        <div class="view-container">
+            <div class="view-header">
+                <h2 class="view-title">Información del Usuario</h2>
                 <a href="index_usuarios.php" class="btn-regresar">
                     <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
                 </a>
             </div>
 
-            <div class="form-pagination-container" style="min-height: 500px;">
-                <form id="usuarioForm" onsubmit="return false;">
+            <div class="view-content">
+                <div class="info-grid">
+                    <!-- SECCIÓN IZQUIERDA: Información Personal -->
+                    <div class="info-section">
+                        <h3 style="color: #239358; margin-bottom: 20px; font-size: 1.3em;">
+                            <ion-icon name="person-outline" style="vertical-align: middle;"></ion-icon>
+                            Información Personal
+                        </h3>
 
-                    <!-- PÁGINA 1: Datos Personales -->
-                    <div class="form-page is-active" data-page="1">
-                        <h3>Datos Personales</h3>
+                        <div class="info-row">
+                            <span class="info-label">ID:</span>
+                            <span class="info-value"><?php echo $usuario_data['id']; ?></span>
+                        </div>
 
-                        <label><span>Nombre:</span><input type="text" name="nombre" value="<?php echo htmlspecialchars($profesional_data['nombre'] ?? ''); ?>" readonly></label>
+                        <div class="info-row">
+                            <span class="info-label">Nombre Completo:</span>
+                            <span class="info-value"><?php echo htmlspecialchars(($profesional_data['nombre'] ?? '') . ' ' . ($profesional_data['apellido_paterno'] ?? '') . ' ' . ($profesional_data['apellido_materno'] ?? '')); ?></span>
+                        </div>
 
-                        <label><span>Apellido Paterno:</span><input type="text" name="apellido_paterno" value="<?php echo htmlspecialchars($profesional_data['apellido_paterno'] ?? ''); ?>" readonly></label>
+                        <div class="info-row">
+                            <span class="info-label">Correo:</span>
+                            <a href="mailto:<?php echo $profesional_data['correo_institucional'] ?? ''; ?>" class="info-value email">
+                                <?php echo htmlspecialchars($profesional_data['correo_institucional'] ?? 'N/A'); ?>
+                            </a>
+                        </div>
 
-                        <label><span>Apellido Materno:</span><input type="text" name="apellido_materno" value="<?php echo htmlspecialchars($profesional_data['apellido_materno'] ?? ''); ?>" readonly></label>
+                        <div class="info-row">
+                            <span class="info-label">Teléfono:</span>
+                            <span class="info-value">
+                                <?php echo ($profesional_data['telefono'] ?? false) ? htmlspecialchars($profesional_data['telefono']) : 'No especificado'; ?>
+                            </span>
+                        </div>
 
-                        <label><span>Correo:</span><input type="email" name="correo_institucional" value="<?php echo htmlspecialchars($profesional_data['correo_institucional'] ?? ''); ?>" readonly></label>
-
-                        <label><span>Teléfono:</span><input type="text" name="telefono" value="<?php echo htmlspecialchars($profesional_data['telefono'] ?? ''); ?>" readonly></label>
-
-                        <label><span>Especialidad:</span>
-                            <select name="especialidad" disabled>
-                                <option value="">Selecciona...</option>
-                                <option value="Psicología" <?php echo ($profesional_data['especialidad'] ?? '') == 'Psicología' ? 'selected' : ''; ?>>Psicología</option>
-                                <option value="Educación Especial" <?php echo ($profesional_data['especialidad'] ?? '') == 'Educación Especial' ? 'selected' : ''; ?>>Educación Especial</option>
-                                <option value="Trabajo Social" <?php echo ($profesional_data['especialidad'] ?? '') == 'Trabajo Social' ? 'selected' : ''; ?>>Trabajo Social</option>
-                                <option value="Medicina" <?php echo ($profesional_data['especialidad'] ?? '') == 'Medicina' ? 'selected' : ''; ?>>Medicina</option>
-                                <option value="Pedagogía" <?php echo ($profesional_data['especialidad'] ?? '') == 'Pedagogía' ? 'selected' : ''; ?>>Pedagogía</option>
-                                <option value="Otro" <?php echo ($profesional_data['especialidad'] ?? '') == 'Otro' ? 'selected' : ''; ?>>Otro</option>
-                            </select>
-                        </label>
-                    </div>
-
-                    <!-- PÁGINA 2: Datos de Acceso -->
-                    <div class="form-page" data-page="2">
-                        <h3>Datos de Acceso</h3>
-
-                        <label><span>Usuario:</span><input type="text" name="usuario" value="<?php echo htmlspecialchars($usuario_data['usuario']); ?>" readonly></label>
-
-                        <label class="password-field">
-                            <span>Contraseña:</span>
-                            <div class="password-input-wrapper">
-                                <input type="password" id="contrasena_ver" value="<?php echo htmlspecialchars($usuario_data['contrasena']); ?>" readonly>
-                                <button type="button" class="toggle-password" onclick="togglePassword('contrasena_ver')">
-                                    <ion-icon name="eye-outline" class="eye-icon"></ion-icon>
-                                </button>
-                            </div>
-                        </label>
-
-                        <label><span>Rol:</span>
-                            <select name="rol" disabled>
-                                <option value="">Selecciona...</option>
-                                <option value="Administrador" <?php echo ($usuario_data['rol'] ?? '') == 'Administrador' ? 'selected' : ''; ?>>Administrador</option>
-                                <option value="Profesional" <?php echo ($usuario_data['rol'] ?? '') == 'Profesional' ? 'selected' : ''; ?>>Profesional</option>
-                                <option value="Academico" <?php echo ($usuario_data['rol'] ?? '') == 'Academico' ? 'selected' : ''; ?>>Académico</option>
-                            </select>
-                        </label>
-
-                        <label><span>Estado:</span>
-                            <select name="estado" disabled>
-                                <option value="Activo" <?php echo ($profesional_data['estado'] ?? 'Activo') == 'Activo' ? 'selected' : ''; ?>>Activo</option>
-                                <option value="Inactivo" <?php echo ($profesional_data['estado'] ?? '') == 'Inactivo' ? 'selected' : ''; ?>>Inactivo</option>
-                            </select>
-                        </label>
-                        <div class="permisos-section">
-                            <h4 class="permisos-title" style="  font-size: 1em; color: #003366; text-align: center; margin-bottom: 15px; margin-top: 25px; font-weight: 700;">Permisos de Acceso</h4>
-
-                            <div class="permisos-grid-two-columns">
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Beneficiarios</span>
-                                    <input type="checkbox" name="permiso_beneficiario" value="1" <?php echo ($profesional_data['permiso_beneficiario'] ?? 0) == 1 ? 'checked' : ''; ?> disabled>
-                                </label>
-
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Seguimiento</span>
-                                    <input type="checkbox" name="permiso_diagnostico" value="1" <?php echo ($profesional_data['permiso_diagnostico'] ?? 0) == 1 ? 'checked' : ''; ?> disabled>
-                                </label>
-
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Adaptaciones</span>
-                                    <input type="checkbox" name="permiso_adaptacion" value="1" <?php echo ($profesional_data['permiso_adaptacion'] ?? 0) == 1 ? 'checked' : ''; ?> disabled>
-                                </label>
-
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Intervenciones</span>
-                                    <input type="checkbox" name="permiso_intervencion" value="1" <?php echo ($profesional_data['permiso_intervencion'] ?? 0) == 1 ? 'checked' : ''; ?> disabled>
-                                </label>
-                            </div>
+                        <div class="info-row">
+                            <span class="info-label">Especialidad:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($profesional_data['especialidad'] ?? 'N/A'); ?></span>
                         </div>
                     </div>
 
-                </form>
-            </div>
+                    <!-- SECCIÓN DERECHA: Información del Sistema -->
+                    <div class="info-section">
+                        <h3 style="color: #239358; margin-bottom: 20px; font-size: 1.3em;">
+                            <ion-icon name="settings-outline" style="vertical-align: middle;"></ion-icon>
+                            Información del Sistema
+                        </h3>
 
-            <div class="pagination-info">
-                Hoja <span id="currentPageNumber">1</span> de 2
-            </div>
+                        <div class="info-row">
+                            <span class="info-label">Usuario:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($usuario_data['usuario']); ?></span>
+                        </div>
 
-            <div class="pagination-buttons">
-                <button type="button" class="btn-pagination btn-prev" id="prevBtn" style="display: none;">
-                    <ion-icon name="arrow-back-outline"></ion-icon> Anterior
-                </button>
-                <button type="button" class="btn-pagination btn-next" id="nextBtn">
-                    Siguiente <ion-icon name="arrow-forward-outline"></ion-icon>
-                </button>
-            </div>
-            <div id="formValidationMessage" class="validation-message-global"></div>
+                        <div class="info-row">
+                            <span class="info-label">Rol:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($usuario_data['rol']); ?></span>
+                        </div>
 
+                        <div class="info-row">
+                            <span class="info-label">Estado:</span>
+                            <span class="info-value">
+                                <span class="badge <?php echo strtolower($usuario_data['estado'] ?? 'activo'); ?>">
+                                    <?php echo $usuario_data['estado'] ?? 'Activo'; ?>
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Permisos:</span>
+                            <span class="info-value">
+                                <?php
+                                $permisos = [];
+                                if (($profesional_data['permiso_beneficiario'] ?? 0) == 1) $permisos[] = 'Beneficiarios';
+                                if (($profesional_data['permiso_diagnostico'] ?? 0) == 1) $permisos[] = 'Seguimiento';
+                                if (($profesional_data['permiso_adaptacion'] ?? 0) == 1) $permisos[] = 'Adaptaciones';
+                                if (($profesional_data['permiso_intervencion'] ?? 0) == 1) $permisos[] = 'Intervenciones';
+                                echo !empty($permisos) ? implode(', ', $permisos) : 'Sin permisos asignados';
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <a href="editar_usuarios.php?id=<?php echo $usuario_data['id']; ?>" class="btn-action btn-edit">
+                        <ion-icon name="create-outline"></ion-icon> Editar Usuario
+                    </a>
+                    <a href="index_usuarios.php" class="btn-action btn-cancel">
+                        <ion-icon name="list-outline"></ion-icon> Ver Todos los Usuarios
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -283,25 +505,11 @@ $titulo_seccion = "Ver Usuario";
         </div>
     </div>
 
-    <script src="../../assets/js/main_usuarios.js"></script>
+    <script src="../../assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
     <script>
-        // Función para mostrar/ocultar contraseña
-        function togglePassword(fieldId) {
-            const field = document.getElementById(fieldId);
-            const button = field.nextElementSibling;
-            const icon = button.querySelector('.eye-icon');
-
-            if (field.type === 'password') {
-                field.type = 'text';
-                icon.setAttribute('name', 'eye-off-outline');
-            } else {
-                field.type = 'password';
-                icon.setAttribute('name', 'eye-outline');
-            }
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
             const toggle = document.querySelector(".toggle");
             const navigation = document.querySelector(".navigation");
@@ -337,7 +545,6 @@ $titulo_seccion = "Ver Usuario";
             }
         });
     </script>
-
 </body>
 
 </html>

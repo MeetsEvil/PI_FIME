@@ -47,14 +47,19 @@ if ($stmt = mysqli_prepare($conex, $query)) {
         }
         // --------------------------------------------------------------------------
         
-        // Añadir la columna de opciones con botones Editar y Ver
+        // Añadir la columna de opciones con botones Editar, Ver y Eliminar
         $row['opciones'] = '
-            <a href="editar_diagnosticos.php?id=' . $row['id_diagnostico'] . '" class="btn-action2 btn-edit" title="Editar">
-                <i class="fas fa-pencil-alt"></i>
-            </a>
-            <a href="ver_diagnosticos.php?id=' . $row['id_diagnostico'] . '" class="btn-action2 btn-view" title="Ver">
-                <i class="fas fa-eye"></i>
-            </a>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+                <a href="editar_diagnosticos.php?id=' . $row['id_diagnostico'] . '" class="btn-action2 btn-edit" title="Editar" style="background: #ffc107; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease;">
+                    <i class="fas fa-pencil-alt"></i>
+                </a>
+                <a href="ver_diagnosticos.php?id=' . $row['id_diagnostico'] . '" class="btn-action2 btn-view" title="Ver" style="background: #28a745; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease;">
+                    <i class="fas fa-eye"></i>
+                </a>
+                <a href="javascript:void(0);" onclick="confirmarEliminar(' . $row['id_diagnostico'] . ')" class="btn-action2 btn-delete" title="Eliminar" style="background: #dc3545; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease;">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
         ';
         $data[] = $row;
     }

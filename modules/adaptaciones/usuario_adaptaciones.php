@@ -85,6 +85,10 @@ if (isset($conex)) {
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
     <div class="container">
         <div class="navigation">
             <ul>
@@ -104,28 +108,44 @@ if (isset($conex)) {
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_beneficiarios.php' or $currentPage == 'crear_beneficiarios.php') ? 'active' : ''; ?>">
+                <?php
+                // Beneficiarios
+                $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
                         <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
                         <span class="title">Beneficiarios</span>
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_diagnosticos.php') ? 'active' : ''; ?>">
+                <?php
+                // Diagnosticos
+                $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                         <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
                         <span class="title">Seguimiento</span>
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_adaptaciones.php') ? 'active' : ''; ?>">
+                <?php
+                // Adaptaciones
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
                         <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
                         <span class="title">Adaptaciones</span>
                     </a>
                 </li>
 
-                <li class="<?php echo ($currentPage == 'index_intervenciones.php') ? 'active' : ''; ?>">
+                <?php
+                // Intervenciones
+                $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
                         <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
                         <span class="title">Intervenciones</span>
@@ -133,16 +153,17 @@ if (isset($conex)) {
                 </li>
 
                 <?php
-                // Profesionales - Solo visible para Administradores
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    ?>
-                    <li class="<?php echo ($currentPage == 'index_profesionales.php') ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
+                ?>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
-                    <?php
+                <?php
                 }
                 ?>
 
@@ -157,6 +178,7 @@ if (isset($conex)) {
                 </li>
             </ul>
         </div>
+
     </div>
 
     <div class="main">

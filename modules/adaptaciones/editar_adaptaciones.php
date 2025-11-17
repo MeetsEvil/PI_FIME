@@ -94,10 +94,11 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
     <div class="container">
-        <?php
-        $currentPage = basename($_SERVER['PHP_SELF']);
-        ?>
         <div class="navigation">
             <ul>
                 <li>
@@ -117,6 +118,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
+                // Beneficiarios
                 $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
@@ -127,6 +129,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
+                // Diagnosticos
                 $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
@@ -137,7 +140,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
-                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
+                // Adaptaciones
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
@@ -147,6 +151,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
+                // Intervenciones
                 $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
@@ -157,18 +162,20 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </li>
 
                 <?php
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
                 ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
                 <?php
                 }
                 ?>
+
 
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
@@ -181,117 +188,118 @@ while ($row = mysqli_fetch_assoc($result)) {
             </ul>
         </div>
 
-        <div class="main">
-            <div class="topbar">
-                <div class="toggle"><ion-icon name="menu-outline"></ion-icon></div>
-                <h2 class="page-title">PROGRAMA DE INCLUSIÓN</h2>
-                <div class="user-box">
-                    <div class="user-info">
-                        <div class="user-name"><?php echo htmlspecialchars($user); ?></div>
-                        <div class="user-role"><?php echo htmlspecialchars($_SESSION['rol']); ?></div>
-                    </div>
-                    <button class="info-btn" onclick="mostrarInfo()">
-                        <ion-icon name="information-outline"></ion-icon>
-                    </button>
+    </div>
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle"><ion-icon name="menu-outline"></ion-icon></div>
+            <h2 class="page-title">PROGRAMA DE INCLUSIÓN</h2>
+            <div class="user-box">
+                <div class="user-info">
+                    <div class="user-name"><?php echo htmlspecialchars($user); ?></div>
+                    <div class="user-role"><?php echo htmlspecialchars($_SESSION['rol']); ?></div>
                 </div>
-            </div>
-
-            <div class="diagnosticos-container" style="min-height: 85vh;">
-                <div class="header-section">
-                    <h2 class="section-title">Editar Adaptación de <?php echo htmlspecialchars($beneficiario_nombre); ?></h2>
-                    <a href="historico_adaptaciones.php?id=<?php echo $beneficiario_id; ?>" class="btn-regresar">
-                        <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
-                    </a>
-                </div>
-
-                <div class="form-pagination-container">
-                    <form id="editAdaptacionForm" action="actualizar_adaptacion.php" method="POST">
-                        <input type="hidden" name="id_adaptacion" value="<?php echo $id_adaptacion; ?>">
-                        <input type="hidden" name="beneficiario_id" value="<?php echo htmlspecialchars($beneficiario_id); ?>">
-
-                        <div class="form-page is-active" data-page="1">
-                            <h3>Detalles de la Adaptación</h3>
-
-                            <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
-                                <label style="flex:1;"><span>N° Adaptación:</span>
-                                    <input type="text" value="<?php echo htmlspecialchars($adaptacion['numero_adaptacion']); ?>" readonly name="numero_adaptacion" tyle="background-color:#f0f0f0; font-weight: 700;">
-                                </label>
-                                <label style="flex:2;"><span>Beneficiario Asignado:</span>
-                                    <input type="text" value="<?php echo htmlspecialchars($beneficiario_nombre); ?>" readonly style="background-color:#f0f0f0;">
-                                </label>
-                            </div>
-
-                            <label><span>Fecha de Implementación:</span>
-                                <input type="date" name="fecha_implementacion" required value="<?php echo htmlspecialchars($adaptacion['fecha_implementacion']); ?>">
-                            </label>
-
-                            <label><span>Tipo de Adaptación:</span>
-                                <select name="tipo_adaptacion" required>
-                                    <?php
-                                    $tipos = ["Curricular", "Evaluativa", "Infraestructura", "Tecnológica", "Material didáctico", "Otro"];
-                                    foreach ($tipos as $tipo) {
-                                        $sel = ($adaptacion['tipo_adaptacion'] == $tipo) ? "selected" : "";
-                                        echo "<option value='$tipo' $sel>$tipo</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </label>
-
-                            <label><span>Profesional Responsable:</span>
-                                <input type="text"
-                                    name="profesional_asignado_nombre"
-                                    list="profesionales-list"
-                                    id="profesionalAsignadoNombre"
-                                    value="<?php
-                                            foreach ($profesionales as $p) {
-                                                if ($p['id'] == $adaptacion['profesional_id']) {
-                                                    echo htmlspecialchars($p['nombre']);
-                                                    break;
-                                                }
-                                            }
-                                            ?>"
-                                    required>
-
-                                <input type="hidden" name="profesional_asignado_id" id="profesionalAsignadoId" value="<?php echo htmlspecialchars($adaptacion['profesional_id']); ?>">
-                                <datalist id="profesionales-list">
-                                    <?php foreach ($profesionales as $p): ?>
-                                        <option data-id="<?php echo $p['id']; ?>" value="<?php echo htmlspecialchars($p['nombre']); ?>"></option>
-                                    <?php endforeach; ?>
-                                </datalist>
-                            </label>
-                            <div id="profesionalError" class="validation-message-small"></div>
-
-                            <label><span>Estado:</span>
-                                <select name="estado" required>
-                                    <?php
-                                    $estados = ["Pendiente", "En progreso", "Finalizada"];
-                                    foreach ($estados as $est) {
-                                        $sel = ($adaptacion['estado'] == $est) ? "selected" : "";
-                                        echo "<option value='$est' $sel>$est</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </label>
-
-                            <label><span>Descripción:</span>
-                                <textarea name="descripcion" required><?php echo htmlspecialchars($adaptacion['descripcion']); ?></textarea>
-                            </label>
-
-                            <label><span>Observaciones:</span>
-                                <textarea name="observaciones"><?php echo htmlspecialchars($adaptacion['observaciones']); ?></textarea>
-                            </label>
-                        </div>
-                    </form>
-                    <div class="pagination-buttons">
-                        <button type="button" class="btn-pagination btn-next" id="updateAdaptacionBtn" style="margin-top: 20px;">
-                            Guardar Cambios <ion-icon name="checkmark-circle-outline"></ion-icon>
-                        </button>
-                    </div>
-                    <div id="formValidationMessage" class="validation-message-global"></div>
-                </div>
-
+                <button class="info-btn" onclick="mostrarInfo()">
+                    <ion-icon name="information-outline"></ion-icon>
+                </button>
             </div>
         </div>
+
+        <div class="diagnosticos-container" style="min-height: 85vh;">
+            <div class="header-section">
+                <h2 class="section-title">Editar Adaptación de <?php echo htmlspecialchars($beneficiario_nombre); ?></h2>
+                <a href="historico_adaptaciones.php?id=<?php echo $beneficiario_id; ?>" class="btn-regresar">
+                    <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
+                </a>
+            </div>
+
+            <div class="form-pagination-container">
+                <form id="editAdaptacionForm" action="actualizar_adaptacion.php" method="POST">
+                    <input type="hidden" name="id_adaptacion" value="<?php echo $id_adaptacion; ?>">
+                    <input type="hidden" name="beneficiario_id" value="<?php echo htmlspecialchars($beneficiario_id); ?>">
+
+                    <div class="form-page is-active" data-page="1">
+                        <h3>Detalles de la Adaptación</h3>
+
+                        <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
+                            <label style="flex:1;"><span>N° Adaptación:</span>
+                                <input type="text" value="<?php echo htmlspecialchars($adaptacion['numero_adaptacion']); ?>" readonly name="numero_adaptacion" tyle="background-color:#f0f0f0; font-weight: 700;">
+                            </label>
+                            <label style="flex:2;"><span>Beneficiario Asignado:</span>
+                                <input type="text" value="<?php echo htmlspecialchars($beneficiario_nombre); ?>" readonly style="background-color:#f0f0f0;">
+                            </label>
+                        </div>
+
+                        <label><span>Fecha de Implementación:</span>
+                            <input type="date" name="fecha_implementacion" required value="<?php echo htmlspecialchars($adaptacion['fecha_implementacion']); ?>">
+                        </label>
+
+                        <label><span>Tipo de Adaptación:</span>
+                            <select name="tipo_adaptacion" required>
+                                <?php
+                                $tipos = ["Curricular", "Evaluativa", "Infraestructura", "Tecnológica", "Material didáctico", "Otro"];
+                                foreach ($tipos as $tipo) {
+                                    $sel = ($adaptacion['tipo_adaptacion'] == $tipo) ? "selected" : "";
+                                    echo "<option value='$tipo' $sel>$tipo</option>";
+                                }
+                                ?>
+                            </select>
+                        </label>
+
+                        <label><span>Profesional Responsable:</span>
+                            <input type="text"
+                                name="profesional_asignado_nombre"
+                                list="profesionales-list"
+                                id="profesionalAsignadoNombre"
+                                value="<?php
+                                        foreach ($profesionales as $p) {
+                                            if ($p['id'] == $adaptacion['profesional_id']) {
+                                                echo htmlspecialchars($p['nombre']);
+                                                break;
+                                            }
+                                        }
+                                        ?>"
+                                required>
+
+                            <input type="hidden" name="profesional_asignado_id" id="profesionalAsignadoId" value="<?php echo htmlspecialchars($adaptacion['profesional_id']); ?>">
+                            <datalist id="profesionales-list">
+                                <?php foreach ($profesionales as $p): ?>
+                                    <option data-id="<?php echo $p['id']; ?>" value="<?php echo htmlspecialchars($p['nombre']); ?>"></option>
+                                <?php endforeach; ?>
+                            </datalist>
+                        </label>
+                        <div id="profesionalError" class="validation-message-small"></div>
+
+                        <label><span>Estado:</span>
+                            <select name="estado" required>
+                                <?php
+                                $estados = ["Pendiente", "En progreso", "Finalizada"];
+                                foreach ($estados as $est) {
+                                    $sel = ($adaptacion['estado'] == $est) ? "selected" : "";
+                                    echo "<option value='$est' $sel>$est</option>";
+                                }
+                                ?>
+                            </select>
+                        </label>
+
+                        <label><span>Descripción:</span>
+                            <textarea name="descripcion" required><?php echo htmlspecialchars($adaptacion['descripcion']); ?></textarea>
+                        </label>
+
+                        <label><span>Observaciones:</span>
+                            <textarea name="observaciones"><?php echo htmlspecialchars($adaptacion['observaciones']); ?></textarea>
+                        </label>
+                    </div>
+                </form>
+                <div class="pagination-buttons">
+                    <button type="button" class="btn-pagination btn-next" id="updateAdaptacionBtn" style="margin-top: 20px;">
+                        Guardar Cambios <ion-icon name="checkmark-circle-outline"></ion-icon>
+                    </button>
+                </div>
+                <div id="formValidationMessage" class="validation-message-global"></div>
+            </div>
+
+        </div>
+    </div>
     </div>
 
     <!-- Modal de éxito -->

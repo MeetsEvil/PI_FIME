@@ -79,17 +79,193 @@ if (isset($conex)) {
     <title>Ver Beneficiario</title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .view-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: auto;
+            padding-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .view-container:hover {
+            box-shadow: 0 6px 20px rgba(35, 147, 88, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .view-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #000000ff;
+            margin: 0;
+        }
+
+        .view-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #239358;
+        }
+
+        .info-section h3 {
+            color: #239358;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #555;
+            min-width: 180px;
+            font-size: 0.95em;
+            padding-right: 5px;
+            margin-right: 10px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 0.95em;
+            flex: 1;
+        }
+
+        .info-value.email {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .info-value.email:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .badge.activo {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.inactivo,
+        .badge.baja {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge.egresado {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn-action {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-edit {
+            background: linear-gradient(90deg, #FF9800, #E65100);
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: linear-gradient(90deg, #FB8C00, #D84315);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: linear-gradient(90deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: linear-gradient(90deg, #5a6268, #3d4349);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
     <div class="container">
         <div class="navigation">
-            <?php
-            // Obtiene solo el archivo actual sin parámetros
-            $currentPage = basename($_SERVER['PHP_SELF']);
-            ?>
             <ul>
                 <li>
                     <a href="#">
@@ -152,17 +328,17 @@ if (isset($conex)) {
                 </li>
 
                 <?php
-                // Profesionales - Solo visible para Administradores
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
-                    ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
+                ?>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
-                    <?php
+                <?php
                 }
                 ?>
 
@@ -197,139 +373,261 @@ if (isset($conex)) {
             </div>
         </div>
 
-        <div class="beneficiary-container">
-            <div class="header-section">
+        <div class="view-container">
+            <div class="view-header">
                 <?php
-                // --- CÓDIGO AÑADIDO/MODIFICADO AQUÍ ---
                 $nombre_completo_beneficiario = trim(
                     $beneficiario['nombre'] . ' ' .
                         $beneficiario['apellido_paterno'] . ' ' .
                         ($beneficiario['apellido_materno'] ?? '')
                 );
                 ?>
-                <h2 class="section-title">Editar Beneficiario:
-                    <?php echo htmlspecialchars($beneficiario['id_beneficiario'] . ' - ' . $nombre_completo_beneficiario); ?>
-                </h2>
+                <h2 class="view-title">Información del Beneficiario</h2>
                 <a href="../../modules/beneficiarios/index_beneficiarios.php" class="btn-regresar">
                     <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
                 </a>
             </div>
 
-            <div class="form-pagination-container">
-                <form id="beneficiaryForm" onsubmit="return false;">
+            <div class="view-content">
+                <div class="info-grid">
+                    <!-- SECCIÓN 1: Datos Personales -->
+                    <div class="info-section">
+                        <h3>
+                            <ion-icon name="person-outline"></ion-icon>
+                            Datos Personales
+                        </h3>
 
-                    <div class="form-page is-active" data-page="1">
-                        <h3>Datos Personales</h3>
-                        <label><span>Nombre:</span><input type="text" name="nombre" value="<?php echo htmlspecialchars($beneficiario['nombre'] ?? ''); ?>" readonly></label>
-                        <label><span>Apellido Paterno:</span><input type="text" name="apellido_paterno" value="<?php echo htmlspecialchars($beneficiario['apellido_paterno'] ?? ''); ?>" readonly></label>
-                        <label><span>Apellido Materno:</span><input type="text" name="apellido_materno" value="<?php echo htmlspecialchars($beneficiario['apellido_materno'] ?? ''); ?>" readonly></label>
-                        <label><span>CURP:</span><input type="text" name="curp" value="<?php echo htmlspecialchars($beneficiario['curp'] ?? ''); ?>" readonly></label>
-                        <label><span>Fecha de Nacimiento:</span><input type="date" name="fecha_nacimiento" value="<?php echo htmlspecialchars($beneficiario['fecha_nacimiento'] ?? ''); ?>" readonly></label>
-                        <label><span>Género:</span>
-                            <select name="genero" readonly disabled>
-                                <option value="">Selecciona...</option>
-                                <option value="Masculino" <?php echo ($beneficiario['genero'] ?? '') == 'Masculino' ? 'selected' : ''; ?>>Masculino</option>
-                                <option value="Femenino" <?php echo ($beneficiario['genero'] ?? '') == 'Femenino' ? 'selected' : ''; ?>>Femenino</option>
-                                <option value="Otro" <?php echo ($beneficiario['genero'] ?? '') == 'Otro' ? 'selected' : ''; ?>>Otro</option>
-                            </select>
-                        </label>
-                        <label><span>Teléfono:</span><input type="tel" name="telefono" value="<?php echo htmlspecialchars($beneficiario['telefono'] ?? ''); ?>" readonly></label>
-                        <label><span>Correo Personal:</span><input type="email" name="correo_institucional" value="<?php echo htmlspecialchars($beneficiario['correo_institucional'] ?? ''); ?>" readonly></label>
+                        <div class="info-row">
+                            <span class="info-label">ID:</span>
+                            <span class="info-value"><?php echo $beneficiario['id_beneficiario']; ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Nombre Completo:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($nombre_completo_beneficiario); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">CURP:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['curp'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Fecha de Nacimiento:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['fecha_nacimiento'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Género:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['genero'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Teléfono:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['telefono'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Correo:</span>
+                            <a href="mailto:<?php echo $beneficiario['correo_institucional'] ?? ''; ?>" class="info-value email">
+                                <?php echo htmlspecialchars($beneficiario['correo_institucional'] ?? 'N/A'); ?>
+                            </a>
+                        </div>
                     </div>
 
-                    <div class="form-page" data-page="2">
-                        <h3>Datos Académicos</h3>
-                        <label><span>Matrícula:</span><input type="text" name="matricula" value="<?php echo htmlspecialchars($beneficiario['matricula'] ?? ''); ?>" readonly></label>
-                        <label><span>Carrera:</span>
-                            <select name="carrera" readonly disabled>
-                                <option value="">Selecciona una carrera...</option>
-                                <?php foreach ($carreras as $carrera): ?>
-                                    <option value="<?php echo htmlspecialchars($carrera); ?>" <?php echo ($beneficiario['carrera'] ?? '') == $carrera ? 'selected' : ''; ?>><?php echo htmlspecialchars($carrera); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </label>
-                        <label><span>Plan de Estudio:</span><input type="text" name="plan_de_estudio" value="<?php echo htmlspecialchars($beneficiario['plan_de_estudio'] ?? ''); ?>" readonly></label>
-                        <label><span>Semestre:</span><input type="number" name="semestre" value="<?php echo htmlspecialchars($beneficiario['semestre'] ?? ''); ?>" readonly></label>
-                        <label><span>Estatus Académico:</span>
-                            <select name="estatus_academico" readonly disabled>
-                                <option value="">Selecciona...</option>
-                                <option value="Activo" <?php echo ($beneficiario['estatus_academico'] ?? '') == 'Activo' ? 'selected' : ''; ?>>Activo</option>
-                                <option value="Baja temporal" <?php echo ($beneficiario['estatus_academico'] ?? '') == 'Baja temporal' ? 'selected' : ''; ?>>Baja temporal</option>
-                                <option value="Egresado" <?php echo ($beneficiario['estatus_academico'] ?? '') == 'Egresado' ? 'selected' : ''; ?>>Egresado</option>
-                                <option value="Baja definitiva" <?php echo ($beneficiario['estatus_academico'] ?? '') == 'Baja definitiva' ? 'selected' : ''; ?>>Baja definitiva</option>
-                            </select>
-                        </label>
+                    <!-- SECCIÓN 2: Datos Académicos -->
+                    <div class="info-section">
+                        <h3>
+                            <ion-icon name="school-outline"></ion-icon>
+                            Datos Académicos
+                        </h3>
+
+                        <div class="info-row">
+                            <span class="info-label">Matrícula:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['matricula'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Carrera:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['carrera'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Plan de Estudio:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['plan_de_estudio'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Semestre:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['semestre'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Estatus Académico:</span>
+                            <span class="info-value">
+                                <?php
+                                $estatus = $beneficiario['estatus_academico'] ?? 'N/A';
+                                $badge_class = 'activo';
+                                if (in_array($estatus, ['Baja temporal', 'Baja definitiva'])) {
+                                    $badge_class = 'baja';
+                                } elseif ($estatus == 'Egresado') {
+                                    $badge_class = 'egresado';
+                                }
+                                ?>
+                                <span class="badge <?php echo $badge_class; ?>">
+                                    <?php echo htmlspecialchars($estatus); ?>
+                                </span>
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="form-page" data-page="3">
-                        <h3>Inclusión y Apoyos</h3>
-                        <label><span>Tipo de Discapacidad:</span><input type="text" name="tipo_discapacidad" value="<?php echo htmlspecialchars($beneficiario['tipo_discapacidad'] ?? ''); ?>" readonly></label>
-                        <label><span>Diagnóstico:</span><textarea name="diagnostico" readonly><?php echo htmlspecialchars($beneficiario['diagnostico'] ?? ''); ?></textarea></label>
-                        <label><span>Adaptaciones:</span><textarea name="adaptaciones" readonly><?php echo htmlspecialchars($beneficiario['adaptaciones'] ?? ''); ?></textarea></label>
-                        <label><span>Recursos Asignados:</span><textarea name="recursos_asignados" readonly><?php echo htmlspecialchars($beneficiario['recursos_asignados'] ?? ''); ?></textarea></label>
+                    <!-- SECCIÓN 3: Inclusión y Apoyos -->
+                    <div class="info-section">
+                        <h3>
+                            <ion-icon name="accessibility-outline"></ion-icon>
+                            Inclusión y Apoyos
+                        </h3>
 
-                        <label><span>Profesional Asignado:</span>
-                            <input type="text" name="profesional_asignado_nombre" value="<?php
-                                                                                            // Busca el nombre del profesional usando el ID
-                                                                                            $profesional_encontrado = array_search($beneficiario['profesional_asignado'], array_column($profesionales, 'id'));
-                                                                                            echo $profesional_encontrado !== false ? htmlspecialchars($profesionales[$profesional_encontrado]['nombre']) : '';
-                                                                                            ?>" readonly>
-                        </label>
+                        <div class="info-row">
+                            <span class="info-label">Tipo de Discapacidad:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['tipo_discapacidad'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Diagnóstico:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['diagnostico'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Adaptaciones:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['adaptaciones'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Recursos Asignados:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['recursos_asignados'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Profesional Asignado:</span>
+                            <span class="info-value">
+                                <?php
+                                $profesional_encontrado = array_search($beneficiario['profesional_asignado'], array_column($profesionales, 'id'));
+                                echo $profesional_encontrado !== false ? htmlspecialchars($profesionales[$profesional_encontrado]['nombre']) : 'N/A';
+                                ?>
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="form-page" data-page="4">
-                        <h3>Seguimiento Inicial</h3>
-                        <label><span>Fecha de Ingreso:</span><input type="date" name="fecha_ingreso" value="<?php echo htmlspecialchars($beneficiario['fecha_ingreso'] ?? ''); ?>" readonly></label>
-                        <label><span>Estado Inicial:</span><input type="text" name="estado_inicial" value="<?php echo htmlspecialchars($beneficiario['estado_inicial'] ?? ''); ?>" readonly></label>
-                        <label><span>Observaciones Iniciales:</span><textarea name="observaciones_iniciales" readonly><?php echo htmlspecialchars($beneficiario['observaciones_iniciales'] ?? ''); ?></textarea></label>
+                    <!-- SECCIÓN 4: Seguimiento y Contacto de Emergencia -->
+                    <div class="info-section">
+                        <h3>
+                            <ion-icon name="medkit-outline"></ion-icon>
+                            Seguimiento y Emergencia
+                        </h3>
+
+                        <div class="info-row">
+                            <span class="info-label">Fecha de Ingreso:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['fecha_ingreso'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Estado Inicial:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['estado_inicial'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Observaciones:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['observaciones_iniciales'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Contacto Emergencia:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['nombre_emergencia'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Teléfono Emergencia:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['telefono_emergencia'] ?? 'N/A'); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Parentesco:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario['parentesco_emergencia'] ?? 'N/A'); ?></span>
+                        </div>
                     </div>
-                    <div class="form-page" data-page="5">
-                        <h3>Contacto de Emergencia</h3>
+                </div>
 
-                        <label><span>Nombre del Contacto:</span>
-                            <input type="text" name="nombre_emergencia" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras y espacios." maxlength="100" required  value="<?php echo htmlspecialchars($beneficiario['nombre_emergencia'] ?? ''); ?>" readonly>
-                        </label>
-
-                        <label><span>Teléfono del Contacto:</span>
-                            <input type="tel" name="telefono_emergencia" minlength="10" maxlength="10" pattern="\d{10}" title="El teléfono debe tener 10 dígitos." required value="<?php echo htmlspecialchars($beneficiario['telefono_emergencia'] ?? ''); ?>" readonly>
-                        </label>
-
-                        <label><span>Parentesco:</span>
-                            <select name="parentesco_emergencia" readonly disabled>
-                                <option value="">Selecciona...</option>
-                                <option value="Madre" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Madre' ? 'selected' : ''; ?>>Madre</option>
-                                <option value="Padre" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Padre' ? 'selected' : ''; ?>>Padre</option>
-                                <option value="Hermano(a)" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Hermano(a)' ? 'selected' : ''; ?>>Hermano(a)</option>        
-                                <option value="Tío(a)" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Tío(a)' ? 'selected' : ''; ?>>Tío(a)</option>
-
-                                <option value="Abuelo(a)" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Abuelo(a)' ? 'selected' : ''; ?>>Abuelo(a)</option>        
-                                <option value="Amigo(a)" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Amigo(a)' ? 'selected' : ''; ?>>Amigo(a)</option>        
-                                <option value="Otro" <?php echo ($beneficiario['parentesco_emergencia'] ?? '') == 'Otro' ? 'selected' : ''; ?>>Otro</option>        
-                            </select>
-                        </label>
-                    </div>
-
-                </form>
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <a href="editar_beneficiarios.php?id=<?php echo $beneficiario['id_beneficiario']; ?>" class="btn-action btn-edit">
+                        <ion-icon name="create-outline"></ion-icon> Editar Beneficiario
+                    </a>
+                    <a href="index_beneficiarios.php" class="btn-action btn-cancel">
+                        <ion-icon name="list-outline"></ion-icon> Ver Todos los Beneficiarios
+                    </a>
+                </div>
             </div>
 
-            <div class="pagination-info">
-                Hoja <span id="currentPageNumber">1</span> de 5
+        </div>
+    </div>
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn">&times;</span>
+                <h2>Cierre de sesión</h2>
             </div>
-            <div class="pagination-buttons">
-                <button type="button" class="btn-pagination btn-prev" style="display: none;">
-                    <ion-icon name="arrow-back-outline"></ion-icon> Anterior
-                </button>
-                <button type="button" class="btn-pagination btn-next">
-                    Siguiente <ion-icon name="arrow-forward-outline"></ion-icon>
-                </button>
+            <div class="modal-body">
+                <p>¿Confirmas que deseas cerrar sesión?</p>
             </div>
-            <div id="formValidationMessage" class="validation-message-global"></div>
+            <div class="modal-footer">
+                <button id="cancelBtn" class="btn-cancel">Cancelar</button>
+                <a href="../../modules/auth/logout.php" class="btn-confirm">Cerrar Sesión</a>
+            </div>
         </div>
     </div>
 
     <script src="../../assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggle = document.querySelector(".toggle");
+            const navigation = document.querySelector(".navigation");
+            const main = document.querySelector(".main");
+
+            if (toggle && navigation && main) {
+                toggle.onclick = () => {
+                    navigation.classList.toggle("active");
+                    main.classList.toggle("active");
+                };
+            }
+
+            var logoutModal = document.getElementById("logoutModal");
+            var closeLogoutBtn = document.querySelector("#logoutModal .close-btn");
+            var cancelBtn = document.getElementById("cancelBtn");
+
+            window.showLogoutModal = function() {
+                logoutModal.style.display = "flex";
+            }
+
+            if (closeLogoutBtn) closeLogoutBtn.onclick = function() {
+                logoutModal.style.display = "none";
+            }
+
+            if (cancelBtn) cancelBtn.onclick = function() {
+                logoutModal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == logoutModal) {
+                    logoutModal.style.display = "none";
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

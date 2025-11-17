@@ -61,6 +61,80 @@ $titulo_seccion = "Editar Usuario";
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .diagnosticos-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            /* borde negro */
+            /* Degradado y bordes */
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+            /* Dimensiones */
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+
+            /* Configuración del layout interno */
+            display: flex;
+            flex-direction: column;
+            /* Cambiado para apilar los elementos verticalmente */
+            /* Aquí se elimina justify-content: center y align-items: center */
+        }
+
+        @media (max-width: 1200px) {
+            .page-title {
+                font-size: 1.2em !important;
+            }
+
+            .diagnosticos-container {
+                margin-left: 20px !important;
+                margin-right: 20px !important;
+                width: calc(100% - 40px) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1em !important;
+            }
+
+            .diagnosticos-container {
+                margin: 20px auto !important;
+                margin-left: 10px !important;
+                width: calc(100% - 20px) !important;
+                padding: 15px !important;
+            }
+
+            .section-title {
+                font-size: 1.8em !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 0.9em !important;
+            }
+
+            .diagnosticos-container {
+                margin: 10px auto !important;
+                margin-left: 5px !important;
+                width: calc(100% - 10px) !important;
+                padding: 10px !important;
+            }
+
+            .section-title {
+                font-size: 1.5em !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -176,7 +250,7 @@ $titulo_seccion = "Editar Usuario";
 
                         <label><span>Correo: <span class="required-asterisk">*</span></span><input type="email" name="correo_institucional" value="<?php echo htmlspecialchars($profesional_data['correo_institucional'] ?? ''); ?>" required title="Ingresa un correo electrónico válido."></label>
 
-                        <label><span>Teléfono:</span><input type="text" name="telefono" value="<?php echo htmlspecialchars($profesional_data['telefono'] ?? ''); ?>" minlength="10" maxlength="10" pattern="[0-9]{10}" title="El teléfono debe tener exactamente 10 dígitos." placeholder="10 dígitos"></label>
+                        <label><span>Teléfono:</span><input type="tel" name="telefono" value="<?php echo htmlspecialchars($profesional_data['telefono'] ?? ''); ?>" minlength="10" maxlength="10" pattern="[0-9]{10}" title="El teléfono debe tener exactamente 10 dígitos." placeholder="10 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></label>
 
                         <label><span>Especialidad: <span class="required-asterisk">*</span></span>
                             <select name="especialidad" required>
@@ -234,31 +308,27 @@ $titulo_seccion = "Editar Usuario";
                             </select>
                         </label>
 
-                        <div class="permisos-section">
-                            <h4 class="permisos-title" style="  font-size: 1em; color: #003366; text-align: center; margin-bottom: 15px; margin-top: 25px; font-weight: 700;">Permisos de Acceso</h4>
+                        <h4 style="font-size: 1.1em; color: #003366; margin-top: 25px; margin-bottom: 15px; font-weight: 600; text-align: center;">Permisos de Acceso</h4>
 
-                            <div class="permisos-grid-two-columns">
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Beneficiarios</span>
-                                    <input type="checkbox" name="permiso_beneficiario" value="1" <?php echo ($profesional_data['permiso_beneficiario'] ?? 0) == 1 ? 'checked' : ''; ?>>
-                                </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="permiso_beneficiario" value="1" <?php echo ($profesional_data['permiso_beneficiario'] ?? 0) == 1 ? 'checked' : ''; ?> style="width: 20px; height: 20px; cursor: pointer;">
+                            <span>Beneficiarios</span>
+                        </label>
 
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Seguimiento</span>
-                                    <input type="checkbox" name="permiso_diagnostico" value="1" <?php echo ($profesional_data['permiso_diagnostico'] ?? 0) == 1 ? 'checked' : ''; ?>>
-                                </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="permiso_diagnostico" value="1" <?php echo ($profesional_data['permiso_diagnostico'] ?? 0) == 1 ? 'checked' : ''; ?> style="width: 20px; height: 20px; cursor: pointer;">
+                            <span>Seguimiento</span>
+                        </label>
 
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Adaptaciones</span>
-                                    <input type="checkbox" name="permiso_adaptacion" value="1" <?php echo ($profesional_data['permiso_adaptacion'] ?? 0) == 1 ? 'checked' : ''; ?>>
-                                </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="permiso_adaptacion" value="1" <?php echo ($profesional_data['permiso_adaptacion'] ?? 0) == 1 ? 'checked' : ''; ?> style="width: 20px; height: 20px; cursor: pointer;">
+                            <span>Adaptaciones</span>
+                        </label>
 
-                                <label class="checkbox-label">
-                                    <span class="checkbox-text">Intervenciones</span>
-                                    <input type="checkbox" name="permiso_intervencion" value="1" <?php echo ($profesional_data['permiso_intervencion'] ?? 0) == 1 ? 'checked' : ''; ?>>
-                                </label>
-                            </div>
-                        </div>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="permiso_intervencion" value="1" <?php echo ($profesional_data['permiso_intervencion'] ?? 0) == 1 ? 'checked' : ''; ?> style="width: 20px; height: 20px; cursor: pointer;">
+                            <span>Intervenciones</span>
+                        </label>
                     </div>
 
                 </form>
@@ -324,7 +394,7 @@ $titulo_seccion = "Editar Usuario";
             const field = document.getElementById(fieldId);
             const button = field.nextElementSibling;
             const icon = button.querySelector('.eye-icon');
-            
+
             if (field.type === 'password') {
                 field.type = 'text';
                 icon.setAttribute('name', 'eye-off-outline');

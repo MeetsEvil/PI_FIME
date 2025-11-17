@@ -64,9 +64,8 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
     <!-- Custom Font (Mantenido) -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
-    <!-- *** CSS INTEGRADO AQUÍ PARA GARANTIZAR ESPECIFICIDAD Y ORDEN DE CARGA *** -->
     <style>
-        /* Aumentamos la especificidad incluyendo el prefijo dataTable de la librería */
+        /* Estilos para la tabla de intervenciones */
         #tablaIntervenciones,
         table.dataTable#tablaIntervenciones {
             width: 100%;
@@ -80,17 +79,28 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
         #tablaIntervenciones th,
         #tablaIntervenciones td,
         table.dataTable#tablaIntervenciones th,
-        table.dataTable#tablaItervencioness td {
+        table.dataTable#tablaIntervenciones td {
             padding: 10px 15px;
             text-align: left;
         }
 
         #tablaIntervenciones th,
-        table.dataTable#tablaIntervenciones th {
-            background-color: #239358;
-            color: white;
+        table.dataTable#tablaIntervenciones th,
+        #tablaIntervenciones thead th,
+        table.dataTable#tablaIntervenciones thead th {
+            background-color: #239358 !important;
+            color: white !important;
             font-weight: 600;
             text-transform: uppercase;
+        }
+
+        /* Eliminar hover del thead */
+        #tablaIntervenciones thead tr:hover,
+        table.dataTable#tablaIntervenciones thead tr:hover,
+        #tablaIntervenciones thead th:hover,
+        table.dataTable#tablaIntervenciones thead th:hover {
+            background-color: #239358 !important;
+            cursor: default !important;
         }
 
         #tablaIntervenciones tbody tr:hover,
@@ -100,7 +110,7 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
         }
 
         #tablaIntervenciones tr:nth-child(even),
-        table.dataTable#tablaIntervenciones tr.even {
+        table.dataTable#tablaIntervenciones tbody tr.even {
             background-color: #f9f9f9;
         }
 
@@ -125,90 +135,100 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
 </head>
 
 <body>
-    <div class="navigation">
-        <?php
-        $currentPage = basename($_SERVER['PHP_SELF']);
-        ?>
-        <ul>
-            <li>
-                <a href="#">
-                    <span class="icon">
-                        <ion-icon name="school-outline"></ion-icon>
-                    </span>
-                    <span class="title">FIME Inclusivo</span>
-                </a>
-            </li>
-
-            <li class="<?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
-                <a href="../../modules/auth/dashboard.php" data-tooltip="Inicio">
-                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                    <span class="title">Inicio</span>
-                </a>
-            </li>
-
-            <?php
-            $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
-                <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
-                    <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
-                    <span class="title">Beneficiarios</span>
-                </a>
-            </li>
-
-            <?php
-            $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
-                <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
-                    <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
-                    <span class="title">Seguimiento</span>
-                </a>
-            </li>
-
-            <?php
-            $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
-                <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
-                    <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
-                    <span class="title">Adaptaciones</span>
-                </a>
-            </li>
-
-            <?php
-            $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
-            ?>
-            <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
-                <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
-                    <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
-                    <span class="title">Intervenciones</span>
-                </a>
-            </li>
-
-            <?php
-            if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
-            ?>
-                <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                    <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                        <span class="title">Profesionales</span>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="school-outline"></ion-icon>
+                        </span>
+                        <span class="title">FIME Inclusivo</span>
                     </a>
                 </li>
-            <?php
-            }
-            ?>
 
-            <li>
-                <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
-                    <span class="icon">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                    </span>
-                    <span class="title">Cerrar Sesión</span>
-                </a>
-            </li>
-        </ul>
+                <li class="<?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
+                    <a href="../../modules/auth/dashboard.php" data-tooltip="Inicio">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Inicio</span>
+                    </a>
+                </li>
+
+                <?php
+                // Beneficiarios
+                $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
+                        <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                        <span class="title">Beneficiarios</span>
+                    </a>
+                </li>
+
+                <?php
+                // Diagnosticos
+                $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
+                        <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
+                        <span class="title">Seguimiento</span>
+                    </a>
+                </li>
+
+                <?php
+                // Adaptaciones
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
+                        <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
+                        <span class="title">Adaptaciones</span>
+                    </a>
+                </li>
+
+                <?php
+                // Intervenciones
+                $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
+                ?>
+                <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
+                    <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
+                        <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
+                        <span class="title">Intervenciones</span>
+                    </a>
+                </li>
+
+                <?php
+                // Usuarios - Solo visible para Administradores
+                if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
+                ?>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
+                        </a>
+                    </li>
+                <?php
+                }
+                ?>
+
+
+                <li>
+                    <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
     </div>
 
 
@@ -228,13 +248,13 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
                 </button>
             </div>
         </div>
-        <div class="diagnosticos-container">
-            <div class="header-section-tabla">
+        <div class="diagnosticos-container" style="height: auto; min-height: 740px;">
+            <div class="header-section">
                 <h2 class="section-title"><?php echo $titulo_seccion; ?></h2>
                 <div class="action-buttons-container" style="display: flex; gap: 10px;">
-                <a href="exportar_completo4.php"
-                    style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
-                    <ion-icon name="download-outline"></ion-icon> Exportar Completo
+                    <a href="exportar_completo4.php"
+                        style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
+                        <ion-icon name="download-outline"></ion-icon> Exportar Completo
                     </a>
                     <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
                         onclick="window.location.href='crear_intervenciones.php?beneficiario_id=' + $('#beneficiarioId').val();">

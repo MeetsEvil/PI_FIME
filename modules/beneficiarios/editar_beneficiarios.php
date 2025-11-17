@@ -81,15 +81,35 @@ if (isset($conex)) {
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .beneficiary-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
     <div class="container">
         <div class="navigation">
-            <?php
-            // Obtiene solo el archivo actual sin parámetros
-            $currentPage = basename($_SERVER['PHP_SELF']);
-            ?>
             <ul>
                 <li>
                     <a href="#">
@@ -152,14 +172,14 @@ if (isset($conex)) {
                 </li>
 
                 <?php
-                // Profesionales - Solo visible para Administradores
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
                 ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
                 <?php
@@ -238,7 +258,7 @@ if (isset($conex)) {
                                 <option value="Otro" <?php echo ($beneficiario['genero'] ?? '') == 'Otro' ? 'selected' : ''; ?>>Otro</option>
                             </select>
                         </label>
-                        <label><span>Teléfono:</span><input type="tel" name="telefono" value="<?php echo htmlspecialchars($beneficiario['telefono'] ?? ''); ?>" minlength="10" maxlength="10" required pattern="[0-9]{10}" title="El teléfono debe tener 10 dígitos."></label>
+                        <label><span>Teléfono:</span><input type="tel" name="telefono" value="<?php echo htmlspecialchars($beneficiario['telefono'] ?? ''); ?>" minlength="10" maxlength="10" required pattern="[0-9]{10}" title="El teléfono debe tener 10 dígitos." oninput="this.value = this.value.replace(/[^0-9]/g, '')"></label>
                         <label><span>Correo Personal:</span><input type="email" name="correo_institucional" value="<?php echo htmlspecialchars($beneficiario['correo_institucional'] ?? ''); ?>" required title="Ingresa un correo electrónico válido."></label>
                     </div>
 
@@ -317,7 +337,8 @@ if (isset($conex)) {
                                 value="<?php echo htmlspecialchars($beneficiario['telefono_emergencia'] ?? ''); ?>"
                                 minlength="10" maxlength="10"
                                 required pattern="[0-9]{10}"
-                                title="El teléfono debe tener 10 dígitos.">
+                                title="El teléfono debe tener 10 dígitos."
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         </label>
                         <label><span>Parentesco:</span>
                             <select name="parentesco_emergencia" required>

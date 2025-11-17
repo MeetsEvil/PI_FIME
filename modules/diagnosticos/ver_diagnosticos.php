@@ -46,17 +46,179 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
     <title>Ver Seguimiento #<?php echo htmlspecialchars($id_diagnostico); ?></title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .view-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .view-container:hover {
+            box-shadow: 0 6px 20px rgba(35, 147, 88, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .view-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #000000ff;
+            margin: 0;
+        }
+
+        .view-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #239358;
+        }
+
+        .info-section h3 {
+            color: #239358;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #555;
+            min-width: 180px;
+            font-size: 0.95em;
+            padding-right: 5px;
+            margin-right: 10px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 0.95em;
+            flex: 1;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn-action {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-edit {
+            background: linear-gradient(90deg, #FF9800, #E65100);
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: linear-gradient(90deg, #FB8C00, #D84315);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: linear-gradient(90deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: linear-gradient(90deg, #5a6268, #3d4349);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .diagnosticos-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: auto;
+            padding-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo de la URL
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
     <div class="container">
         <div class="navigation">
-            <?php
-            // Obtiene solo el archivo actual sin parámetros
-            $currentPage = basename($_SERVER['PHP_SELF']);
-            ?>
             <ul>
                 <li>
                     <a href="#">
@@ -119,14 +281,14 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
                 </li>
 
                 <?php
-                // Profesionales - Solo visible para Administradores
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
-                    $profesionalesPages = ['index_profesionales.php', 'crear_profesionales.php', 'editar_profesionales.php', 'ver_profesionales.php'];
+                    $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
                 ?>
-                    <li class="<?php echo in_array($currentPage, $profesionalesPages) ? 'active' : ''; ?>">
-                        <a href="../../modules/profesionales/index_profesionales.php" data-tooltip="Profesionales">
-                            <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
-                            <span class="title">Profesionales</span>
+                    <li class="<?php echo in_array($currentPage, $usuariosPages) ? 'active' : ''; ?>">
+                        <a href="../../modules/usuarios/index_usuarios.php" data-tooltip="Usuarios">
+                            <span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+                            <span class="title">Usuarios</span>
                         </a>
                     </li>
                 <?php
@@ -162,59 +324,95 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
             </div>
         </div>
 
-        <div class="diagnosticos-container" style="min-height: 85vh;">
-            <div class="header-section">
-                <h2 class="section-title">Seguimiento de <?php echo htmlspecialchars($beneficiario_nombre); ?></h2>
+        <div class="view-container">
+            <div class="view-header">
+                <h2 class="view-title">Información del Seguimiento</h2>
                 <a href="historico_diagnosticos.php?id=<?php echo $beneficiario_id; ?>" class="btn-regresar">
                     <ion-icon name="caret-back-circle-outline"></ion-icon> Regresar
                 </a>
             </div>
 
-            <div class="form-pagination-container">
-                <form>
-                    <div class="form-page is-active" data-page="1">
-                        <h3>Detalles de Seguimiento</h3>
+            <div class="view-content">
+                <div class="info-grid">
+                    <!-- SECCIÓN 1: Información General -->
+                    <div class="info-section">
+                        <h3>
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                            Información General
+                        </h3>
 
-                        <div class="readonly-fields-group" style="display: flex; gap: 15px; margin-bottom: 10px;">
-                            <label style="flex:1;"><span>N° Seguimiento:</span>
-                                <input type="text"
-                                    value="<?php echo htmlspecialchars($diagnostico['numero_diagnostico']); ?>"
-                                    readonly
-                                    style="background-color:#f0f0f0; font-weight: 700;">
-                            </label>
-                            <label style="flex:2;"><span>Beneficiario Asignado:</span>
-                                <input type="text" value="<?php echo htmlspecialchars($beneficiario_nombre); ?>" readonly style="background-color:#f0f0f0;">
-                                </label>
+                        <div class="info-row">
+                            <span class="info-label">N° Seguimiento:</span>
+                            <span class="info-value" style="font-weight: 700;"><?php echo htmlspecialchars($diagnostico['numero_diagnostico']); ?></span>
                         </div>
 
-                        <label><span>Fecha de Seguimiento:</span>
-                            <input type="date" value="<?php echo htmlspecialchars($diagnostico['fecha_diagnostico']); ?>" readonly style="background-color:#f0f0f0;">
-                        </label>
+                        <div class="info-row">
+                            <span class="info-label">Beneficiario:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($beneficiario_nombre); ?></span>
+                        </div>
 
-                        <label><span>Tipo de Seguimiento:</span>
-                            <input type="text" value="<?php echo htmlspecialchars($diagnostico['tipo_diagnostico']); ?>" readonly style="background-color:#f0f0f0;">
-                        </label>
+                        <div class="info-row">
+                            <span class="info-label">Fecha de Seguimiento:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($diagnostico['fecha_diagnostico']); ?></span>
+                        </div>
 
-                        <label><span>Profesional Asignado:</span>
-                            <input type="text" value="<?php echo htmlspecialchars($diagnostico['profesional_id']); ?>" readonly style="background-color:#f0f0f0;">
-                        </label>
+                        <div class="info-row">
+                            <span class="info-label">Tipo de Seguimiento:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($diagnostico['tipo_diagnostico']); ?></span>
+                        </div>
 
-                        <label><span>Resultado:</span>
-                            <textarea readonly style="background-color:#f0f0f0;"><?php echo htmlspecialchars($diagnostico['resultado']); ?></textarea>
-                        </label>
-
-                        <label><span>Observaciones:</span>
-                            <textarea readonly style="background-color:#f0f0f0;"><?php echo htmlspecialchars($diagnostico['observaciones']); ?></textarea>
-                        </label>
-
-                        <label><span>Archivo Adjunto:</span>
-                            <input type="text" value="<?php echo htmlspecialchars($diagnostico['archivo_adjunto']); ?>" readonly style="background-color:#f0f0f0;">
-                        </label>
+                        <div class="info-row">
+                            <span class="info-label">Profesional Asignado:</span>
+                            <span class="info-value">
+                                <?php 
+                                // Obtener el nombre del profesional
+                                $query_prof = "SELECT CONCAT(nombre, ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS nombre_completo 
+                                              FROM profesionales WHERE id_profesional = ?";
+                                $stmt_prof = mysqli_prepare($conex, $query_prof);
+                                mysqli_stmt_bind_param($stmt_prof, "i", $diagnostico['profesional_id']);
+                                mysqli_stmt_execute($stmt_prof);
+                                $result_prof = mysqli_stmt_get_result($stmt_prof);
+                                $profesional = mysqli_fetch_assoc($result_prof);
+                                mysqli_stmt_close($stmt_prof);
+                                echo htmlspecialchars($profesional['nombre_completo'] ?? 'No Asignado');
+                                ?>
+                            </span>
+                        </div>
                     </div>
-                </form>
 
-                <!-- Botón de guardar eliminado -->
-                <div class="pagination-buttons"></div>
+                    <!-- SECCIÓN 2: Resultados y Observaciones -->
+                    <div class="info-section">
+                        <h3>
+                            <ion-icon name="document-text-outline"></ion-icon>
+                            Resultados y Observaciones
+                        </h3>
+
+                        <div class="info-row">
+                            <span class="info-label">Resultado:</span>
+                            <span class="info-value"><?php echo nl2br(htmlspecialchars($diagnostico['resultado'])); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Observaciones:</span>
+                            <span class="info-value"><?php echo nl2br(htmlspecialchars($diagnostico['observaciones'])); ?></span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Archivo Adjunto:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($diagnostico['archivo_adjunto'] ?: 'Sin archivo adjunto'); ?></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <a href="editar_diagnosticos.php?id=<?php echo $diagnostico['id_diagnostico']; ?>" class="btn-action btn-edit">
+                        <ion-icon name="create-outline"></ion-icon> Editar Seguimiento
+                    </a>
+                    <a href="historico_diagnosticos.php?id=<?php echo $beneficiario_id; ?>" class="btn-action btn-cancel">
+                        <ion-icon name="list-outline"></ion-icon> Ver Histórico
+                    </a>
+                </div>
             </div>
         </div>
     </div>

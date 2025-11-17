@@ -79,8 +79,8 @@ try {
     }
 
     // 2. Insertar en tabla usuarios_login
-    $query_usuario = "INSERT INTO usuarios_login (usuario, contrasena, rol) 
-        VALUES ('$usuario', '$contrasena', '$rol')";
+    $query_usuario = "INSERT INTO usuarios_login (usuario, contrasena, rol, estado) 
+        VALUES ('$usuario', '$contrasena', '$rol', '$estado')";
     
     if (!mysqli_query($conex, $query_usuario)) {
         throw new Exception('Error al insertar en usuarios_login: ' . mysqli_error($conex));
