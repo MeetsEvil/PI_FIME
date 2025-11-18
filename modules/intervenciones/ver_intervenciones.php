@@ -65,7 +65,8 @@ $profesional_nombre = $intervencion['profesional_nombre'] ?: 'No asignado';
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             width: calc(95% - 200px);
             min-height: 95px;
-            height: 740px;
+            height: auto;
+            padding-bottom: 50px;
             display: flex;
             flex-direction: column;
         }
@@ -193,32 +194,45 @@ $profesional_nombre = $intervencion['profesional_nombre'] ?: 'No asignado';
             transform: translateY(-2px);
         }
 
-        .diagnosticos-container {
-            margin: 30px auto;
-            margin-top: 50px;
-            margin-left: 170px;
-            margin-right: 10px;
-            margin-bottom: 90px;
-            padding: 30px;
-            border: 1px solid #000;
-            background: white;
-            border: 2px solid #adabab;
-            border-radius: 25px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            width: calc(95% - 200px);
-            min-height: 95px;
-            height: auto;
-            padding-bottom: 50px;
-            display: flex;
-            flex-direction: column;
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .badge.activo {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.inactivo,
+        .badge.baja {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge.egresado {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .info-value.email {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .info-value.email:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
     <?php
-    // Obtiene el nombre del archivo de la URL
-    $currentPage = basename($_SERVER['REQUEST_URI']);
+    // Obtiene el nombre del archivo sin parámetros de la URL
+    $currentPage = basename($_SERVER['PHP_SELF']);
     ?>
     <div class="container">
         <div class="navigation">
@@ -263,7 +277,7 @@ $profesional_nombre = $intervencion['profesional_nombre'] ?: 'No asignado';
 
                 <?php
                 // Adaptaciones
-                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
@@ -345,6 +359,11 @@ $profesional_nombre = $intervencion['profesional_nombre'] ?: 'No asignado';
                         </h3>
 
                         <div class="info-row">
+                            <span class="info-label">ID Intervención:</span>
+                            <span class="info-value"><?php echo htmlspecialchars($intervencion['id_intervencion']); ?></span>
+                        </div>
+
+                        <div class="info-row">
                             <span class="info-label">N° Intervención:</span>
                             <span class="info-value"><?php echo htmlspecialchars($intervencion['numero_intervencion']); ?></span>
                         </div>
@@ -379,12 +398,25 @@ $profesional_nombre = $intervencion['profesional_nombre'] ?: 'No asignado';
 
                         <div class="info-row">
                             <span class="info-label">Estado:</span>
-                            <span class="info-value"><?php echo htmlspecialchars($intervencion['estado'] ?? 'N/A'); ?></span>
+                            <span class="info-value">
+                                <?php
+                                $estado = $intervencion['estado'] ?? 'N/A';
+                                $badge_class = 'activo';
+                                if (in_array($estado, ['Cancelada', 'Suspendida'])) {
+                                    $badge_class = 'baja';
+                                } elseif ($estado == 'Completada') {
+                                    $badge_class = 'egresado';
+                                }
+                                ?>
+                                <span class="badge <?php echo $badge_class; ?>">
+                                    <?php echo htmlspecialchars($estado); ?>
+                                </span>
+                            </span>
                         </div>
                     </div>
 
-                    <!-- SECCIÓN 3: Resultados Esperados (Ocupa toda la fila) -->
-                    <div class="info-section" style="grid-column: 1 / -1;">
+                    <!-- SECCIÓN 3: Resultados Esperados -->
+                    <div class="info-section">
                         <h3>
                             <ion-icon name="checkmark-circle-outline"></ion-icon>
                             Resultados Esperados
@@ -395,8 +427,8 @@ $profesional_nombre = $intervencion['profesional_nombre'] ?: 'No asignado';
                         </div>
                     </div>
 
-                    <!-- SECCIÓN 4: Observaciones (Ocupa toda la fila) -->
-                    <div class="info-section" style="grid-column: 1 / -1;">
+                    <!-- SECCIÓN 4: Observaciones -->
+                    <div class="info-section">
                         <h3>
                             <ion-icon name="document-text-outline"></ion-icon>
                             Observaciones
@@ -421,6 +453,41 @@ $profesional_nombre = $intervencion['profesional_nombre'] ?: 'No asignado';
         </div>
     </div>
 
+    <!-- Modal de Contacto -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" id="closeContact">&times;</span>
+                <h2>Información de Contacto</h2>
+            </div>
+            <div class="modal-body">
+                <h3>Orlando Jair - Ingeniero en Sistemas</h3>
+                <p></p>
+                <div class="socialMedia">
+                    <a class="socialIcon" href="https://github.com/MeetsEvil" target="_blank"><i class="fab fa-github"></i></a>
+                    <a class="socialIcon" href="https://www.linkedin.com/in/orlandojgarciap-17a612289/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a class="socialIcon" href="mailto:orlandojgarciap@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn">&times;</span>
+                <h2>Cierre de sesión</h2>
+            </div>
+            <div class="modal-body">
+                <p>¿Confirmas que deseas cerrar sesión?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelBtn" class="btn-cancel">Cancelar</button>
+                <a href="../../modules/auth/logout.php" class="btn-confirm">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+
     <script src="../../assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -435,6 +502,44 @@ $profesional_nombre = $intervencion['profesional_nombre'] ?: 'No asignado';
                     navigation.classList.toggle("active");
                     main.classList.toggle("active");
                 };
+            }
+
+            // Modal de Contacto
+            var contactModal = document.getElementById("contactModal");
+            var closeContact = document.getElementById("closeContact");
+
+            window.mostrarInfo = function() {
+                contactModal.style.display = "flex";
+            }
+
+            if (closeContact) closeContact.onclick = function() {
+                contactModal.style.display = "none";
+            }
+
+            // Modal de Cerrar Sesión
+            var logoutModal = document.getElementById("logoutModal");
+            var closeLogoutBtn = document.querySelector("#logoutModal .close-btn");
+            var cancelBtn = document.getElementById("cancelBtn");
+
+            window.showLogoutModal = function() {
+                logoutModal.style.display = "flex";
+            }
+
+            if (closeLogoutBtn) closeLogoutBtn.onclick = function() {
+                logoutModal.style.display = "none";
+            }
+
+            if (cancelBtn) cancelBtn.onclick = function() {
+                logoutModal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == contactModal) {
+                    contactModal.style.display = "none";
+                }
+                if (event.target == logoutModal) {
+                    logoutModal.style.display = "none";
+                }
             }
         });
     </script>

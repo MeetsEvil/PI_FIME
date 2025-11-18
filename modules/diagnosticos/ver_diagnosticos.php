@@ -214,8 +214,8 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
 
 <body>
     <?php
-    // Obtiene el nombre del archivo de la URL
-    $currentPage = basename($_SERVER['REQUEST_URI']);
+    // Obtiene el nombre del archivo sin parámetros de la URL
+    $currentPage = basename($_SERVER['PHP_SELF']);
     ?>
     <div class="container">
         <div class="navigation">
@@ -260,7 +260,7 @@ $beneficiario_nombre = $diagnostico['beneficiario_nombre'];
 
                 <?php
                 // Adaptaciones
-                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php'];
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
                 ?>
                 <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">

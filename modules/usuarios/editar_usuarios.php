@@ -138,13 +138,18 @@ $titulo_seccion = "Editar Usuario";
 </head>
 
 <body>
+    <?php
+    // Obtiene el nombre del archivo sin parámetros de la URL
+    $currentPage = basename($_SERVER['PHP_SELF']);
+    ?>
     <div class="container">
         <div class="navigation">
-            <?php $currentPage = basename($_SERVER['PHP_SELF']); ?>
             <ul>
                 <li>
                     <a href="#">
-                        <span class="icon"><ion-icon name="school-outline"></ion-icon></span>
+                        <span class="icon">
+                            <ion-icon name="school-outline"></ion-icon>
+                        </span>
                         <span class="title">FIME Inclusivo</span>
                     </a>
                 </li>
@@ -156,7 +161,10 @@ $titulo_seccion = "Editar Usuario";
                     </a>
                 </li>
 
-                <?php $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php']; ?>
+                <?php
+                // Beneficiarios
+                $beneficiariosPages = ['index_beneficiarios.php', 'crear_beneficiarios.php', 'editar_beneficiarios.php', 'ver_beneficiarios.php'];
+                ?>
                 <li class="<?php echo in_array($currentPage, $beneficiariosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/beneficiarios/index_beneficiarios.php" data-tooltip="Beneficiarios">
                         <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
@@ -164,7 +172,10 @@ $titulo_seccion = "Editar Usuario";
                     </a>
                 </li>
 
-                <?php $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php']; ?>
+                <?php
+                // Diagnosticos
+                $diagnosticosPages = ['index_diagnosticos.php', 'crear_diagnosticos.php', 'editar_diagnosticos.php', 'historico_diagnosticos.php', 'ver_diagnosticos.php'];
+                ?>
                 <li class="<?php echo in_array($currentPage, $diagnosticosPages) ? 'active' : ''; ?>">
                     <a href="../../modules/diagnosticos/index_diagnosticos.php" data-tooltip="Diagnósticos">
                         <span class="icon"><ion-icon name="medkit-outline"></ion-icon></span>
@@ -172,7 +183,10 @@ $titulo_seccion = "Editar Usuario";
                     </a>
                 </li>
 
-                <?php $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptacione.php', 'ver_adaptaciones.php']; ?>
+                <?php
+                // Adaptaciones
+                $adaptacionesPages = ['index_adaptaciones.php', 'crear_adaptaciones.php', 'editar_adaptaciones.php', 'historico_adaptaciones.php', 'ver_adaptaciones.php'];
+                ?>
                 <li class="<?php echo in_array($currentPage, $adaptacionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/adaptaciones/index_adaptaciones.php" data-tooltip="Adaptaciones">
                         <span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
@@ -180,7 +194,10 @@ $titulo_seccion = "Editar Usuario";
                     </a>
                 </li>
 
-                <?php $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php']; ?>
+                <?php
+                // Intervenciones
+                $intervencionesPages = ['index_intervenciones.php', 'crear_intervenciones.php', 'editar_intervenciones.php', 'historico_intervenciones.php', 'ver_intervenciones.php'];
+                ?>
                 <li class="<?php echo in_array($currentPage, $intervencionesPages) ? 'active' : ''; ?>">
                     <a href="../../modules/intervenciones/index_intervenciones.php" data-tooltip="Intervenciones">
                         <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
@@ -189,6 +206,7 @@ $titulo_seccion = "Editar Usuario";
                 </li>
 
                 <?php
+                // Usuarios - Solo visible para Administradores
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'Administrador') {
                     $usuariosPages = ['index_usuarios.php', 'crear_usuarios.php', 'editar_usuarios.php', 'ver_usuarios.php'];
                 ?>
@@ -198,16 +216,22 @@ $titulo_seccion = "Editar Usuario";
                             <span class="title">Usuarios</span>
                         </a>
                     </li>
-                <?php } ?>
+                <?php
+                }
+                ?>
+
 
                 <li>
                     <a href="#" onclick="showLogoutModal()" data-tooltip="Cerrar Sesión">
-                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
                         <span class="title">Cerrar Sesión</span>
                     </a>
                 </li>
             </ul>
         </div>
+
     </div>
 
     <div class="main">

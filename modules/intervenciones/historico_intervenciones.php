@@ -9,6 +9,9 @@ $user = $_SESSION['usuarioingresando'];
 // Incluir la conexión a la base de datos
 include '../../config/db.php';
 
+// Verificar permisos de intervenciones
+$tiene_permiso_intervencion = ($_SESSION['rol'] === 'Administrador') || (isset($_SESSION['permiso_intervencion']) && $_SESSION['permiso_intervencion'] == 1);
+
 // Obtiene el nombre del archivo de la URL para la navegación
 $currentPage = basename($_SERVER['REQUEST_URI']);
 
@@ -65,57 +68,228 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
     <style>
-        /* Estilos para la tabla de intervenciones */
-        #tablaIntervenciones,
-        table.dataTable#tablaIntervenciones {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-family: Arial, sans-serif;
-            font-size: 0.95em;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .diagnosticos-container {
+            margin: 30px auto;
+            margin-top: 50px;
+            margin-left: 170px;
+            margin-right: 10px;
+            margin-bottom: 90px;
+            padding: 30px;
+            border: 1px solid #000;
+            background: white;
+            border: 2px solid #adabab;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: calc(95% - 200px);
+            min-height: 95px;
+            height: 740px;
+            display: flex;
+            flex-direction: column;
         }
 
-        #tablaIntervenciones th,
-        #tablaIntervenciones td,
-        table.dataTable#tablaIntervenciones th,
-        table.dataTable#tablaIntervenciones td {
-            padding: 10px 15px;
-            text-align: left;
+        .table-wrapper {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 570px;
         }
 
-        #tablaIntervenciones th,
-        table.dataTable#tablaIntervenciones th,
-        #tablaIntervenciones thead th,
-        table.dataTable#tablaIntervenciones thead th {
-            background-color: #239358 !important;
+        .header-section-tabla {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            border-bottom: 2px solid #f0f0f0 !important;
+        }
+
+        .section-title {
+            font-size: 2.3em;
+            font-weight: 700;
+            color: #000000;
+            margin: 0;
+        }
+
+        .btn-new, .btn-action-nuevo {
+            background: #239358 !important;
+            border: none !important;
             color: white !important;
-            font-weight: 600;
-            text-transform: uppercase;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px !important;
+            padding: 10px 20px !important;
+            border-radius: 50px !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+            transition: all 0.3s ease !important;
         }
 
-        /* Eliminar hover del thead */
-        #tablaIntervenciones thead tr:hover,
-        table.dataTable#tablaIntervenciones thead tr:hover,
-        #tablaIntervenciones thead th:hover,
-        table.dataTable#tablaIntervenciones thead th:hover {
+        .btn-new:hover, .btn-action-nuevo:hover {
+            background: #1a7043 !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .dataTables_wrapper {
+            padding: 20px 0 !important;
+            width: 100% !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border: 2px solid #239358 !important;
+            border-radius: 8px !important;
+            padding: 8px 15px !important;
+            margin-left: 10px !important;
+            font-size: 0.95em !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border: 2px solid #239358 !important;
+            border-radius: 8px !important;
+            padding: 5px 10px !important;
+            margin: 0 10px !important;
+        }
+
+        .dt-buttons {
+            margin-bottom: 10px !important;
+            display: flex !important;
+            gap: 8px !important;
+        }
+
+        .btn-dt {
+            background: #239358 !important;
+            border: none !important;
+            color: white !important;
+            padding: 8px 15px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            font-size: 0.9em !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-dt:hover {
+            background: #1a7043 !important;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        #tablaIntervenciones {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            background: white !important;
+        }
+
+        #tablaIntervenciones thead {
+            background: #239358 !important;
+        }
+
+        #tablaIntervenciones th {
+            background: transparent !important;
+            color: white !important;
+            font-weight: 600 !important;
+            padding: 15px 10px !important;
+            text-align: center !important;
+            font-size: 0.95em !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        #tablaIntervenciones td {
+            padding: 12px 10px !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+            border-bottom: 1px solid #f0f0f0 !important;
+            font-size: 0.9em !important;
+        }
+
+        #tablaIntervenciones tbody tr {
+            transition: all 0.2s ease !important;
+        }
+
+        #tablaIntervenciones tbody tr:hover {
+            background-color: #f0f9f4 !important;
+            transform: scale(1.01) !important;
+            box-shadow: 0 2px 5px rgba(35, 147, 88, 0.1) !important;
+        }
+
+        #tablaIntervenciones tbody tr:nth-child(even) {
+            background-color: #fafafa !important;
+        }
+
+        #tablaIntervenciones tbody tr:nth-child(even):hover {
+            background-color: #f0f9f4 !important;
+        }
+
+        #tablaIntervenciones thead tr:hover {
             background-color: #239358 !important;
-            cursor: default !important;
+            transform: none !important;
+            box-shadow: none !important;
         }
 
-        #tablaIntervenciones tbody tr:hover,
-        table.dataTable#tablaIntervenciones tbody tr:hover {
-            background-color: #f1f1f1 !important;
-            cursor: pointer;
+        #tablaIntervenciones thead th:hover {
+            background-color: transparent !important;
         }
 
-        #tablaIntervenciones tr:nth-child(even),
-        table.dataTable#tablaIntervenciones tbody tr.even {
-            background-color: #f9f9f9;
+        .dataTables_wrapper .dataTables_paginate {
+            padding-top: 20px !important;
         }
 
-        div.dt-buttons .dt-button {
-            margin-bottom: 25px;
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 8px 12px !important;
+            margin: 0 3px !important;
+            border-radius: 8px !important;
+            border: 2px solid #239358 !important;
+            background: white !important;
+            color: #239358 !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: linear-gradient(90deg, #2db36a, #239358) !important;
+            color: white !important;
+            border: 2px solid #239358 !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: linear-gradient(90deg, #2db36a, #239358) !important;
+            color: white !important;
+            border: 2px solid #239358 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            padding-top: 20px !important;
+            color: #666 !important;
+            font-size: 0.9em !important;
+        }
+
+        .dataTables_wrapper .dataTables_length label,
+        .dataTables_wrapper .dataTables_filter label {
+            font-weight: 500 !important;
+            color: #333 !important;
+        }
+
+        .btn-action2 {
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-action2:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .btn-edit:hover {
+            background: #e0a800 !important;
+        }
+
+        .btn-view:hover {
+            background: #218838 !important;
         }
     </style>
 
@@ -248,42 +422,94 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
                 </button>
             </div>
         </div>
-        <div class="diagnosticos-container" style="height: auto; min-height: 740px;">
-            <div class="header-section">
+        <div class="diagnosticos-container">
+            <div class="header-section-tabla">
                 <h2 class="section-title"><?php echo $titulo_seccion; ?></h2>
                 <div class="action-buttons-container" style="display: flex; gap: 10px;">
-                    <a href="exportar_completo4.php"
-                        style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
-                        <ion-icon name="download-outline"></ion-icon> Exportar Completo
+                <a href="exportar_completo4.php"
+                    style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
+                    <ion-icon name="download-outline"></ion-icon> Exportar Completo
                     </a>
-                    <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
-                        onclick="window.location.href='crear_intervenciones.php?beneficiario_id=' + $('#beneficiarioId').val();">
-                        <ion-icon name="add-circle-outline"></ion-icon> Nuevo
-                    </button>
+                    <?php if ($tiene_permiso_intervencion): ?>
+                        <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
+                            onclick="window.location.href='crear_intervenciones.php?beneficiario_id=' + $('#beneficiarioId').val();">
+                            <ion-icon name="add-circle-outline"></ion-icon> Nuevo
+                        </button>
+                    <?php else: ?>
+                        <button onclick="mostrarModalPermisos()" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important; opacity: 0.6; cursor: not-allowed;">
+                            <ion-icon name="lock-closed-outline"></ion-icon> Nuevo
+                        </button>
+                    <?php endif; ?>
                 </div>
             </div>
             <!-- TABLA DE HISTÓRICO DE INTERVENCIONES-->
-            <table id="tablaIntervenciones" class="tablaIntervenciones" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>N°</th>
-                        <th>Tipo Intervención</th>
-                        <th>Fecha Implementación</th>
-                        <th>Profesional Asignado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Los datos se cargarán aquí vía AJAX/DataTables -->
-                </tbody>
-            </table>
+            <div class="table-wrapper">
+                <table id="tablaIntervenciones" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Tipo Intervención</th>
+                            <th>Fecha Implementación</th>
+                            <th>Profesional Asignado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos se cargarán aquí vía AJAX/DataTables -->
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Campo oculto para DataTables sepa qué beneficiario buscar -->
             <input type="hidden" id="beneficiarioId" value="<?php echo $beneficiario_id; ?>">
         </div>
     </div>
+    </div>
 
-    <!-- Modales y Scripts Externos omitidos por brevedad -->
+    <!-- Modal de confirmación de eliminación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="cerrarModalEliminar()">&times;</span>
+                <h2>Eliminar Intervención</h2>
+            </div>
+            <div class="modal-body">
+                <p style="color: #000000; font-size: 1em;">¿Estás seguro de que deseas eliminar este registro de intervención?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalEliminar()">Cancelar</button>
+                <a href="#" id="btnConfirmarEliminar" class="btn-confirm" style="background: #dc3545;">Eliminar</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de éxito al eliminar -->
+    <div id="successDeleteModal" class="modal">
+        <div class="modal-content success">
+            <div class="modal-body">
+                <h2 class="success-title">¡Intervención Eliminada!</h2>
+                <p style="margin-top: 8px;">El registro de intervención ha sido eliminado correctamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de permisos denegados -->
+    <div id="permisosModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="cerrarModalPermisos()">&times;</span>
+                <h2 style="color: #ffffff; font-weight: 700;"><ion-icon name="lock-closed-outline" style="color: #ffffff;"></ion-icon> Acceso Denegado</h2>
+            </div>
+            <div class="modal-body">
+                <p style="color: #000000; font-size: 1.1em; text-align: center;">No tienes los permisos necesarios para realizar esta acción.</p>
+                <p style="color: #666; font-size: 0.95em; text-align: center; margin-top: 10px;">Por favor, contacta a un administrador para solicitar acceso.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalPermisos()">Entendido</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../../assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -292,7 +518,13 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
             const beneficiarioId = $('#beneficiarioId').val();
 
             $('#tablaIntervenciones').DataTable({
-                "ajax": "get_intervenciones_beneficiario.php?id=" + beneficiarioId,
+                "ajax": {
+                    "url": "get_intervenciones_beneficiario.php?id=" + beneficiarioId,
+                    "dataSrc": "data",
+                    "error": function(xhr, error, code) {
+                        console.error('Error al cargar datos:', error);
+                    }
+                },
                 "columns": [{
                         "data": "numero_intervencion"
                     },
@@ -311,58 +543,82 @@ $titulo_seccion = "Histórico de Intervenciones: " . htmlspecialchars($nombre_co
                         "searchable": false
                     }
                 ],
-
-                // ==============================================================
-                // === CAMBIOS CLAVE AÑADIDOS: columnDefs y order inicial ===
-                // ==============================================================
-
-                // 1. Define la columna 0 (numero_intervencion) como NUMÉRICA
                 "columnDefs": [{
                     "type": "num",
                     "targets": 0
                 }],
-
-                // 2. Ordena la tabla inicialmente por la columna 0 (N°) ascendente (asc)
                 "order": [
                     [0, "asc"]
                 ],
-
-                // ==============================================================
-
-                "pageLength": 7,
-                "lengthMenu": [
-                    [7, 14, 28, 50, -1],
-                    [7, 14, 28, 50, "Todos"]
-                ],
+                "pageLength": 10,
+                "lengthMenu": [10, 25, 50, 100],
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "zeroRecords": "No se encontraron registros coincidentes"
                 },
-
-                // NOTA: Se comenta el orden anterior para usar el nuevo orden por columna 0:
-                // "order": [[2, "desc"]], // Ordena por fecha de implementación (columna 2) descendente
-
-                dom: 'Bfrtip',
-                buttons: [{
+                "dom": 'Bfrtip',
+                "buttons": [{
                         extend: 'copyHtml5',
-                        text: 'Copiar',
-                        className: 'btn btn-sm btn-secondary'
+                        text: '<i class="fas fa-copy"></i> Copiar',
+                        className: 'btn-dt',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
                     },
                     {
                         extend: 'excelHtml5',
-                        text: 'Excel',
-                        className: 'btn btn-sm btn-success'
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        className: 'btn-dt',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
                     },
                     {
                         extend: 'pdfHtml5',
-                        text: 'PDF',
-                        className: 'btn btn-sm btn-danger',
+                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        className: 'btn-dt',
                         orientation: 'landscape',
                         pageSize: 'A4',
-                        title: 'Histórico de Intervenciones - ' + '<?php echo htmlspecialchars($nombre_completo_beneficiario); ?>'
+                        title: 'Histórico de Intervenciones - <?php echo htmlspecialchars($nombre_completo_beneficiario); ?>',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
                     }
                 ]
             });
+
+            <?php if (isset($_SESSION['success_delete']) && $_SESSION['success_delete'] === true): ?>
+                document.getElementById('successDeleteModal').style.display = 'flex';
+                setTimeout(function() {
+                    document.getElementById('successDeleteModal').style.display = 'none';
+                }, 2000);
+                <?php unset($_SESSION['success_delete']); ?>
+            <?php endif; ?>
         });
+
+        function confirmarEliminar(id) {
+            <?php if (!$tiene_permiso_intervencion): ?>
+                mostrarModalPermisos();
+                return false;
+            <?php endif; ?>
+            document.getElementById('deleteModal').style.display = 'flex';
+            document.getElementById('btnConfirmarEliminar').href = 'eliminar_intervencion.php?id=' + id + '&beneficiario_id=' + $('#beneficiarioId').val();
+        }
+
+        function cerrarModalEliminar() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        function mostrarModalPermisos() {
+            document.getElementById('permisosModal').style.display = 'flex';
+        }
+
+        function cerrarModalPermisos() {
+            document.getElementById('permisosModal').style.display = 'none';
+        }
     </script>
 </body>
 

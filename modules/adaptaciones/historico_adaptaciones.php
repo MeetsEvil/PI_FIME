@@ -9,6 +9,9 @@ $user = $_SESSION['usuarioingresando'];
 // Incluir la conexión a la base de datos
 include '../../config/db.php';
 
+// Verificar permisos de adaptaciones
+$tiene_permiso_adaptacion = ($_SESSION['rol'] === 'Administrador') || (isset($_SESSION['permiso_adaptacion']) && $_SESSION['permiso_adaptacion'] == 1);
+
 // Obtiene el nombre del archivo de la URL para la navegación
 $currentPage = basename($_SERVER['REQUEST_URI']);
 
@@ -427,10 +430,16 @@ $titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_comp
                     style="background: linear-gradient(90deg,rgb(200, 224, 90),rgb(143, 177, 20)); border: none; color: white; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px 20px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">                    
                     <ion-icon name="download-outline"></ion-icon> Exportar Completo
                     </a>
-                    <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
-                        onclick="window.location.href='crear_adaptaciones.php?beneficiario_id=' + $('#beneficiarioId').val();">
-                        <ion-icon name="add-circle-outline"></ion-icon> Nuevo
-                    </button>
+                    <?php if ($tiene_permiso_adaptacion): ?>
+                        <button id="newRecordBtn" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important;"
+                            onclick="window.location.href='crear_adaptaciones.php?beneficiario_id=' + $('#beneficiarioId').val();">
+                            <ion-icon name="add-circle-outline"></ion-icon> Nuevo
+                        </button>
+                    <?php else: ?>
+                        <button onclick="mostrarModalPermisos()" class="btn-action-nuevo btn-new" style="font-size: 16px !important; font-weight: 700 !important; opacity: 0.6; cursor: not-allowed;">
+                            <ion-icon name="lock-closed-outline"></ion-icon> Nuevo
+                        </button>
+                    <?php endif; ?>
                 </div>
             </div>
             <!-- TABLA DE HISTÓRICO DE ADAPTACIONES-->
@@ -479,6 +488,23 @@ $titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_comp
             <div class="modal-body">
                 <h2 class="success-title">¡Adaptación Eliminada!</h2>
                 <p style="margin-top: 8px;">El registro de adaptación ha sido eliminado correctamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de permisos denegados -->
+    <div id="permisosModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="cerrarModalPermisos()">&times;</span>
+                <h2 style="color: #ffffff; font-weight: 700;"><ion-icon name="lock-closed-outline" style="color: #ffffff;"></ion-icon> Acceso Denegado</h2>
+            </div>
+            <div class="modal-body">
+                <p style="color: #000000; font-size: 1.1em; text-align: center;">No tienes los permisos necesarios para realizar esta acción.</p>
+                <p style="color: #666; font-size: 0.95em; text-align: center; margin-top: 10px;">Por favor, contacta a un administrador para solicitar acceso.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalPermisos()">Entendido</button>
             </div>
         </div>
     </div>
@@ -573,12 +599,24 @@ $titulo_seccion = "Histórico de Adaptaciones: " . htmlspecialchars($nombre_comp
         });
 
         function confirmarEliminar(id) {
+            <?php if (!$tiene_permiso_adaptacion): ?>
+                mostrarModalPermisos();
+                return false;
+            <?php endif; ?>
             document.getElementById('deleteModal').style.display = 'flex';
             document.getElementById('btnConfirmarEliminar').href = 'eliminar_adaptacion.php?id=' + id + '&beneficiario_id=' + $('#beneficiarioId').val();
         }
 
         function cerrarModalEliminar() {
             document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        function mostrarModalPermisos() {
+            document.getElementById('permisosModal').style.display = 'flex';
+        }
+
+        function cerrarModalPermisos() {
+            document.getElementById('permisosModal').style.display = 'none';
         }
     </script>
 </body>

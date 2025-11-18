@@ -5,6 +5,9 @@ if (!isset($_SESSION['usuarioingresando'])) {
     exit();
 }
 $user = $_SESSION['usuarioingresando'];
+
+// Verificar permisos de beneficiarios
+$tiene_permiso_beneficiario = ($_SESSION['rol'] === 'Administrador') || (isset($_SESSION['permiso_beneficiario']) && $_SESSION['permiso_beneficiario'] == 1);
 ?>
 
 <!DOCTYPE html>
@@ -393,9 +396,15 @@ $user = $_SESSION['usuarioingresando'];
             <div class="header-section">
                 <h2 class="section-title">Beneficiarios</h2>
                 <div style="display: flex; gap: 10px;">
-                    <a href="crear_beneficiarios.php" class="btn-new">
-                        <ion-icon name="add-circle-outline"></ion-icon> Nuevo Beneficiario
-                    </a>
+                    <?php if ($tiene_permiso_beneficiario): ?>
+                        <a href="crear_beneficiarios.php" class="btn-new">
+                            <ion-icon name="add-circle-outline"></ion-icon> Nuevo Beneficiario
+                        </a>
+                    <?php else: ?>
+                        <button onclick="mostrarModalPermisos()" class="btn-new" style="opacity: 0.6; cursor: not-allowed;">
+                            <ion-icon name="lock-closed-outline"></ion-icon> Nuevo Beneficiario
+                        </button>
+                    <?php endif; ?>
                 </div>
             </div>
             <!-- Tabla HTML con wrapper para scroll -->
@@ -533,12 +542,24 @@ $user = $_SESSION['usuarioingresando'];
             }
 
             function confirmarEliminar(id) {
+                <?php if (!$tiene_permiso_beneficiario): ?>
+                    mostrarModalPermisos();
+                    return false;
+                <?php endif; ?>
                 document.getElementById('deleteModal').style.display = 'flex';
                 document.getElementById('btnConfirmarEliminar').href = 'eliminar_beneficiario.php?id=' + id;
             }
 
             function cerrarModalEliminar() {
                 document.getElementById('deleteModal').style.display = 'none';
+            }
+
+            function mostrarModalPermisos() {
+                document.getElementById('permisosModal').style.display = 'flex';
+            }
+
+            function cerrarModalPermisos() {
+                document.getElementById('permisosModal').style.display = 'none';
             }
         </script>
     </div>
@@ -600,6 +621,23 @@ $user = $_SESSION['usuarioingresando'];
             <div class="modal-body">
                 <h2 class="success-title">¡Beneficiario Desactivado!</h2>
                 <p style="margin-top: 8px;">El beneficiario ha sido desactivado correctamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de permisos denegados -->
+    <div id="permisosModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="cerrarModalPermisos()">&times;</span>
+                <h2 style="color: #ffffff; font-weight: 700;"><ion-icon name="lock-closed-outline" style="color: #ffffff;"></ion-icon> Acceso Denegado</h2>
+            </div>
+            <div class="modal-body">
+                <p style="color: #000000; font-size: 1.1em; text-align: center;">No tienes los permisos necesarios para realizar esta acción.</p>
+                <p style="color: #666; font-size: 0.95em; text-align: center; margin-top: 10px;">Por favor, contacta a un administrador para solicitar acceso.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalPermisos()">Entendido</button>
             </div>
         </div>
     </div>
